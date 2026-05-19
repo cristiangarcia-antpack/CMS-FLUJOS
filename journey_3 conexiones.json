@@ -1,0 +1,727 @@
+{
+  "nodes": [
+    {
+      "id": 51,
+      "type": "entry",
+      "x": 0,
+      "y": 100.74760982759372,
+      "data": {
+        "title": "Entry Source",
+        "subtitle": "inactivos_4-6_meses.csv\n~250K contactos",
+        "file": "inactivos_4-6_meses.csv",
+        "contacts": "~250,000"
+      }
+    },
+    {
+      "id": 52,
+      "type": "email",
+      "x": 479.7348755591287,
+      "y": 64.8176971396176,
+      "data": {
+        "title": "Email · Día 1",
+        "subtitle": "¡Te extrañamos!\nOferta especial bienvenida",
+        "time": "D1 09:00",
+        "subject": "¡Te extrañamos! Vuelve con esta oferta",
+        "from": "Mensaje@terpel.com",
+        "template": "reactivacion_v2"
+      }
+    },
+    {
+      "id": 53,
+      "type": "split",
+      "x": 148.19516353406422,
+      "y": 102.63326114416813,
+      "data": {
+        "title": "Guia de Camino",
+        "subtitle": "1 si compro en menos de 3 meses\n2 si compro en menos de 6 meses \n3 si no se tiene la cedula",
+        "time": "8:00",
+        "condition": "compro@terpel.com",
+        "waitHours": "24"
+      }
+    },
+    {
+      "id": 56,
+      "type": "wait",
+      "x": 695.3718225333653,
+      "y": 73.47022934898867,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "¿Usurio compro?",
+        "duration": "24 ",
+        "unit": "horas"
+      }
+    },
+    {
+      "id": 57,
+      "type": "wait",
+      "x": 672.5431248930785,
+      "y": 344.4136737232024,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "¿Usuario compro de nuevo?",
+        "duration": "12",
+        "unit": "horas"
+      }
+    },
+    {
+      "id": 59,
+      "type": "split",
+      "x": 904.6435722599427,
+      "y": 62.46253278989617,
+      "data": {
+        "title": "Usuario abrio el Email",
+        "subtitle": "El usuario realizo click en el email que se envio",
+        "time": "",
+        "condition": "¿Abrio el email?",
+        "waitHours": "2"
+      }
+    },
+    {
+      "id": 60,
+      "type": "whatsapp",
+      "x": 1044.823826152937,
+      "y": 67.19132373520536,
+      "data": {
+        "title": "WhatsApp · D8",
+        "subtitle": "Mensaje personalizado\nÚltima oportunidad 20% OFF",
+        "time": "D8 10:00",
+        "message": "Hola [Nombre], tu descuento del 20% expira mañana. ¿Quieres aprovecharlo?",
+        "template": "reactivacion_final"
+      }
+    },
+    {
+      "id": 62,
+      "type": "decision",
+      "x": 1395.8024103590171,
+      "y": 64.55882223799071,
+      "data": {
+        "title": "Decision Split",
+        "subtitle": "¿Compró últimos 30 días?",
+        "time": "D10",
+        "condition": "¿Realizó compra en los últimos 30 días?"
+      }
+    },
+    {
+      "id": 63,
+      "type": "split",
+      "x": 1268.2741040214535,
+      "y": 64.55882223799073,
+      "data": {
+        "title": "Eng. Split · 48h",
+        "subtitle": "¿Respondió WhatsApp?",
+        "time": "D10",
+        "condition": "¿Respondió o interactuó con WhatsApp?",
+        "waitHours": "48"
+      }
+    },
+    {
+      "id": 65,
+      "type": "email",
+      "x": 1723.1605739205181,
+      "y": 0,
+      "data": {
+        "title": "Email · D13",
+        "subtitle": "Email final urgente\nBeneficio expira HOY",
+        "time": "D13 08:00",
+        "subject": "Tu beneficio expira HOY a las 23:59",
+        "from": "Mensaje@terpel.com",
+        "template": "urgencia_final"
+      }
+    },
+    {
+      "id": 66,
+      "type": "exit_bad",
+      "x": 2132.1052869912573,
+      "y": 5.7876436920836625,
+      "data": {
+        "title": "Exit Negativo",
+        "subtitle": "No reactivado\nSegmento frío",
+        "segment": "frios_60dias",
+        "action": "Pasar a lista supresión 6 meses"
+      }
+    },
+    {
+      "id": 67,
+      "type": "exit_ok",
+      "x": 2016.3817012583468,
+      "y": 195.75217587968885,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "Reactivado tardío",
+        "segment": "reactivados_tardios"
+      }
+    },
+    {
+      "id": 68,
+      "type": "decision",
+      "x": 1971.702940162201,
+      "y": 0,
+      "data": {
+        "title": "Decision Final",
+        "subtitle": "¿Compró últimos 15 días?",
+        "time": "D15",
+        "condition": "¿Realizó compra en los últimos 15 días?"
+      }
+    },
+    {
+      "id": 69,
+      "type": "join",
+      "x": 1536.1160240498198,
+      "y": 70.85341723975141,
+      "data": {
+        "title": "Join",
+        "subtitle": "Si la respuesta es positiva Finaliza\nSi la respuesta es negativa continua con el correo"
+      }
+    },
+    {
+      "id": 70,
+      "type": "whatsapp",
+      "x": 460.3879853337189,
+      "y": 336.5375852770129,
+      "data": {
+        "title": "WhatsApp · Día 1",
+        "subtitle": "¡REGRESA! 30% descuento\nSolo por hoy para ti",
+        "time": "D1 10:00",
+        "message": "¡REGRESA! Tenemos un 30% de descuento exclusivo para ti. Solo válido HOY. [link]",
+        "template": "reactivacion_30_off"
+      }
+    },
+    {
+      "id": 71,
+      "type": "split",
+      "x": 880.3353621970801,
+      "y": 331.8323284136697,
+      "data": {
+        "title": "Eng. Split · 24h",
+        "subtitle": "¿Click o respuesta?",
+        "time": "D2",
+        "condition": "¿Hizo clic o respondió el WhatsApp?",
+        "waitHours": "24"
+      }
+    },
+    {
+      "id": 72,
+      "type": "sms",
+      "x": 1019.1362994959386,
+      "y": 336.56111935897894,
+      "data": {
+        "title": "SMS · Día 3",
+        "subtitle": "URGENTE: Tu bono de $50.000\nexpira MAÑANA",
+        "time": "D3 15:00",
+        "message": "URGENTE: Tu bono de $50.000 expira MAÑANA. Actívalo ahora: [link]",
+        "senderId": "TERPEL"
+      }
+    },
+    {
+      "id": 73,
+      "type": "wait",
+      "x": 1227.8870518462052,
+      "y": 344.44505249915716,
+      "data": {
+        "title": "Tiempo de espera",
+        "subtitle": "",
+        "duration": "2",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 74,
+      "type": "whatsapp",
+      "x": 1455.491237159902,
+      "y": 267.04471504110774,
+      "data": {
+        "title": "WhatsApp · D5",
+        "subtitle": "ÚLTIMA LLAMADA\nBonus exclusivo termina HOY",
+        "time": "D5 09:00",
+        "message": "ÚLTIMA LLAMADA. Tu bonus exclusivo termina HOY a las 23:59. No lo pierdas: [link]",
+        "template": "ultima_llamada_c"
+      }
+    },
+    {
+      "id": 75,
+      "type": "split",
+      "x": 1491.5468323224427,
+      "y": 398.4353217392358,
+      "data": {
+        "title": "Eng. Split · 48h",
+        "subtitle": "¿Interacción?",
+        "time": "D7",
+        "condition": "¿Interactuó con el mensaje de D5?",
+        "waitHours": "48"
+      }
+    },
+    {
+      "id": 76,
+      "type": "decision",
+      "x": 1684.0824034642515,
+      "y": 259.1906982972404,
+      "data": {
+        "title": "Decision Split",
+        "subtitle": "¿Compró últimos 21 días?",
+        "time": "D7",
+        "condition": "¿Realizó alguna compra en los últimos 21 días?"
+      }
+    },
+    {
+      "id": 77,
+      "type": "email",
+      "x": 1850.520793207211,
+      "y": 330.44949597168113,
+      "data": {
+        "title": "Email · D10",
+        "subtitle": "Email final desesperado\n50% OFF + envío gratis",
+        "time": "D10 08:00",
+        "subject": "50% OFF + envío gratis — Tu última oportunidad",
+        "from": "campanas@terpel.com",
+        "template": "email_final_50off"
+      }
+    },
+    {
+      "id": 78,
+      "type": "decision",
+      "x": 2098.915572642753,
+      "y": 327.9463346689531,
+      "data": {
+        "title": "Decision Final",
+        "subtitle": "¿Compró últimos 10 días?",
+        "time": "D12",
+        "condition": "¿Realizó alguna compra en los últimos 10 días?"
+      }
+    },
+    {
+      "id": 81,
+      "type": "exit_ok",
+      "x": 1687.5541192627911,
+      "y": 487.68800987203963,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "¡Recuperado!",
+        "segment": "reactivados_journey_c"
+      }
+    },
+    {
+      "id": 82,
+      "type": "exit_bad",
+      "x": 2321.573288425297,
+      "y": 277.5847771216352,
+      "data": {
+        "title": "Exit Negativo",
+        "subtitle": "Perdido definitivamente\nExcluir de campañas",
+        "segment": "perdidos_definitivos",
+        "action": "Lista de supresión 12 meses"
+      }
+    },
+    {
+      "id": 84,
+      "type": "exit_ok",
+      "x": 2323.519744729623,
+      "y": 442.69665512119633,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "Reactivado in extremis",
+        "segment": "reactivados_tardios_c"
+      }
+    },
+    {
+      "id": 85,
+      "type": "banner",
+      "x": 278.7845130434117,
+      "y": 530.8368019172134,
+      "data": {
+        "title": "App Banner",
+        "subtitle": "Banner superior app\n\"Completa tu perfil y gana\"",
+        "time": "Continuo",
+        "message": "Completa tu perfil y gana un bono de $10.000",
+        "placement": "Banner superior app"
+      }
+    },
+    {
+      "id": 86,
+      "type": "push",
+      "x": 498.6928074678725,
+      "y": 530.8368019172133,
+      "data": {
+        "title": "Push · Día 1",
+        "subtitle": "Desbloquea tu bono de $10.000\nRegistra tu cédula",
+        "time": "D1 11:00",
+        "message": "Desbloquea tu bono de $10.000. Registra tu cédula ahora."
+      }
+    },
+    {
+      "id": 87,
+      "type": "popup",
+      "x": 710.8787979509136,
+      "y": 530.8368019172133,
+      "data": {
+        "title": "Pop-up Form",
+        "subtitle": "Formulario captura cédula\nModal al abrir app",
+        "time": "Al login app",
+        "message": "¡Completa tu perfil! Ingresa tu número de cédula para recibir tu bono.",
+        "formField": "documento_identidad"
+      }
+    },
+    {
+      "id": 88,
+      "type": "update_contact",
+      "x": 918.4183798832311,
+      "y": 530.8368019172133,
+      "data": {
+        "title": "Update Contact",
+        "subtitle": "Actualizar perfil CRM\nCampo: documento_identidad",
+        "field": "Automático",
+        "value": "Valor capturado en formulario"
+      }
+    },
+    {
+      "id": 89,
+      "type": "exit_ok",
+      "x": 1338.14395229859,
+      "y": 645.4482128350604,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "Perfil completo\nAsignar bono $10.000",
+        "segment": "Asignar bono $10.000 y enviar confirmación"
+      }
+    },
+    {
+      "id": 90,
+      "type": "decision",
+      "x": 1130.6043703662724,
+      "y": 526.1903933664896,
+      "data": {
+        "title": "Decision Split",
+        "subtitle": "¿Cédula capturada?",
+        "time": "Tiempo real",
+        "condition": "documento_identidad IS NOT NULL"
+      }
+    },
+    {
+      "id": 91,
+      "type": "push",
+      "x": 1293.2286696415958,
+      "y": 492.11673066118385,
+      "data": {
+        "title": "Push · Recordatorio",
+        "subtitle": "¡No pierdas tu bono!\nRegistra tu cédula ahora",
+        "time": "D3 14:00",
+        "message": "¡No pierdas tu bono de $10.000! Registra tu cédula ahora."
+      }
+    },
+    {
+      "id": 92,
+      "type": "push",
+      "x": 1547.2323370811487,
+      "y": 583.4960988254134,
+      "data": {
+        "title": "Push · Urgencia",
+        "subtitle": "ÚLTIMO DÍA para tu bono\nRegístrate YA",
+        "time": "D7 10:00",
+        "message": "¡ÚLTIMO DÍA! Tu bono de $10.000 expira hoy. Regístrate YA."
+      }
+    },
+    {
+      "id": 93,
+      "type": "exit_bad",
+      "x": 1765.6135389651547,
+      "y": 600.5329301780662,
+      "data": {
+        "title": "Exit Negativo",
+        "subtitle": "No completó perfil\nExcluir de bonos",
+        "segment": "sin_cedula_7dias",
+        "action": "Excluir de campañas de bono por 30 días"
+      }
+    }
+  ],
+  "connections": [
+    {
+      "id": "c1778871264728",
+      "from": 51,
+      "to": 53,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778871274945",
+      "from": 53,
+      "to": 52,
+      "label": "Compro en menos de 3 meses",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1778874704007",
+      "from": 52,
+      "to": 56,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778874706406",
+      "from": 56,
+      "to": 59,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778874889123",
+      "from": 59,
+      "to": 60,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778874985539",
+      "from": 60,
+      "to": 63,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778875022589",
+      "from": 63,
+      "to": 62,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778875299420",
+      "from": 65,
+      "to": 68,
+      "label": "NO",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1778875302770",
+      "from": 68,
+      "to": 66,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778875453103",
+      "from": 62,
+      "to": 69,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778875569202",
+      "from": 69,
+      "to": 65,
+      "label": "NO",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1778875849217",
+      "from": 53,
+      "to": 70,
+      "label": "Compro en menos de 6 meses",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1778875852984",
+      "from": 70,
+      "to": 57,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778875927817",
+      "from": 57,
+      "to": 71,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778875975483",
+      "from": 71,
+      "to": 72,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778876012349",
+      "from": 72,
+      "to": 73,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778877411274",
+      "from": 73,
+      "to": 74,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778877492558",
+      "from": 74,
+      "to": 75,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778877557791",
+      "from": 75,
+      "to": 76,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1778877632757",
+      "from": 76,
+      "to": 77,
+      "label": "NO",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1778877759773",
+      "from": 77,
+      "to": 78,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779200894648",
+      "from": 65,
+      "to": 67,
+      "label": "SI",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779200921832",
+      "from": 69,
+      "to": 67,
+      "label": "SI",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779201169679",
+      "from": 76,
+      "to": 81,
+      "label": "SI",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779201243395",
+      "from": 78,
+      "to": 84,
+      "label": "SI",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779201248995",
+      "from": 78,
+      "to": 82,
+      "label": "NO",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779202479504",
+      "from": 85,
+      "to": 86,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779202494787",
+      "from": 53,
+      "to": 85,
+      "label": "Se tiene la cedula del usuario",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779202666219",
+      "from": 86,
+      "to": 87,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779202680886",
+      "from": 87,
+      "to": 88,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779202794548",
+      "from": 88,
+      "to": 90,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779202827931",
+      "from": 90,
+      "to": 89,
+      "label": "SI",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779202914447",
+      "from": 90,
+      "to": 91,
+      "label": "NO",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779203013932",
+      "from": 91,
+      "to": 92,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779203017913",
+      "from": 92,
+      "to": 93,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    }
+  ],
+  "title": "Nuevos Flujos Terpel",
+  "meta": {
+    "saved": "2026-05-19T15:05:33.995Z",
+    "journeyMeta": {
+      "audiencia": "~250,000 contactos",
+      "duracion": "15 días",
+      "canales": "Email, SMS, WhatsApp",
+      "estrategia": "Email-first intensivo"
+    }
+  }
+}
