@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Journey Builder — Marketing Cloud</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -744,6 +745,89 @@
         background: #f5f5f5;
       }
 
+      /* REAL DATA UPLOAD */
+      .real-data-zone {
+        border: 2px dashed #93c5fd;
+        border-radius: 8px;
+        padding: 12px 10px;
+        text-align: center;
+        background: #eff6ff;
+        cursor: pointer;
+        transition: all 0.15s;
+        margin-top: 4px;
+      }
+      .real-data-zone:hover {
+        border-color: var(--sf-blue);
+        background: #dbeafe;
+      }
+      .real-data-zone.has-data {
+        border-color: #04844b;
+        background: #dcfce7;
+      }
+      .real-data-zone.drag-over {
+        border-color: var(--sf-blue);
+        background: #bfdbfe;
+        transform: scale(1.02);
+      }
+      .real-data-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #04844b;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 10px;
+        margin-top: 5px;
+      }
+      .real-data-table-wrap {
+        margin-top: 8px;
+        max-height: 120px;
+        overflow-y: auto;
+        border: 1px solid #d1fae5;
+        border-radius: 6px;
+        font-size: 9px;
+      }
+      .real-data-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .real-data-table-wrap th {
+        background: #04844b;
+        color: #fff;
+        padding: 3px 6px;
+        text-align: left;
+        font-size: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        position: sticky;
+        top: 0;
+      }
+      .real-data-table-wrap td {
+        padding: 2px 6px;
+        border-bottom: 1px solid #f0fdf4;
+        color: #333;
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .real-data-table-wrap tr:nth-child(even) td {
+        background: #f0fdf4;
+      }
+      .rd-clear-btn {
+        font-size: 9px;
+        color: #c23934;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        margin-top: 4px;
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
       /* Scrollbar */
       ::-webkit-scrollbar {
         width: 5px;
@@ -2294,15 +2378,133 @@
         estrategia: "Email-first intensivo",
       };
 
+      // Real contacts data loaded from file
+      let realContactsData = null; // { rows: [...], columns: [...], fileName: '', count: 0 }
+
+      function getRealContact(index) {
+        if (!realContactsData || !realContactsData.rows.length) return null;
+        return realContactsData.rows[index % realContactsData.rows.length];
+      }
+
+      function getContactField(contact, ...keys) {
+        if (!contact) return null;
+        // Try each key variant (case-insensitive, common aliases)
+        const aliases = {
+          nombre: [
+            "nombre",
+            "name",
+            "first_name",
+            "firstname",
+            "nombres",
+            "nombre_contacto",
+          ],
+          email: [
+            "email",
+            "correo",
+            "mail",
+            "email_address",
+            "correo_electronico",
+          ],
+          telefono: [
+            "telefono",
+            "phone",
+            "celular",
+            "movil",
+            "tel",
+            "mobile",
+            "phone_number",
+          ],
+          ciudad: ["ciudad", "city", "localidad"],
+          apellido: ["apellido", "lastname", "last_name", "apellidos"],
+        };
+        for (const k of keys) {
+          const variants = aliases[k.toLowerCase()] || [k];
+          for (const v of variants) {
+            const found = Object.keys(contact).find(
+              (ck) => ck.toLowerCase() === v.toLowerCase(),
+            );
+            if (found && contact[found]) return String(contact[found]);
+          }
+        }
+        return null;
+      }
+
+      function getContactDisplayName(contact) {
+        if (!contact) return "[Nombre]";
+        const n =
+          getContactField(contact, "nombre") ||
+          getContactField(contact, "nombre");
+        const a = getContactField(contact, "apellido");
+        if (n && a) return n + " " + a;
+        if (n) return n;
+        // fallback: first string column value
+        const firstVal = Object.values(contact).find(
+          (v) => typeof v === "string" && v.length > 1 && v.length < 40,
+        );
+        return firstVal || "[Nombre]";
+      }
+
       function updateStatsPanel() {
         const title = document
           .getElementById("journey-title-display")
           .textContent.toUpperCase();
         document.getElementById("stat-title").textContent = title + " STATS";
-        document.getElementById("stat-audiencia").textContent =
-          journeyMeta.audiencia || "—";
+
+        // --- Contactos: si hay datos reales, siempre ganan sobre el valor manual ---
+        const entryNode = nodes.find((n) => n.type === "entry");
+        let audiencia;
+        if (realContactsData) {
+          audiencia = `${realContactsData.count.toLocaleString("es-CO")} contactos`;
+          // Sincronizar también el dato del nodo Entry para que todo sea coherente
+          if (entryNode) {
+            entryNode.data._manualContacts =
+              entryNode.data._manualContacts || entryNode.data.contacts;
+            entryNode.data.contacts =
+              realContactsData.count.toLocaleString("es-CO");
+          }
+        } else if (entryNode && entryNode.data.contacts) {
+          // Usar el valor que el usuario puso manualmente en el nodo Entry
+          const rawContacts = entryNode.data.contacts
+            .replace(/[^\d.,KkMm~]/g, "")
+            .trim();
+          audiencia = `~${rawContacts} contactos`;
+          journeyMeta.audiencia = audiencia; // mantener en sync
+        } else {
+          audiencia = journeyMeta.audiencia || "—";
+        }
+        document.getElementById("stat-audiencia").textContent = audiencia;
+
+        // --- Duración: calcular en base a nodos Wait del journey ---
+        const waitNodes = nodes.filter((n) => n.type === "wait");
+        if (waitNodes.length > 0) {
+          let totalDias = 0;
+          waitNodes.forEach((n) => {
+            const d = parseFloat(n.data.duration || 0);
+            const u = (n.data.unit || "días").toLowerCase();
+            if (u.includes("hora")) totalDias += d / 24;
+            else if (u.includes("sem")) totalDias += d * 7;
+            else totalDias += d;
+          });
+          const dias = Math.ceil(totalDias);
+          journeyMeta.duracion = dias + " días";
+        }
         document.getElementById("stat-duracion").textContent =
           journeyMeta.duracion || "—";
+
+        // --- Canales: detectar automáticamente según nodos presentes ---
+        const channelMap = {
+          email: "Email",
+          sms: "SMS",
+          whatsapp: "WhatsApp",
+          push: "Push",
+          banner: "App Banner",
+        };
+        const detectedChannels = Object.entries(channelMap)
+          .filter(([type]) => nodes.some((n) => n.type === type))
+          .map(([, label]) => label);
+        if (detectedChannels.length > 0) {
+          journeyMeta.canales = detectedChannels.join(", ");
+        }
         document.getElementById("stat-canales").textContent =
           journeyMeta.canales || "—";
         document.getElementById("stat-estrategia").textContent =
@@ -2580,12 +2782,18 @@
 
         /* ── Round ── */
         if (t.kind === "round") {
+          // For entry node: show contacts count below subtitle
+          const contactsLine =
+            n.type === "entry" && n.data.contacts
+              ? `<div class="round-tag-sub" style="max-width:90px;color:#0070d2;font-weight:700">${n.data.contacts} contactos</div>`
+              : "";
           return `<div class="round-container">
       <div class="round-node" style="background:${t.bg};border-color:${t.borderColor}">
         <div class="round-icon">${t.icon}</div>
         <div class="round-label" style="color:${t.textColor}">${title}</div>
       </div>
       ${sub ? `<div class="round-tag-sub" style="max-width:90px">${sub}</div>` : ""}
+      ${contactsLine}
     </div>`;
         }
 
@@ -2766,18 +2974,12 @@
           if (conn.label) {
             const mx = (fp.x + tp.x) / 2;
             const my = (fp.y + tp.y) / 2 - 10;
-            const lcolor =
-              conn.label === "Yes"
-                ? "#04844b"
-                : conn.label === "No"
-                  ? "#c23934"
-                  : "#555";
-            const lbg =
-              conn.label === "Yes"
-                ? "#dcfce7"
-                : conn.label === "No"
-                  ? "#fee2e2"
-                  : "#f3f4f6";
+            const isYes = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
+              conn.label,
+            );
+            const isNo = ["No", "no", "NO"].includes(conn.label);
+            const lcolor = isYes ? "#04844b" : isNo ? "#c23934" : "#555";
+            const lbg = isYes ? "#dcfce7" : isNo ? "#fee2e2" : "#f3f4f6";
             paths += `<rect x="${mx - 12}" y="${my - 11}" width="24" height="14" rx="3" fill="${lbg}" stroke="${lcolor}" stroke-width="1"/>
         <text x="${mx}" y="${my}" class="arrow-label" fill="${lcolor}" text-anchor="middle">${conn.label}</text>`;
           }
@@ -2816,12 +3018,11 @@
           );
           if (ans !== null) {
             conn.label = ans.trim();
-            conn.color =
-              conn.label === "Yes"
-                ? "#04844b"
-                : conn.label === "No"
-                  ? "#c23934"
-                  : "#888";
+            const isYes2 = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
+              conn.label,
+            );
+            const isNo2 = ["No", "no", "NO"].includes(conn.label);
+            conn.color = isYes2 ? "#04844b" : isNo2 ? "#c23934" : "#888";
             conn.dashed = conn.label !== "";
             renderConnections();
             updateStats();
@@ -3060,15 +3261,14 @@
               dashed = false;
             if (NODE_TYPES[fn?.type]?.kind === "diamond") {
               const ans = prompt(
-                'Etiqueta de la conexión:\n"Yes" para Sí\n"No" para No\nO deja vacío para neutral',
+                'Etiqueta de la conexión:\n"Si" o "Yes" → camino verde (Sí)\n"No" → camino rojo (No)\nO deja vacío para neutral',
               );
               label = (ans || "").trim();
-              color =
-                label === "Yes"
-                  ? "#04844b"
-                  : label === "No"
-                    ? "#c23934"
-                    : "#888";
+              const isYes3 = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
+                label,
+              );
+              const isNo3 = ["No", "no", "NO"].includes(label);
+              color = isYes3 ? "#04844b" : isNo3 ? "#c23934" : "#888";
               dashed = label !== "";
             }
             connections.push({
@@ -3121,6 +3321,11 @@
           }
         });
 
+        // ── Entry Source: inject real data upload section ──
+        if (n.type === "entry") {
+          html += buildRealDataUploadUI(n);
+        }
+
         const outs = connections.filter((c) => c.from === n.id);
         if (outs.length) {
           html += `<div class="field-group" style="margin-top:10px">
@@ -3140,10 +3345,256 @@
         document.getElementById("dp-body").innerHTML = html;
         dpPanel.classList.add("open");
         clearDirty();
+
+        // Wire up real data upload if entry node
+        if (n.type === "entry") {
+          wireRealDataUpload(n);
+        }
+
         // Track changes: mark panel dirty on any input
         dpPanel.querySelectorAll(".field-input").forEach((inp) => {
           inp.addEventListener("input", markDirty);
           inp.addEventListener("change", markDirty);
+        });
+
+        // Live sync: when contacts field changes on entry node, update stats immediately
+        if (n.type === "entry") {
+          const contactsEl = document.getElementById("fp-contacts");
+          if (contactsEl) {
+            contactsEl.addEventListener("input", () => {
+              if (!realContactsData) {
+                n.data.contacts = contactsEl.value;
+                updateStatsPanel();
+              }
+            });
+          }
+        }
+      }
+
+      /* ════════════════════════════════
+   REAL DATA UPLOAD (Entry Source)
+════════════════════════════════ */
+      function buildRealDataUploadUI(n) {
+        const hasData = !!realContactsData;
+        let html = `
+        <div class="field-group" style="margin-top:4px">
+          <div class="field-label">📂 Datos Reales (opcional)</div>
+          <div class="real-data-zone ${hasData ? "has-data" : ""}" id="rd-dropzone">
+            <input type="file" id="rd-file-input" accept=".xlsx,.xls,.csv,.json,.xml" style="display:none">`;
+
+        if (hasData) {
+          html += `
+            <div style="font-size:18px">✅</div>
+            <div style="font-size:11px;font-weight:700;color:#04844b;margin:2px 0">Datos cargados</div>
+            <div class="real-data-badge">📁 ${realContactsData.fileName} &nbsp;·&nbsp; ${realContactsData.count.toLocaleString("es-CO")} contactos</div>
+            <div style="font-size:9px;color:#065f46;margin-top:4px">Columnas: ${realContactsData.columns.slice(0, 5).join(", ")}${realContactsData.columns.length > 5 ? "…" : ""}</div>`;
+        } else {
+          html += `
+            <div style="font-size:18px">📤</div>
+            <div style="font-size:11px;font-weight:600;color:#1d4ed8;margin:3px 0">Arrastra o haz clic para cargar</div>
+            <div style="font-size:9px;color:#6b7280">Excel (.xlsx), CSV, JSON o XML</div>`;
+        }
+
+        html += `</div>`;
+
+        if (hasData) {
+          // Show preview table of first 5 rows
+          const previewRows = realContactsData.rows.slice(0, 5);
+          const cols = realContactsData.columns.slice(0, 5);
+          html += `
+          <div class="real-data-table-wrap" style="margin-top:6px">
+            <table>
+              <thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}</tr></thead>
+              <tbody>
+                ${previewRows.map((r) => `<tr>${cols.map((c) => `<td title="${r[c] || ""}">${r[c] || ""}</td>`).join("")}</tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+          <button class="rd-clear-btn" id="rd-clear-btn">✕ Limpiar datos reales</button>`;
+        }
+
+        html += `</div>`;
+        return html;
+      }
+
+      function wireRealDataUpload(n) {
+        const zone = document.getElementById("rd-dropzone");
+        const fileInput = document.getElementById("rd-file-input");
+        const clearBtn = document.getElementById("rd-clear-btn");
+
+        if (!zone || !fileInput) return;
+
+        zone.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", (e) => {
+          if (e.target.files[0]) processRealDataFile(e.target.files[0], n);
+        });
+        zone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          zone.classList.add("drag-over");
+        });
+        zone.addEventListener("dragleave", () =>
+          zone.classList.remove("drag-over"),
+        );
+        zone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          zone.classList.remove("drag-over");
+          const f = e.dataTransfer.files[0];
+          if (f) processRealDataFile(f, n);
+        });
+
+        if (clearBtn) {
+          clearBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            realContactsData = null;
+            // Reset entry node contacts to manual value
+            const entryNode = nodes.find((x) => x.type === "entry");
+            if (entryNode) {
+              entryNode.data.contacts =
+                entryNode.data._manualContacts || "~250,000";
+              refreshNodeEl(entryNode);
+            }
+            updateStatsPanel();
+            // Re-render the panel
+            openPanel(n);
+            showNotif("🗑 Datos reales eliminados. Usando valores manuales.");
+          });
+        }
+      }
+
+      async function processRealDataFile(file, entryNode) {
+        const ext = file.name.split(".").pop().toLowerCase();
+        showNotif("⏳ Procesando archivo…");
+        try {
+          let rows = [];
+          let columns = [];
+
+          if (ext === "json") {
+            const text = await file.text();
+            const parsed = JSON.parse(text);
+            const arr = Array.isArray(parsed)
+              ? parsed
+              : parsed.data ||
+                parsed.contacts ||
+                parsed.rows ||
+                Object.values(parsed)[0];
+            if (!Array.isArray(arr) || !arr.length)
+              throw new Error("JSON no contiene un array válido");
+            rows = arr;
+            columns = Object.keys(rows[0]);
+          } else if (ext === "csv") {
+            const text = await file.text();
+            rows = parseCSV(text);
+            if (!rows.length) throw new Error("CSV vacío");
+            columns = Object.keys(rows[0]);
+          } else if (ext === "xml") {
+            const text = await file.text();
+            rows = parseXML(text);
+            if (!rows.length) throw new Error("XML sin registros reconocibles");
+            columns = Object.keys(rows[0]);
+          } else if (ext === "xlsx" || ext === "xls") {
+            rows = await parseExcel(file);
+            if (!rows.length) throw new Error("Excel vacío o sin datos");
+            columns = Object.keys(rows[0]);
+          } else {
+            throw new Error("Formato no soportado: ." + ext);
+          }
+
+          realContactsData = {
+            rows,
+            columns,
+            fileName: file.name,
+            count: rows.length,
+          };
+
+          // Update entry node contacts count & file name
+          if (entryNode) {
+            entryNode.data._manualContacts = entryNode.data.contacts; // backup
+            entryNode.data.contacts = rows.length.toLocaleString("es-CO");
+            entryNode.data.file = file.name;
+            refreshNodeEl(entryNode);
+          }
+
+          updateStatsPanel();
+          // Re-render panel to show the data preview
+          openPanel(
+            entryNode || nodes.find((x) => x.type === "entry") || nodes[0],
+          );
+          showNotif(
+            `✅ ${rows.length.toLocaleString("es-CO")} contactos cargados desde ${file.name}`,
+          );
+        } catch (err) {
+          showNotif("⚠ Error al procesar archivo: " + err.message);
+        }
+      }
+
+      function parseCSV(text) {
+        const lines = text.trim().split(/\r?\n/);
+        if (lines.length < 2) return [];
+        const sep = lines[0].includes(";") ? ";" : ",";
+        const headers = lines[0]
+          .split(sep)
+          .map((h) => h.replace(/^"|"$/g, "").trim());
+        return lines
+          .slice(1)
+          .filter((l) => l.trim())
+          .map((line) => {
+            const vals = line
+              .split(sep)
+              .map((v) => v.replace(/^"|"$/g, "").trim());
+            const obj = {};
+            headers.forEach((h, i) => (obj[h] = vals[i] || ""));
+            return obj;
+          });
+      }
+
+      function parseXML(text) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, "application/xml");
+        const rows = [];
+        // Try common patterns: <row>, <record>, <contact>, <item>, or first child elements
+        const tagNames = [
+          "row",
+          "record",
+          "contact",
+          "contacto",
+          "item",
+          "entry",
+        ];
+        let elements = [];
+        for (const tag of tagNames) {
+          elements = Array.from(doc.getElementsByTagName(tag));
+          if (elements.length) break;
+        }
+        if (!elements.length) {
+          // Fallback: use second-level children
+          const root = doc.documentElement;
+          elements = Array.from(root.children);
+        }
+        elements.forEach((el) => {
+          const obj = {};
+          Array.from(el.children).forEach((child) => {
+            obj[child.tagName] = child.textContent.trim();
+          });
+          if (Object.keys(obj).length) rows.push(obj);
+        });
+        return rows;
+      }
+
+      async function parseExcel(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const wb = XLSX.read(e.target.result, { type: "array" });
+              const ws = wb.Sheets[wb.SheetNames[0]];
+              const rows = XLSX.utils.sheet_to_json(ws, { defval: "" });
+              resolve(rows);
+            } catch (err) {
+              reject(err);
+            }
+          };
+          reader.onerror = () => reject(new Error("Error leyendo el archivo"));
+          reader.readAsArrayBuffer(file);
         });
       }
 
@@ -3211,6 +3662,7 @@
         renderConnections();
         clearDirty();
         setUnsavedExport();
+        updateStatsPanel(); // sync stats panel with any field changes (e.g. contacts)
         const el = document.getElementById("n-" + selectedNode.id);
         if (el) {
           el.style.filter = "brightness(1.08)";
@@ -3518,18 +3970,12 @@
           if (conn.label) {
             const mx = (fx + tx) / 2,
               my = (fy + ty) / 2 - 10;
-            const lc =
-              conn.label === "Yes"
-                ? "#04844b"
-                : conn.label === "No"
-                  ? "#c23934"
-                  : "#555";
-            const lb =
-              conn.label === "Yes"
-                ? "#dcfce7"
-                : conn.label === "No"
-                  ? "#fee2e2"
-                  : "#f3f4f6";
+            const isYesE = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
+              conn.label,
+            );
+            const isNoE = ["No", "no", "NO"].includes(conn.label);
+            const lc = isYesE ? "#04844b" : isNoE ? "#c23934" : "#555";
+            const lb = isYesE ? "#dcfce7" : isNoE ? "#fee2e2" : "#f3f4f6";
             arrows += `<rect x="${mx - 13}" y="${my - 12}" width="26" height="15" rx="3" fill="${lb}" stroke="${lc}" stroke-width="1"/>
         <text x="${mx}" y="${my}" font-size="10" font-weight="700" fill="${lc}" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif">${conn.label}</text>`;
           }
@@ -4016,6 +4462,51 @@
         const subtitle = n.data.subtitle || "";
         const file = n.data.file || "—";
         const contacts = n.data.contacts || "—";
+
+        if (realContactsData && realContactsData.rows.length) {
+          const sample = realContactsData.rows[0];
+          const name = getContactDisplayName(sample);
+          const email = getContactField(sample, "email") || "—";
+          const phone = getContactField(sample, "telefono") || "—";
+          const city = getContactField(sample, "ciudad") || "";
+          const cols = realContactsData.columns;
+          return `
+  <div style="padding:16px">
+    <div style="text-align:center;margin-bottom:10px">
+      <div style="font-size:36px">👥</div>
+      <div style="font-size:13px;font-weight:800;color:#0070d2;margin-top:4px">${title}</div>
+      <div class="real-data-badge" style="display:inline-flex;margin-top:4px">✅ Datos reales cargados</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="background:#dcfce7;border:1.5px solid #04844b;border-radius:8px;padding:10px 14px">
+        <div style="font-size:9px;color:#065f46;font-weight:700;text-transform:uppercase;margin-bottom:3px">📁 Archivo cargado</div>
+        <div style="font-size:11px;font-weight:700;color:#181818">${realContactsData.fileName}</div>
+        <div style="font-size:18px;font-weight:900;color:#04844b;margin-top:2px">${realContactsData.count.toLocaleString("es-CO")} <span style="font-size:11px;font-weight:600">contactos reales</span></div>
+      </div>
+      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 14px">
+        <div style="font-size:9px;color:#0369a1;font-weight:700;text-transform:uppercase;margin-bottom:5px">👤 Primer contacto (muestra)</div>
+        <div style="font-size:12px;font-weight:800;color:#0c4a6e">${name}</div>
+        ${email !== "—" ? `<div style="font-size:10px;color:#555;margin-top:2px">✉️ ${email}</div>` : ""}
+        ${phone !== "—" ? `<div style="font-size:10px;color:#555">📱 ${phone}</div>` : ""}
+        ${city ? `<div style="font-size:10px;color:#555">📍 ${city}</div>` : ""}
+      </div>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px">
+        <div style="font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase;margin-bottom:4px">Columnas del dataset (${cols.length})</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px">
+          ${cols
+            .slice(0, 12)
+            .map(
+              (c) =>
+                `<span style="background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:10px;font-size:8.5px;font-weight:600">${c}</span>`,
+            )
+            .join("")}
+          ${cols.length > 12 ? `<span style="color:#94a3b8;font-size:9px">+${cols.length - 12} más</span>` : ""}
+        </div>
+      </div>
+    </div>
+  </div>`;
+        }
+
         return `
   <div style="padding:20px;text-align:center">
     <div style="font-size:40px;margin-bottom:10px">👥</div>
