@@ -745,6 +745,235 @@
         background: #f5f5f5;
       }
 
+      /* ══ CONNECTION EDITOR PANEL ══ */
+      .conn-editor {
+        position: fixed;
+        right: 16px;
+        top: 60px;
+        width: 280px;
+        background: #fff;
+        border: 1.5px solid var(--sf-blue);
+        border-radius: 10px;
+        box-shadow: 0 6px 24px rgba(0, 112, 210, 0.18);
+        z-index: 8000;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .conn-editor.open {
+        display: flex;
+      }
+      .conn-ed-header {
+        background: var(--sf-blue);
+        color: #fff;
+        padding: 9px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      /* Conn editor dirty bar (mirrors .dp-dirty-bar) */
+      .ce-dirty-bar {
+        background: #fef3c7;
+        border-bottom: 1px solid #fcd34d;
+        padding: 5px 14px;
+        font-size: 10px;
+        color: #92400e;
+        display: none;
+        align-items: center;
+        gap: 5px;
+        flex-shrink: 0;
+      }
+      .ce-dirty-bar.on {
+        display: flex;
+      }
+      .conn-ed-body {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .conn-ed-row {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .conn-ed-label {
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .conn-ed-input {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 5px 8px;
+        font-size: 11px;
+        outline: none;
+        font-family: inherit;
+      }
+      .conn-ed-input:focus {
+        border-color: var(--sf-blue);
+      }
+      .conn-style-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+      }
+      .conn-style-btn {
+        border: 1.5px solid var(--border);
+        border-radius: 5px;
+        padding: 5px 4px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 8.5px;
+        color: #444;
+        font-weight: 600;
+        background: #fff;
+        transition: all 0.12s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        line-height: 1.2;
+      }
+      .conn-style-btn:hover {
+        border-color: var(--sf-blue);
+        background: #eff6ff;
+      }
+      .conn-style-btn.active {
+        border-color: var(--sf-blue);
+        background: #dbeafe;
+        color: var(--sf-blue);
+      }
+      .conn-style-btn svg {
+        display: block;
+      }
+      .conn-color-swatches {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .color-swatch {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition:
+          transform 0.12s,
+          border-color 0.12s;
+      }
+      .color-swatch:hover {
+        transform: scale(1.2);
+      }
+      .color-swatch.active {
+        border-color: #181818;
+        transform: scale(1.15);
+      }
+      .conn-ed-footer {
+        padding: 8px 12px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 6px;
+      }
+      .conn-ed-apply {
+        flex: 1;
+        background: var(--sf-blue);
+        color: #fff;
+        border: none;
+        padding: 6px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .conn-ed-apply:hover {
+        opacity: 0.88;
+      }
+      .conn-ed-del {
+        background: #fdecea;
+        color: var(--sf-red);
+        border: 1px solid #f5c2c0;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      /* Draggable label on canvas */
+      .conn-label-handle {
+        position: absolute;
+        cursor: move;
+        user-select: none;
+        z-index: 30;
+      }
+      .conn-label-handle:hover rect {
+        stroke-width: 2 !important;
+      }
+      /* HTML label overlay */
+      .conn-label-overlay {
+        position: absolute;
+        cursor: move;
+        user-select: none;
+        z-index: 25;
+      }
+      .conn-label-overlay:hover {
+        box-shadow:
+          0 0 0 2px rgba(0, 112, 210, 0.35),
+          0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        transform: translate(-50%, -50%) scale(1.08) !important;
+      }
+      /* Connection control point handle */
+      .conn-cp {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2.5px solid #0070d2;
+        cursor: crosshair;
+        z-index: 40;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 1px 6px rgba(0, 112, 210, 0.4);
+        transition:
+          transform 0.1s,
+          box-shadow 0.1s;
+        pointer-events: all;
+      }
+      .conn-cp:hover {
+        transform: translate(-50%, -50%) scale(1.4);
+        box-shadow: 0 0 0 4px rgba(0, 112, 210, 0.25);
+      }
+      .conn-cp.dragging {
+        transform: translate(-50%, -50%) scale(1.5);
+        background: #0070d2;
+        box-shadow: 0 0 0 6px rgba(0, 112, 210, 0.2);
+      }
+      .conn-cp-line {
+        position: absolute;
+        pointer-events: none;
+        z-index: 35;
+        transform-origin: 0 50%;
+      }
+      /* Selected connection highlight */
+      .conn-selected-overlay {
+        position: absolute;
+        pointer-events: none;
+        z-index: 20;
+      }
+      /* Arrow width inputs */
+      .conn-ed-row-2col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
       /* REAL DATA UPLOAD */
       .real-data-zone {
         border: 2px dashed #93c5fd;
@@ -850,6 +1079,50 @@
       }
       .conn-hit:hover {
         stroke-opacity: 0.4;
+      }
+
+      /* Confirm edit connection mini-modal */
+      .conn-confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        z-index: 8500;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .conn-confirm-overlay.show {
+        display: flex;
+      }
+      .conn-confirm-box {
+        background: #fff;
+        border-radius: 10px;
+        padding: 22px 24px 18px;
+        min-width: 300px;
+        max-width: 380px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+        animation: slideUp 0.18s ease;
+      }
+      .conn-confirm-ico {
+        font-size: 26px;
+        margin-bottom: 8px;
+      }
+      .conn-confirm-ttl {
+        font-size: 14px;
+        font-weight: 700;
+        color: #181818;
+        margin-bottom: 6px;
+      }
+      .conn-confirm-msg {
+        font-size: 12px;
+        color: #706e6b;
+        line-height: 1.55;
+        margin-bottom: 16px;
+      }
+      .conn-confirm-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
       }
 
       /* Unsaved dot */
@@ -1670,6 +1943,82 @@
         width: 36px;
         flex-shrink: 0;
       }
+
+      /* ══ FREE TEXT BOX ══════════════════════════════ */
+      .text-box {
+        position: absolute;
+        min-width: 100px;
+        min-height: 40px;
+        background: #fffde7;
+        border: 1.5px dashed #f9a825;
+        border-radius: 6px;
+        padding: 8px 10px 8px 10px;
+        font-size: 12px;
+        color: #333;
+        cursor: grab;
+        user-select: none;
+        z-index: 15;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        word-break: break-word;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .text-box:active {
+        cursor: grabbing;
+      }
+      .text-box.selected {
+        outline: 2.5px solid var(--sf-blue);
+        box-shadow: 0 0 0 4px rgba(0, 112, 210, 0.15);
+      }
+      .text-box-inner {
+        outline: none;
+        min-height: 24px;
+        line-height: 1.5;
+        cursor: text;
+        word-break: break-word;
+        white-space: pre-wrap;
+      }
+      .text-box-resize {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 14px;
+        height: 14px;
+        cursor: se-resize;
+        opacity: 0.4;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: #888;
+        line-height: 1;
+      }
+      .text-box.selected .text-box-resize {
+        display: flex;
+      }
+      .text-box-del {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 18px;
+        height: 18px;
+        background: #c23934;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 9px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: 700;
+        z-index: 20;
+        border: none;
+        line-height: 1;
+      }
+      .text-box.selected .text-box-del {
+        display: flex;
+      }
     </style>
   </head>
   <body>
@@ -1758,11 +2107,11 @@
           />
         </div>
         <div class="sb-scroll">
-          <div class="sb-section">Entry Sources</div>
+          <div class="sb-section">Fuente de la entradas</div>
           <div class="sb-item" draggable="true" data-type="entry">
             <div class="sb-icon" style="background: #e0f4ff">👥</div>
             <div>
-              <div class="sb-label">Audience Entry</div>
+              <div class="sb-label">Entrada de datos</div>
               <div class="sb-desc">Segmento de entrada</div>
             </div>
           </div>
@@ -1771,28 +2120,28 @@
           <div class="sb-item" draggable="true" data-type="email">
             <div class="sb-icon" style="background: #e0f4ff">✉️</div>
             <div>
-              <div class="sb-label">Send Email</div>
+              <div class="sb-label">Correo electronico</div>
               <div class="sb-desc">Email transaccional</div>
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="sms">
             <div class="sb-icon" style="background: #fff3cd">📱</div>
             <div>
-              <div class="sb-label">Send SMS</div>
+              <div class="sb-label">Mensaje de Texto SMS</div>
               <div class="sb-desc">Mensaje de texto</div>
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="whatsapp">
             <div class="sb-icon" style="background: #dcfce7">💬</div>
             <div>
-              <div class="sb-label">WhatsApp</div>
+              <div class="sb-label">Mensaje por WhatsApp</div>
               <div class="sb-desc">WhatsApp Business</div>
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="push">
             <div class="sb-icon" style="background: #fce7f3">🔔</div>
             <div>
-              <div class="sb-label">Push Notification</div>
+              <div class="sb-label">Notificación push</div>
               <div class="sb-desc">App notification</div>
             </div>
           </div>
@@ -1808,7 +2157,7 @@
           <div class="sb-item" draggable="true" data-type="popup">
             <div class="sb-icon" style="background: #fce7f3">📝</div>
             <div>
-              <div class="sb-label">Pop-up Form</div>
+              <div class="sb-label">Formulario emergente</div>
               <div class="sb-desc">Modal captura datos</div>
             </div>
           </div>
@@ -1824,14 +2173,14 @@
           <div class="sb-item" draggable="true" data-type="split">
             <div class="sb-icon" style="background: #fff3cd">📊</div>
             <div>
-              <div class="sb-label">Engagement Split</div>
+              <div class="sb-label">Distribución de la participación</div>
               <div class="sb-desc">Split por engagement</div>
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="random_split">
             <div class="sb-icon" style="background: #fde8f5">🎲</div>
             <div>
-              <div class="sb-label">Random Split</div>
+              <div class="sb-label">División aleatoria</div>
               <div class="sb-desc">División aleatoria %</div>
             </div>
           </div>
@@ -1845,14 +2194,23 @@
           <div class="sb-item" draggable="true" data-type="wait">
             <div class="sb-icon" style="background: #ddd6fe">⏱️</div>
             <div>
-              <div class="sb-label">Wait</div>
+              <div class="sb-label">Tiempo</div>
               <div class="sb-desc">Pausa programada</div>
+            </div>
+          </div>
+          <div class="sb-item" draggable="true" data-type="__textbox__">
+            <div class="sb-icon" style="background: #fffde7; font-size: 18px">
+              📝
+            </div>
+            <div>
+              <div class="sb-label">Texto Libre</div>
+              <div class="sb-desc">Nota o anotación</div>
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="update_contact">
             <div class="sb-icon" style="background: #d1fae5">🔄</div>
             <div>
-              <div class="sb-label">Update Contact</div>
+              <div class="sb-label">Actualizar contacto</div>
               <div class="sb-desc">Actualizar atributos</div>
             </div>
           </div>
@@ -1861,7 +2219,7 @@
           <div class="sb-item" draggable="true" data-type="salesforce_task">
             <div class="sb-icon" style="background: #e0f4ff">☁</div>
             <div>
-              <div class="sb-label">Salesforce Task</div>
+              <div class="sb-label">Tarea de saleforce</div>
               <div class="sb-desc">Crear tarea en CRM</div>
             </div>
           </div>
@@ -1877,14 +2235,14 @@
           <div class="sb-item" draggable="true" data-type="exit_ok">
             <div class="sb-icon" style="background: #d4edda">✔</div>
             <div>
-              <div class="sb-label">Exit Positivo</div>
+              <div class="sb-label">Salida Positiva</div>
               <div class="sb-desc">Reactivado / Compró</div>
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="exit_bad">
             <div class="sb-icon" style="background: #fddede">✖</div>
             <div>
-              <div class="sb-label">Exit Negativo</div>
+              <div class="sb-label">Salida Negativa</div>
               <div class="sb-desc">No reactivado / Frío</div>
             </div>
           </div>
@@ -1964,6 +2322,34 @@
         </div>
         <div class="dp-dirty-bar" id="dp-dirty-bar">⚠️ Cambios sin aplicar</div>
         <div class="dp-body" id="dp-body"></div>
+        <div
+          id="dp-preview-wrap"
+          style="display: none; padding: 8px 14px 0; flex-shrink: 0"
+        >
+          <button
+            id="dp-preview-btn"
+            onclick="openPreviewModal()"
+            style="
+              width: 100%;
+              padding: 8px;
+              background: #f0f7ff;
+              border: 1.5px solid #93c5fd;
+              border-radius: 6px;
+              color: #1d4ed8;
+              font-size: 11px;
+              font-weight: 700;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 6px;
+            "
+            onmouseover="this.style.background = '#dbeafe'"
+            onmouseout="this.style.background = '#f0f7ff'"
+          >
+            👁 Vista previa del mensaje
+          </button>
+        </div>
         <div class="dp-footer">
           <button class="dp-del" onclick="deleteNode()">🗑 Eliminar</button>
           <button class="dp-apply" onclick="applyPanel()">✓ Aplicar</button>
@@ -1974,7 +2360,513 @@
 
     <div class="tooltip" id="tooltip"></div>
 
-    <!-- MODAL: Unsaved changes -->
+    <!-- CONFIRM EDIT CONNECTION MODAL -->
+    <div class="conn-confirm-overlay" id="conn-confirm-overlay">
+      <div class="conn-confirm-box">
+        <div class="conn-confirm-ico">🔗</div>
+        <div class="conn-confirm-ttl">Editar conexión</div>
+        <div class="conn-confirm-msg">
+          ¿Deseas editar la configuración de esta conexión? Podrás cambiar el
+          estilo, color, etiqueta y más.
+        </div>
+        <div class="conn-confirm-actions">
+          <button class="mbtn mbtn-cancel" onclick="cancelConnConfirm()">
+            Cancelar
+          </button>
+          <button class="mbtn mbtn-apply" onclick="confirmConnEdit()">
+            ✏️ Sí, editar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONNECTION EDITOR PANEL -->
+    <div class="conn-editor" id="conn-editor">
+      <div class="conn-ed-header">
+        <span>🔗 Editar Conexión</span>
+        <button
+          onclick="
+            event.stopPropagation();
+            closeConnEditor();
+          "
+          style="
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            padding: 4px 6px;
+            border-radius: 4px;
+            transition: background 0.12s;
+          "
+          onmouseover="this.style.background = 'rgba(255,255,255,0.2)'"
+          onmouseout="this.style.background = 'none'"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="ce-dirty-bar" id="ce-dirty-bar">⚠️ Cambios sin aplicar</div>
+      <div class="conn-ed-body">
+        <!-- Etiqueta -->
+        <div class="conn-ed-row">
+          <div class="conn-ed-label">Etiqueta del texto</div>
+          <input
+            class="conn-ed-input"
+            id="ce-label"
+            type="text"
+            placeholder="Yes / No / o dejar vacío"
+          />
+        </div>
+        <!-- Tamaño etiqueta + posición -->
+        <div class="conn-ed-row-2col">
+          <div class="conn-ed-row">
+            <div class="conn-ed-label">Tamaño texto (px)</div>
+            <input
+              class="conn-ed-input"
+              id="ce-fontsize"
+              type="number"
+              value="9"
+              min="7"
+              max="20"
+            />
+          </div>
+          <div class="conn-ed-row">
+            <div class="conn-ed-label">Pos. etiqueta (%)</div>
+            <input
+              class="conn-ed-input"
+              id="ce-labelpos"
+              type="number"
+              value="50"
+              min="0"
+              max="100"
+              title="0=inicio 50=centro 100=fin"
+            />
+          </div>
+        </div>
+        <!-- Offset etiqueta -->
+        <div class="conn-ed-row-2col">
+          <div class="conn-ed-row">
+            <div class="conn-ed-label">Offset X (px)</div>
+            <input class="conn-ed-input" id="ce-offx" type="number" value="0" />
+          </div>
+          <div class="conn-ed-row">
+            <div class="conn-ed-label">Offset Y (px)</div>
+            <input
+              class="conn-ed-input"
+              id="ce-offy"
+              type="number"
+              value="-12"
+            />
+          </div>
+        </div>
+        <!-- Tipo de línea -->
+        <div class="conn-ed-row">
+          <div class="conn-ed-label">Estilo de línea</div>
+          <div class="conn-style-grid" id="ce-style-grid">
+            <button
+              class="conn-style-btn active"
+              data-style="curve"
+              onclick="selectLineStyle(this, 'curve')"
+            >
+              <svg width="36" height="18" viewBox="0 0 36 18">
+                <path
+                  d="M2,9 C10,2 26,2 34,9"
+                  stroke="#555"
+                  stroke-width="2"
+                  fill="none"
+                  marker-end="url(#mini-arr)"
+                />
+                <defs>
+                  <marker
+                    id="mini-arr"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="4"
+                    refY="2.5"
+                    orient="auto"
+                  >
+                    <path d="M0,0 L0,5 L5,2.5z" fill="#555" />
+                  </marker>
+                </defs>
+              </svg>
+              Curva
+            </button>
+            <button
+              class="conn-style-btn"
+              data-style="straight"
+              onclick="selectLineStyle(this, 'straight')"
+            >
+              <svg width="36" height="18" viewBox="0 0 36 18">
+                <line
+                  x1="2"
+                  y1="9"
+                  x2="32"
+                  y2="9"
+                  stroke="#555"
+                  stroke-width="2"
+                  marker-end="url(#mini-arr2)"
+                />
+                <defs>
+                  <marker
+                    id="mini-arr2"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="4"
+                    refY="2.5"
+                    orient="auto"
+                  >
+                    <path d="M0,0 L0,5 L5,2.5z" fill="#555" />
+                  </marker>
+                </defs>
+              </svg>
+              Recta
+            </button>
+            <button
+              class="conn-style-btn"
+              data-style="elbow"
+              onclick="selectLineStyle(this, 'elbow')"
+            >
+              <svg width="36" height="18" viewBox="0 0 36 18">
+                <polyline
+                  points="2,9 18,9 18,3 34,3"
+                  stroke="#555"
+                  stroke-width="2"
+                  fill="none"
+                  marker-end="url(#mini-arr3)"
+                />
+                <defs>
+                  <marker
+                    id="mini-arr3"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="4"
+                    refY="2.5"
+                    orient="auto"
+                  >
+                    <path d="M0,0 L0,5 L5,2.5z" fill="#555" />
+                  </marker>
+                </defs>
+              </svg>
+              Codo
+            </button>
+            <button
+              class="conn-style-btn"
+              data-style="arc"
+              onclick="selectLineStyle(this, 'arc')"
+            >
+              <svg width="36" height="18" viewBox="0 0 36 18">
+                <path
+                  d="M2,14 Q18,-2 34,14"
+                  stroke="#555"
+                  stroke-width="2"
+                  fill="none"
+                  marker-end="url(#mini-arr4)"
+                />
+                <defs>
+                  <marker
+                    id="mini-arr4"
+                    markerWidth="5"
+                    markerHeight="5"
+                    refX="4"
+                    refY="2.5"
+                    orient="auto"
+                  >
+                    <path d="M0,0 L0,5 L5,2.5z" fill="#555" />
+                  </marker>
+                </defs>
+              </svg>
+              Arco
+            </button>
+          </div>
+        </div>
+        <!-- Tipo de trazo -->
+        <div class="conn-ed-row">
+          <div class="conn-ed-label">Tipo de trazo</div>
+          <div class="conn-style-grid" id="ce-dash-grid">
+            <button
+              class="conn-style-btn active"
+              data-dash="solid"
+              onclick="selectDash(this, 'solid')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="2"
+                  y1="7"
+                  x2="34"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                />
+              </svg>
+              Sólido
+            </button>
+            <button
+              class="conn-style-btn"
+              data-dash="dashed"
+              onclick="selectDash(this, 'dashed')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="2"
+                  y1="7"
+                  x2="34"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                  stroke-dasharray="6,3"
+                />
+              </svg>
+              Guiones
+            </button>
+            <button
+              class="conn-style-btn"
+              data-dash="dotted"
+              onclick="selectDash(this, 'dotted')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="2"
+                  y1="7"
+                  x2="34"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                  stroke-dasharray="2,3"
+                />
+              </svg>
+              Puntos
+            </button>
+            <button
+              class="conn-style-btn"
+              data-dash="double"
+              onclick="selectDash(this, 'double')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="2"
+                  y1="4"
+                  x2="34"
+                  y2="4"
+                  stroke="#555"
+                  stroke-width="1.5"
+                />
+                <line
+                  x1="2"
+                  y1="10"
+                  x2="34"
+                  y2="10"
+                  stroke="#555"
+                  stroke-width="1.5"
+                />
+              </svg>
+              Doble
+            </button>
+          </div>
+        </div>
+        <!-- Grosor -->
+        <div class="conn-ed-row">
+          <div class="conn-ed-label">
+            Grosor de línea: <span id="ce-width-val">2</span>px
+          </div>
+          <input
+            type="range"
+            id="ce-width"
+            min="1"
+            max="8"
+            value="2"
+            style="width: 100%; accent-color: var(--sf-blue)"
+            oninput="
+              document.getElementById('ce-width-val').textContent = this.value
+            "
+          />
+        </div>
+        <!-- Flecha -->
+        <div class="conn-ed-row">
+          <div class="conn-ed-label">Tipo de flecha</div>
+          <div class="conn-style-grid" id="ce-arrow-grid">
+            <button
+              class="conn-style-btn active"
+              data-arrow="end"
+              onclick="selectArrow(this, 'end')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="2"
+                  y1="7"
+                  x2="28"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                />
+                <polygon points="28,3 36,7 28,11" fill="#555" />
+              </svg>
+              →
+            </button>
+            <button
+              class="conn-style-btn"
+              data-arrow="both"
+              onclick="selectArrow(this, 'both')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="8"
+                  y1="7"
+                  x2="28"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                />
+                <polygon points="0,7 8,3 8,11" fill="#555" />
+                <polygon points="28,3 36,7 28,11" fill="#555" />
+              </svg>
+              ↔
+            </button>
+            <button
+              class="conn-style-btn"
+              data-arrow="none"
+              onclick="selectArrow(this, 'none')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="2"
+                  y1="7"
+                  x2="34"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                />
+              </svg>
+              Sin
+            </button>
+            <button
+              class="conn-style-btn"
+              data-arrow="start"
+              onclick="selectArrow(this, 'start')"
+            >
+              <svg width="36" height="14" viewBox="0 0 36 14">
+                <line
+                  x1="8"
+                  y1="7"
+                  x2="34"
+                  y2="7"
+                  stroke="#555"
+                  stroke-width="2"
+                />
+                <polygon points="0,7 8,3 8,11" fill="#555" />
+              </svg>
+              ←
+            </button>
+          </div>
+        </div>
+        <!-- Color -->
+        <div class="conn-ed-row">
+          <div class="conn-ed-label">Color</div>
+          <div class="conn-color-swatches" id="ce-color-swatches">
+            <div
+              class="color-swatch active"
+              data-color="#888888"
+              style="background: #888"
+              onclick="selectColor(this, '#888888')"
+              title="Gris"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#04844b"
+              style="background: #04844b"
+              onclick="selectColor(this, '#04844b')"
+              title="Verde (Sí)"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#c23934"
+              style="background: #c23934"
+              onclick="selectColor(this, '#c23934')"
+              title="Rojo (No)"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#0070d2"
+              style="background: #0070d2"
+              onclick="selectColor(this, '#0070d2')"
+              title="Azul"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#7c3aed"
+              style="background: #7c3aed"
+              onclick="selectColor(this, '#7c3aed')"
+              title="Morado"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#e07800"
+              style="background: #e07800"
+              onclick="selectColor(this, '#e07800')"
+              title="Naranja"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#059669"
+              style="background: #059669"
+              onclick="selectColor(this, '#059669')"
+              title="Teal"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#db2777"
+              style="background: #db2777"
+              onclick="selectColor(this, '#db2777')"
+              title="Rosa"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#181818"
+              style="background: #181818"
+              onclick="selectColor(this, '#181818')"
+              title="Negro"
+            ></div>
+            <div
+              class="color-swatch"
+              data-color="#ffffff"
+              style="background: #fff; border: 1.5px solid #ccc"
+              onclick="selectColor(this, '#ffffff')"
+              title="Blanco"
+            ></div>
+            <label
+              title="Color personalizado"
+              style="
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                overflow: hidden;
+                cursor: pointer;
+                border: 2px solid #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+              "
+            >
+              🎨<input
+                type="color"
+                id="ce-custom-color"
+                style="opacity: 0; position: absolute; width: 0; height: 0"
+                onchange="selectCustomColor(this.value)"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="conn-ed-footer">
+        <button class="conn-ed-del" onclick="deleteEditedConn()">
+          🗑 Eliminar
+        </button>
+        <button class="conn-ed-apply" onclick="applyConnEditor()">
+          ✓ Aplicar
+        </button>
+      </div>
+    </div>
     <div class="modal-overlay" id="modal-unsaved">
       <div class="modal-box">
         <div class="modal-ico">⚠️</div>
@@ -1990,6 +2882,29 @@
             Descartar
           </button>
           <button class="mbtn mbtn-apply" onclick="applyAndProceed()">
+            Aplicar y continuar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONN EDITOR UNSAVED MODAL -->
+    <div class="modal-overlay" id="modal-conn-unsaved">
+      <div class="modal-box">
+        <div class="modal-ico">⚠️</div>
+        <div class="modal-ttl">Cambios sin aplicar</div>
+        <div class="modal-msg">
+          Tienes cambios en la conexión que no has aplicado aún. ¿Qué deseas
+          hacer?
+        </div>
+        <div class="modal-actions">
+          <button class="mbtn mbtn-cancel" onclick="dismissConnUnsavedModal()">
+            Seguir editando
+          </button>
+          <button class="mbtn mbtn-discard" onclick="discardConnAndProceed()">
+            Descartar
+          </button>
+          <button class="mbtn mbtn-apply" onclick="applyConnAndProceed()">
             Aplicar y continuar
           </button>
         </div>
@@ -2114,7 +3029,7 @@
       const NODE_TYPES = {
         entry: {
           kind: "round",
-          label: "Entry Source",
+          label: "Fuente de la entrada",
           icon: "👥",
           bg: "#0070d2",
           borderColor: "#005fb2",
@@ -2124,23 +3039,23 @@
         },
         email: {
           kind: "card",
-          label: "Send Email",
+          label: "Correo electronico",
           icon: "✉️",
           borderColor: "#0070d2",
           iconBg: "#e0f4ff",
           headerBg: "#e8f4ff",
-          typeLabel: "Send Email",
+          typeLabel: "Correo electronico",
           fields: ["title", "subtitle", "time", "subject", "from", "template"],
           tooltip: "Envía un email al contacto en el momento configurado.",
         },
         sms: {
           kind: "card",
-          label: "Send SMS",
+          label: "Mensaje de Texto SMS",
           icon: "📱",
           borderColor: "#e07800",
           iconBg: "#fff3cd",
           headerBg: "#fff8e6",
-          typeLabel: "Send SMS",
+          typeLabel: "Mensaje de Texto SMS",
           fields: ["title", "subtitle", "time", "message", "senderId"],
           tooltip: "Envía un SMS al número registrado del contacto.",
         },
@@ -2157,14 +3072,14 @@
         },
         push: {
           kind: "card",
-          label: "Push Notification",
+          label: "Notificación push",
           icon: "🔔",
           borderColor: "#db2777",
           iconBg: "#fce7f3",
           headerBg: "#fdf2f8",
-          typeLabel: "Push Notification",
+          typeLabel: "Notificación push",
           fields: ["title", "subtitle", "time", "message"],
-          tooltip: "Envía una push notification a la app móvil.",
+          tooltip: "Envía una Notificación push a la app móvil.",
         },
         banner: {
           kind: "card",
@@ -2180,12 +3095,12 @@
         },
         popup: {
           kind: "card",
-          label: "Pop-up Form",
+          label: "Formulario emergente",
           icon: "📝",
           borderColor: "#db2777",
           iconBg: "#fce7f3",
           headerBg: "#fdf2f8",
-          typeLabel: "Pop-up Form",
+          typeLabel: "Formulario emergente",
           fields: ["title", "subtitle", "time", "message", "formField"],
           tooltip:
             "Modal que aparece al abrir la app para capturar datos del usuario.",
@@ -2232,7 +3147,7 @@
         },
         wait: {
           kind: "wait",
-          label: "Wait",
+          label: "Tiempo",
           icon: "⏱️",
           bg: "#fff",
           borderColor: "#7c3aed",
@@ -2241,23 +3156,23 @@
         },
         update_contact: {
           kind: "card",
-          label: "Update Contact",
+          label: "Actualizar contacto",
           icon: "🔄",
           borderColor: "#059669",
           iconBg: "#d1fae5",
           headerBg: "#ecfdf5",
-          typeLabel: "Update Contact",
+          typeLabel: "Actualizar contacto",
           fields: ["title", "subtitle", "field", "value"],
           tooltip: "Actualiza un atributo del contacto en la Data Extension.",
         },
         salesforce_task: {
           kind: "card",
-          label: "Salesforce Task",
+          label: "Tarea de saleforce",
           icon: "☁",
           borderColor: "#0070d2",
           iconBg: "#e0f4ff",
           headerBg: "#e8f4ff",
-          typeLabel: "Salesforce Task",
+          typeLabel: "Tarea de saleforce",
           fields: ["title", "subtitle", "taskType", "assignTo"],
           tooltip: "Crea una tarea en Salesforce CRM asociada al contacto.",
         },
@@ -2274,7 +3189,7 @@
         },
         exit_ok: {
           kind: "round",
-          label: "Exit Positivo",
+          label: "Salida Positiva",
           icon: "✔",
           bg: "#04844b",
           borderColor: "#036b3c",
@@ -2284,7 +3199,7 @@
         },
         exit_bad: {
           kind: "round",
-          label: "Exit Negativo",
+          label: "Salida Negativa",
           icon: "✖",
           bg: "#c23934",
           borderColor: "#a72e29",
@@ -2369,6 +3284,7 @@
       let panelDirty = false;
       let pendingAction = null; // callback after resolving unsaved modal
       let pendingImportData = null;
+      let pendingConnId = null; // connection id pending confirmation to edit
 
       // Journey metadata shown in stats panel
       let journeyMeta = {
@@ -2379,7 +3295,24 @@
       };
 
       // Real contacts data loaded from file
-      let realContactsData = null; // { rows: [...], columns: [...], fileName: '', count: 0 }
+      let realContactsData = null;
+
+      // Free text boxes
+      let textBoxes = [];
+      let textBoxIdCounter = 2000;
+      let selectedTextBox = null;
+      let isDraggingTB = false,
+        tbDragEl = null,
+        tbDragObj = null,
+        tbDragOffX = 0,
+        tbDragOffY = 0;
+      let isResizingTB = false,
+        tbResizeObj = null,
+        tbResizeEl = null;
+      let tbResizeStartX = 0,
+        tbResizeStartY = 0,
+        tbResizeStartW = 0,
+        tbResizeStartH = 0; // { rows: [...], columns: [...], fileName: '', count: 0 }
 
       function getRealContact(index) {
         if (!realContactsData || !realContactsData.rows.length) return null;
@@ -2474,7 +3407,7 @@
         }
         document.getElementById("stat-audiencia").textContent = audiencia;
 
-        // --- Duración: calcular en base a nodos Wait del journey ---
+        // --- Duración: calcular en base a nodos Tiempo del journey ---
         const waitNodes = nodes.filter((n) => n.type === "wait");
         if (waitNodes.length > 0) {
           let totalDias = 0;
@@ -2527,7 +3460,7 @@
           x: 60,
           y: 210,
           data: {
-            title: "Entry Source",
+            title: "Fuente de la entrada",
             subtitle: "inactivos_4-6_meses",
             file: "inactivos.csv",
             contacts: "~250,000",
@@ -2600,7 +3533,7 @@
           x: 1060,
           y: 215,
           data: {
-            title: "Wait 3 días",
+            title: "Tiempo 3 días",
             subtitle: "Período de reflexión",
             duration: "3",
             unit: "días",
@@ -2663,7 +3596,7 @@
           x: 1920,
           y: 70,
           data: {
-            title: "Exit Positivo",
+            title: "Salida Positiva",
             subtitle: "Reactivado exitosamente",
             segment: "reactivados_ok",
           },
@@ -2674,7 +3607,7 @@
           x: 1920,
           y: 285,
           data: {
-            title: "Exit Negativo",
+            title: "Salida Negativa",
             subtitle: "No reactivado · Frío",
             segment: "frios_60dias",
             action: "Lista supresión 6 meses",
@@ -2812,7 +3745,7 @@
     </div>`;
         }
 
-        /* ── Wait ── */
+        /* ── Tiempo ── */
         if (t.kind === "wait") {
           const dur = [n.data.duration, n.data.unit].filter(Boolean).join(" ");
           return `<div class="wait-node">
@@ -2917,20 +3850,34 @@
       }
 
       function renderConnections() {
-        const colors = ["#888", "#04844b", "#c23934", "#9b59b6", "#0070d2"];
-        const colorIdx = (c) => {
-          if (c === "#04844b") return 1;
-          if (c === "#c23934") return 2;
-          if (c === "#9b59b6") return 3;
-          if (c === "#0070d2") return 4;
-          return 0;
-        };
+        // Color → marker index map
+        const COLORS = [
+          "#888888",
+          "#04844b",
+          "#c23934",
+          "#9b59b6",
+          "#0070d2",
+          "#e07800",
+          "#059669",
+          "#db2777",
+          "#181818",
+          "#ffffff",
+          "#7c3aed",
+        ];
+        function colorIdx(c) {
+          const i = COLORS.indexOf(c);
+          return i >= 0 ? i : 0;
+        }
 
+        // Build marker defs for every color × arrow directions
         let defs = `<defs>`;
-        colors.forEach((c, i) => {
-          defs += `<marker id="arr${i}" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="${c}"/>
-    </marker>`;
+        COLORS.forEach((c, i) => {
+          defs += `<marker id="ae${i}" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="${c}"/>
+          </marker>`;
+          defs += `<marker id="as${i}" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto-start-reverse">
+            <path d="M0,0 L0,6 L8,3 z" fill="${c}"/>
+          </marker>`;
         });
         defs += `</defs>`;
 
@@ -2943,6 +3890,307 @@
           const { from: fp, to: tp } = getBestAnchors(fn, tn);
           const dx = tp.x - fp.x,
             dy = tp.y - fp.y;
+          const color = conn.color || "#888";
+          const idx = colorIdx(color);
+          const sw = conn.strokeWidth || 2;
+          const lineStyle = conn.lineStyle || "curve";
+          const dashStyle =
+            conn.dashStyle || (conn.dashed ? "dashed" : "solid");
+          const arrowType = conn.arrowType || "end";
+
+          let dashAttr = "";
+          if (dashStyle === "dashed") dashAttr = `stroke-dasharray="6,4"`;
+          else if (dashStyle === "dotted")
+            dashAttr = `stroke-dasharray="2,4" stroke-linecap="round"`;
+
+          const mEnd =
+            arrowType === "end" || arrowType === "both"
+              ? `marker-end="url(#ae${idx})"`
+              : "";
+          const mStart =
+            arrowType === "start" || arrowType === "both"
+              ? `marker-start="url(#as${idx})"`
+              : "";
+
+          let pathD = "";
+          if (lineStyle === "straight") {
+            pathD = `M${fp.x},${fp.y} L${tp.x},${tp.y}`;
+          } else if (lineStyle === "elbow") {
+            const mx = (fp.x + tp.x) / 2;
+            pathD = `M${fp.x},${fp.y} L${mx},${fp.y} L${mx},${tp.y} L${tp.x},${tp.y}`;
+          } else if (lineStyle === "arc") {
+            pathD = `M${fp.x},${fp.y} Q${(fp.x + tp.x) / 2},${Math.min(fp.y, tp.y) - 50} ${tp.x},${tp.y}`;
+          } else {
+            const cpDist = Math.max(40, Math.abs(dx) * 0.45);
+            let cp1x, cp1y, cp2x, cp2y;
+            if (Math.abs(dx) >= Math.abs(dy)) {
+              cp1x = fp.x + cpDist;
+              cp1y = fp.y;
+              cp2x = tp.x - cpDist;
+              cp2y = tp.y;
+            } else {
+              cp1x = fp.x;
+              cp1y = fp.y + (dy > 0 ? cpDist : -cpDist);
+              cp2x = tp.x;
+              cp2y = tp.y - (dy > 0 ? cpDist : -cpDist);
+            }
+            pathD = `M${fp.x},${fp.y} C${cp1x},${cp1y} ${cp2x},${cp2y} ${tp.x},${tp.y}`;
+          }
+
+          if (dashStyle === "double") {
+            const offsetPaths = buildDoubleLinePaths(fp, tp, lineStyle, dx, dy);
+            offsetPaths.forEach((d) => {
+              paths += `<path data-conn-id="${conn.id}" class="conn-hit"
+                d="${d}" fill="none" stroke="${color}" stroke-width="${Math.max(10, sw + 8)}"
+                stroke-opacity="0.01" style="pointer-events:stroke;cursor:pointer"/>`;
+              paths += `<path d="${d}" fill="none" stroke="${color}" stroke-width="${Math.max(1, sw - 0.5)}" ${mEnd} ${mStart}/>`;
+            });
+          } else {
+            paths += `<path data-conn-id="${conn.id}" class="conn-hit"
+              d="${pathD}" fill="none" stroke="${color}" stroke-width="${Math.max(10, sw + 8)}"
+              stroke-opacity="0.01" style="pointer-events:stroke;cursor:pointer"/>`;
+            paths += `<path d="${pathD}" fill="none" stroke="${color}" stroke-width="${sw}"
+              ${dashAttr} ${mEnd} ${mStart}/>`;
+          }
+        });
+
+        svgLayer.innerHTML = defs + paths;
+
+        // Re-attach click on hit areas
+        svgLayer.querySelectorAll(".conn-hit").forEach((el) => {
+          el.style.pointerEvents = "stroke";
+          el.addEventListener("click", (e) => {
+            e.stopPropagation();
+            showConnMenu(e.clientX, e.clientY, el.dataset.connId);
+          });
+        });
+
+        // Rebuild HTML label overlays
+        rebuildLabelOverlays();
+      }
+
+      /* ── HTML label overlays (live-draggable absolutely-positioned divs) ── */
+      function rebuildLabelOverlays() {
+        // Remove old
+        canvas
+          .querySelectorAll(".conn-label-overlay")
+          .forEach((e) => e.remove());
+
+        connections.forEach((conn) => {
+          if (!conn.label) return;
+          const fn = nodes.find((n) => n.id === conn.from);
+          const tn = nodes.find((n) => n.id === conn.to);
+          if (!fn || !tn) return;
+
+          const { from: fp, to: tp } = getBestAnchors(fn, tn);
+          const dx = tp.x - fp.x,
+            dy = tp.y - fp.y;
+          const lineStyle = conn.lineStyle || "curve";
+          const t = (conn.labelPos !== undefined ? conn.labelPos : 50) / 100;
+          const pt = getPointOnPath(fp, tp, lineStyle, dx, dy, t);
+
+          const offX = conn.labelOffX || 0;
+          const offY = conn.labelOffY !== undefined ? conn.labelOffY : -12;
+          const cx = pt.x + offX;
+          const cy = pt.y + offY;
+
+          const fs = conn.labelFontSize || 9;
+          const isYes = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
+            conn.label,
+          );
+          const isNo = ["No", "no", "NO"].includes(conn.label);
+          const color = conn.color || "#888";
+          const lcolor = isYes
+            ? "#04844b"
+            : isNo
+              ? "#c23934"
+              : color === "#888888" || color === "#888"
+                ? "#555"
+                : color;
+          const lbg = isYes ? "#dcfce7" : isNo ? "#fee2e2" : "#f3f4f6";
+          const lborder = isYes ? "#04844b" : isNo ? "#c23934" : "#ccc";
+
+          const el = document.createElement("div");
+          el.className = "conn-label-overlay";
+          el.dataset.connId = conn.id;
+          el.style.cssText = `
+            position:absolute;
+            left:${cx}px; top:${cy}px;
+            transform:translate(-50%,-50%);
+            background:${lbg};
+            color:${lcolor};
+            border:1.5px solid ${lborder};
+            border-radius:4px;
+            padding:2px 7px;
+            font-size:${fs}px;
+            font-weight:700;
+            font-family:inherit;
+            cursor:move;
+            user-select:none;
+            z-index:25;
+            white-space:nowrap;
+            box-shadow:0 1px 4px rgba(0,0,0,.12);
+            transition:box-shadow .1s, transform .1s;
+          `;
+          el.textContent = conn.label;
+          canvas.appendChild(el);
+
+          // Mousedown → drag
+          el.addEventListener("mousedown", (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            startLabelDrag(e, conn, pt);
+          });
+          // Click → open editor (only if no drag happened)
+          el.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (!labelWasDragged) {
+              // If editor already open, switch directly without confirmation dialog
+              if (
+                document
+                  .getElementById("conn-editor")
+                  .classList.contains("open")
+              ) {
+                if (connEditorDirty) {
+                  const ok = confirm(
+                    "\u00bfCambiar a otra conexi\u00f3n?\n\nTienes cambios sin aplicar. Si contin\u00faas se perder\u00e1n.",
+                  );
+                  if (!ok) return;
+                }
+                _forceCloseConnEditor();
+                openConnEditor(conn.id);
+              } else {
+                pendingConnId = conn.id;
+                document
+                  .getElementById("conn-confirm-overlay")
+                  .classList.add("show");
+              }
+            }
+          });
+        });
+      }
+
+      /* Label drag state (module-level so no closure race) */
+      let labelDragActive = false;
+      let labelDragConn = null;
+      let labelDragStartMouse = null;
+      let labelDragInitOff = null;
+      let labelWasDragged = false;
+
+      function startLabelDrag(e, conn, pt) {
+        labelDragActive = true;
+        labelDragConn = conn;
+        labelDragStartMouse = { x: e.clientX, y: e.clientY };
+        labelDragInitOff = {
+          x: conn.labelOffX || 0,
+          y: conn.labelOffY !== undefined ? conn.labelOffY : -12,
+        };
+        labelWasDragged = false;
+
+        // Highlight the label
+        const el = canvas.querySelector(
+          `.conn-label-overlay[data-conn-id="${conn.id}"]`,
+        );
+        if (el)
+          el.style.boxShadow =
+            "0 0 0 3px rgba(0,112,210,.4), 0 2px 8px rgba(0,0,0,.2)";
+      }
+
+      window._labelDragMove = (e) => {
+        if (!labelDragActive || !labelDragConn) return;
+        const dx = (e.clientX - labelDragStartMouse.x) / scale;
+        const dy = (e.clientY - labelDragStartMouse.y) / scale;
+        if (Math.abs(dx) > 2 || Math.abs(dy) > 2) labelWasDragged = true;
+
+        labelDragConn.labelOffX = Math.round(labelDragInitOff.x + dx);
+        labelDragConn.labelOffY = Math.round(labelDragInitOff.y + dy);
+
+        // Move overlay element directly (no full re-render during drag)
+        const fn = nodes.find((n) => n.id === labelDragConn.from);
+        const tn = nodes.find((n) => n.id === labelDragConn.to);
+        if (fn && tn) {
+          const { from: fp, to: tp } = getBestAnchors(fn, tn);
+          const ddx = tp.x - fp.x,
+            ddy = tp.y - fp.y;
+          const t =
+            (labelDragConn.labelPos !== undefined
+              ? labelDragConn.labelPos
+              : 50) / 100;
+          const pt = getPointOnPath(
+            fp,
+            tp,
+            labelDragConn.lineStyle || "curve",
+            ddx,
+            ddy,
+            t,
+          );
+          const newX = pt.x + labelDragConn.labelOffX;
+          const newY = pt.y + labelDragConn.labelOffY;
+          const el = canvas.querySelector(
+            `.conn-label-overlay[data-conn-id="${labelDragConn.id}"]`,
+          );
+          if (el) {
+            el.style.left = newX + "px";
+            el.style.top = newY + "px";
+          }
+        }
+
+        // Sync panel inputs if editor is open for this connection
+        if (editingConnId === labelDragConn.id) {
+          const offxEl = document.getElementById("ce-offx");
+          const offyEl = document.getElementById("ce-offy");
+          if (offxEl) offxEl.value = labelDragConn.labelOffX;
+          if (offyEl) offyEl.value = labelDragConn.labelOffY;
+        }
+      };
+
+      window._labelDragUp = () => {
+        if (labelDragActive) {
+          labelDragActive = false;
+          // Remove highlight
+          if (labelDragConn) {
+            const el = canvas.querySelector(
+              `.conn-label-overlay[data-conn-id="${labelDragConn.id}"]`,
+            );
+            if (el) el.style.boxShadow = "0 1px 4px rgba(0,0,0,.12)";
+          }
+          labelDragConn = null;
+        }
+      };
+
+      /* Helper: get point at parameter t along a path */
+      function getPointOnPath(fp, tp, style, dx, dy, t) {
+        if (style === "straight") {
+          return { x: fp.x + dx * t, y: fp.y + dy * t };
+        } else if (style === "elbow") {
+          const mx = (fp.x + tp.x) / 2;
+          // 3 segments: fp→(mx,fp.y)→(mx,tp.y)→tp
+          const totalLen =
+            Math.abs(mx - fp.x) + Math.abs(tp.y - fp.y) + Math.abs(tp.x - mx);
+          const pos = totalLen * t;
+          const s1 = Math.abs(mx - fp.x);
+          const s2 = s1 + Math.abs(tp.y - fp.y);
+          if (pos <= s1) return { x: fp.x + (mx - fp.x) * (pos / s1), y: fp.y };
+          if (pos <= s2)
+            return {
+              x: mx,
+              y: fp.y + (tp.y - fp.y) * ((pos - s1) / (s2 - s1)),
+            };
+          return {
+            x: mx + (tp.x - mx) * ((pos - s2) / (totalLen - s2)),
+            y: tp.y,
+          };
+        } else if (style === "arc") {
+          const cx = (fp.x + tp.x) / 2,
+            cy = Math.min(fp.y, tp.y) - 50;
+          // Quadratic bezier at t
+          const qx =
+            (1 - t) * (1 - t) * fp.x + 2 * (1 - t) * t * cx + t * t * tp.x;
+          const qy =
+            (1 - t) * (1 - t) * fp.y + 2 * (1 - t) * t * cy + t * t * tp.y;
+          return { x: qx, y: qy };
+        } else {
+          // Cubic bezier
           const cpDist = Math.max(40, Math.abs(dx) * 0.45);
           let cp1x, cp1y, cp2x, cp2y;
           if (Math.abs(dx) >= Math.abs(dy)) {
@@ -2956,99 +4204,417 @@
             cp2x = tp.x;
             cp2y = tp.y - (dy > 0 ? cpDist : -cpDist);
           }
+          const bx =
+            (1 - t) ** 3 * fp.x +
+            3 * (1 - t) ** 2 * t * cp1x +
+            3 * (1 - t) * t ** 2 * cp2x +
+            t ** 3 * tp.x;
+          const by =
+            (1 - t) ** 3 * fp.y +
+            3 * (1 - t) ** 2 * t * cp1y +
+            3 * (1 - t) * t ** 2 * cp2y +
+            t ** 3 * tp.y;
+          return { x: bx, y: by };
+        }
+      }
 
-          const idx = colorIdx(conn.color);
-          const dash = conn.dashed ? 'stroke-dasharray="6,4"' : "";
+      /* Helper: build two offset path strings for "double" style */
+      function buildDoubleLinePaths(fp, tp, style, dx, dy) {
+        const off = 3;
+        // Perpendicular offset
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        const nx = (-dy / len) * off,
+          ny = (dx / len) * off;
+        const fp1 = { x: fp.x + nx, y: fp.y + ny },
+          tp1 = { x: tp.x + nx, y: tp.y + ny };
+        const fp2 = { x: fp.x - nx, y: fp.y - ny },
+          tp2 = { x: tp.x - nx, y: tp.y - ny };
+        function makePath(f, t) {
+          if (style === "straight") return `M${f.x},${f.y} L${t.x},${t.y}`;
+          const mx = (f.x + t.x) / 2;
+          if (style === "elbow")
+            return `M${f.x},${f.y} L${mx},${f.y} L${mx},${t.y} L${t.x},${t.y}`;
+          if (style === "arc")
+            return `M${f.x},${f.y} Q${(f.x + t.x) / 2},${Math.min(f.y, t.y) - 50} ${t.x},${t.y}`;
+          const cpd = Math.max(40, Math.abs(dx) * 0.45);
+          if (Math.abs(dx) >= Math.abs(dy))
+            return `M${f.x},${f.y} C${f.x + cpd},${f.y} ${t.x - cpd},${t.y} ${t.x},${t.y}`;
+          const s = dy > 0 ? cpd : -cpd;
+          return `M${f.x},${f.y} C${f.x},${f.y + s} ${t.x},${t.y - s} ${t.x},${t.y}`;
+        }
+        return [makePath(fp1, tp1), makePath(fp2, tp2)];
+      }
 
-          // invisible thick hit area for click
-          paths += `<path data-conn-id="${conn.id}" class="conn-hit"
-      d="M${fp.x},${fp.y} C${cp1x},${cp1y} ${cp2x},${cp2y} ${tp.x},${tp.y}"
-      fill="none" stroke="${conn.color}" stroke-width="10" stroke-opacity="0.01"
-      style="pointer-events:stroke;cursor:pointer"/>`;
+      /* ════════════════════════════════
+   CONNECTION EDITOR
+════════════════════════════════ */
+      let editingConnId = null;
+      // ── CONN EDITOR DIRTY STATE ──────────────────────────────────────
+      // Simple boolean flag. Set to true only by explicit user interaction
+      // (typing or clicking). Cleared on apply or close. NO setTimeout anywhere.
+      let connEditorDirty = false;
 
-          paths += `<path d="M${fp.x},${fp.y} C${cp1x},${cp1y} ${cp2x},${cp2y} ${tp.x},${tp.y}"
-      fill="none" stroke="${conn.color}" stroke-width="2" ${dash}
-      marker-end="url(#arr${idx})"/>`;
+      function _ceSetDirty(val) {
+        connEditorDirty = val;
+        const bar = document.getElementById("ce-dirty-bar");
+        if (bar) bar.classList.toggle("on", val);
+      }
 
-          // Label
-          if (conn.label) {
-            const mx = (fp.x + tp.x) / 2;
-            const my = (fp.y + tp.y) / 2 - 10;
-            const isYes = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
-              conn.label,
+      // Wire listeners once at startup — they just flip the flag to true.
+      // Opening the editor resets the flag AFTER wiring, so these never
+      // fire "by themselves" during population.
+      function _attachConnEditorListeners() {
+        [
+          "ce-label",
+          "ce-fontsize",
+          "ce-labelpos",
+          "ce-offx",
+          "ce-offy",
+          "ce-width",
+          "ce-custom-color",
+        ].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener("input", () => _ceSetDirty(true));
+        });
+        ["ce-style-grid", "ce-dash-grid", "ce-arrow-grid"].forEach((gridId) => {
+          const grid = document.getElementById(gridId);
+          if (grid) grid.addEventListener("click", () => _ceSetDirty(true));
+        });
+        const swatches = document.getElementById("ce-color-swatches");
+        if (swatches)
+          swatches.addEventListener("click", () => _ceSetDirty(true));
+      }
+      if (document.readyState !== "loading") _attachConnEditorListeners();
+      else
+        document.addEventListener(
+          "DOMContentLoaded",
+          _attachConnEditorListeners,
+        );
+
+      function openConnEditor(connId) {
+        const conn = connections.find((c) => c.id === connId);
+        if (!conn) return;
+        editingConnId = connId;
+
+        // Populate fields — this does NOT trigger the input listeners
+        // because we are setting .value programmatically (no "input" event fires)
+        document.getElementById("ce-label").value = conn.label || "";
+        document.getElementById("ce-fontsize").value = conn.labelFontSize || 9;
+        document.getElementById("ce-labelpos").value =
+          conn.labelPos !== undefined ? conn.labelPos : 50;
+        document.getElementById("ce-offx").value = conn.labelOffX || 0;
+        document.getElementById("ce-offy").value =
+          conn.labelOffY !== undefined ? conn.labelOffY : -12;
+        document.getElementById("ce-width").value = conn.strokeWidth || 2;
+        document.getElementById("ce-width-val").textContent =
+          conn.strokeWidth || 2;
+
+        document
+          .querySelectorAll("#ce-style-grid .conn-style-btn")
+          .forEach((b) => {
+            b.classList.toggle(
+              "active",
+              b.dataset.style === (conn.lineStyle || "curve"),
             );
-            const isNo = ["No", "no", "NO"].includes(conn.label);
-            const lcolor = isYes ? "#04844b" : isNo ? "#c23934" : "#555";
-            const lbg = isYes ? "#dcfce7" : isNo ? "#fee2e2" : "#f3f4f6";
-            paths += `<rect x="${mx - 12}" y="${my - 11}" width="24" height="14" rx="3" fill="${lbg}" stroke="${lcolor}" stroke-width="1"/>
-        <text x="${mx}" y="${my}" class="arrow-label" fill="${lcolor}" text-anchor="middle">${conn.label}</text>`;
-          }
-        });
-
-        svgLayer.innerHTML = defs + paths;
-
-        // Re-attach click events on hit areas
-        svgLayer.querySelectorAll(".conn-hit").forEach((el) => {
-          el.style.pointerEvents = "stroke";
-          el.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const cid = el.dataset.connId;
-            showConnMenu(e.clientX, e.clientY, cid);
           });
-        });
+        document
+          .querySelectorAll("#ce-dash-grid .conn-style-btn")
+          .forEach((b) => {
+            b.classList.toggle(
+              "active",
+              b.dataset.dash ===
+                (conn.dashStyle || (conn.dashed ? "dashed" : "solid")),
+            );
+          });
+        document
+          .querySelectorAll("#ce-arrow-grid .conn-style-btn")
+          .forEach((b) => {
+            b.classList.toggle(
+              "active",
+              b.dataset.arrow === (conn.arrowType || "end"),
+            );
+          });
+        document
+          .querySelectorAll("#ce-color-swatches .color-swatch")
+          .forEach((s) => {
+            s.classList.toggle("active", s.dataset.color === conn.color);
+          });
+
+        // Reset dirty AFTER populating (population never fires input events anyway)
+        _ceSetDirty(false);
+        document.getElementById("conn-editor").classList.add("open");
+      }
+
+      /* Internal: close without guard */
+      function _forceCloseConnEditor() {
+        document.getElementById("conn-editor").classList.remove("open");
+        editingConnId = null;
+        _ceSetDirty(false);
+      }
+
+      /* Public close: if dirty → modal, else close immediately */
+      function closeConnEditor() {
+        if (!connEditorDirty) {
+          _forceCloseConnEditor();
+        } else {
+          document.getElementById("modal-conn-unsaved").classList.add("show");
+        }
+      }
+
+      function selectLineStyle(btn, style) {
+        document
+          .querySelectorAll("#ce-style-grid .conn-style-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+      function selectDash(btn, dash) {
+        document
+          .querySelectorAll("#ce-dash-grid .conn-style-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+      function selectArrow(btn, arrow) {
+        document
+          .querySelectorAll("#ce-arrow-grid .conn-style-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+      function selectColor(el, color) {
+        document
+          .querySelectorAll("#ce-color-swatches .color-swatch")
+          .forEach((s) => s.classList.remove("active"));
+        el.classList.add("active");
+      }
+      function selectCustomColor(color) {
+        document
+          .querySelectorAll("#ce-color-swatches .color-swatch")
+          .forEach((s) => s.classList.remove("active"));
+      }
+
+      function applyConnEditor() {
+        const conn = connections.find((c) => c.id === editingConnId);
+        if (!conn) return;
+
+        conn.label = document.getElementById("ce-label").value.trim();
+        conn.labelFontSize =
+          parseInt(document.getElementById("ce-fontsize").value) || 9;
+        conn.labelPos =
+          parseInt(document.getElementById("ce-labelpos").value) || 50;
+        conn.labelOffX =
+          parseInt(document.getElementById("ce-offx").value) || 0;
+        conn.labelOffY = parseInt(document.getElementById("ce-offy").value);
+        if (isNaN(conn.labelOffY)) conn.labelOffY = -12;
+        conn.strokeWidth =
+          parseInt(document.getElementById("ce-width").value) || 2;
+
+        const activeStyle = document.querySelector(
+          "#ce-style-grid .conn-style-btn.active",
+        );
+        conn.lineStyle = activeStyle ? activeStyle.dataset.style : "curve";
+
+        const activeDash = document.querySelector(
+          "#ce-dash-grid .conn-style-btn.active",
+        );
+        conn.dashStyle = activeDash ? activeDash.dataset.dash : "solid";
+        conn.dashed = conn.dashStyle !== "solid";
+
+        const activeArrow = document.querySelector(
+          "#ce-arrow-grid .conn-style-btn.active",
+        );
+        conn.arrowType = activeArrow ? activeArrow.dataset.arrow : "end";
+
+        const activeSwatch = document.querySelector(
+          "#ce-color-swatches .color-swatch.active",
+        );
+        const customColor = document.getElementById("ce-custom-color").value;
+        if (activeSwatch) {
+          conn.color = activeSwatch.dataset.color;
+        } else if (customColor) {
+          conn.color = customColor;
+        }
+        // Auto-set label color based on text
+        const isYes = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
+          conn.label,
+        );
+        const isNo = ["No", "no", "NO"].includes(conn.label);
+        if (!activeSwatch || activeSwatch.dataset.color === "#888888") {
+          if (isYes) conn.color = "#04844b";
+          else if (isNo) conn.color = "#c23934";
+        }
+
+        renderConnections();
+        updateStats();
+        setUnsavedExport();
+        _ceSetDirty(false);
+        showNotif("✅ Conexión actualizada");
+      }
+
+      function dismissConnUnsavedModal() {
+        document.getElementById("modal-conn-unsaved").classList.remove("show");
+      }
+      function discardConnAndProceed() {
+        document.getElementById("modal-conn-unsaved").classList.remove("show");
+        _forceCloseConnEditor();
+      }
+      function applyConnAndProceed() {
+        document.getElementById("modal-conn-unsaved").classList.remove("show");
+        applyConnEditor();
+        _forceCloseConnEditor();
+      }
+
+      function deleteEditedConn() {
+        if (!editingConnId) return;
+        connections = connections.filter((c) => c.id !== editingConnId);
+        renderConnections();
+        updateStats();
+        closeConnEditor();
+        setUnsavedExport();
+        showNotif("🗑 Conexión eliminada");
       }
 
       function showConnMenu(x, y, connId) {
-        document.querySelectorAll(".conn-menu").forEach((m) => m.remove());
-        const conn = connections.find((c) => c.id === connId);
-        if (!conn) return;
-        const menu = document.createElement("div");
-        menu.className = "conn-menu";
-        menu.style.left = x + "px";
-        menu.style.top = y + "px";
-        menu.innerHTML = `
-    <div class="conn-menu-item" id="cm-label">🏷 Cambiar etiqueta (${conn.label || "ninguna"})</div>
-    <div class="conn-menu-item" id="cm-delete" style="color:#c23934">🗑 Eliminar conexión</div>
-  `;
-        document.body.appendChild(menu);
-        menu.querySelector("#cm-label").onclick = () => {
-          const ans = prompt(
-            "Nueva etiqueta (Yes / No / o dejar vacío):",
-            conn.label || "",
-          );
-          if (ans !== null) {
-            conn.label = ans.trim();
-            const isYes2 = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
-              conn.label,
+        // If the editor is already open, switch directly without the confirm dialog
+        if (document.getElementById("conn-editor").classList.contains("open")) {
+          if (connEditorDirty) {
+            const ok = confirm(
+              "\u00bfCambiar a otra conexi\u00f3n?\n\nTienes cambios sin aplicar. Si contin\u00faas se perder\u00e1n.",
             );
-            const isNo2 = ["No", "no", "NO"].includes(conn.label);
-            conn.color = isYes2 ? "#04844b" : isNo2 ? "#c23934" : "#888";
-            conn.dashed = conn.label !== "";
-            renderConnections();
-            updateStats();
+            if (!ok) return;
           }
-          menu.remove();
-        };
-        menu.querySelector("#cm-delete").onclick = () => {
-          connections = connections.filter((c) => c.id !== connId);
-          renderConnections();
-          updateStats();
-          menu.remove();
-        };
-        setTimeout(
-          () =>
-            document.addEventListener("click", () => menu.remove(), {
-              once: true,
-            }),
-          50,
-        );
+          _forceCloseConnEditor();
+          openConnEditor(connId);
+          return;
+        }
+        // Otherwise show confirmation dialog before opening the rich editor
+        pendingConnId = connId;
+        document.getElementById("conn-confirm-overlay").classList.add("show");
+      }
+
+      function cancelConnConfirm() {
+        document
+          .getElementById("conn-confirm-overlay")
+          .classList.remove("show");
+        pendingConnId = null;
+      }
+
+      function confirmConnEdit() {
+        document
+          .getElementById("conn-confirm-overlay")
+          .classList.remove("show");
+        if (pendingConnId) {
+          openConnEditor(pendingConnId);
+          pendingConnId = null;
+        }
       }
 
       function renderAll() {
         canvas.querySelectorAll(".jnode").forEach((e) => e.remove());
+        canvas.querySelectorAll(".text-box").forEach((e) => e.remove());
         nodes.forEach(buildNodeEl);
+        textBoxes.forEach(buildTextBoxEl);
         renderConnections();
         updateStats();
+      }
+
+      /* ════════════════════════════════
+   FREE TEXT BOXES
+════════════════════════════════ */
+      function buildTextBoxEl(tb) {
+        const el = document.createElement("div");
+        el.className = "text-box";
+        el.id = "tb-" + tb.id;
+        el.dataset.tbId = tb.id;
+        el.style.cssText = `left:${tb.x}px;top:${tb.y}px;width:${tb.w || 160}px;min-height:${tb.h || 60}px;position:absolute;`;
+
+        // Delete button
+        const del = document.createElement("button");
+        del.className = "text-box-del";
+        del.textContent = "✕";
+        del.title = "Eliminar";
+        del.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteTextBox(tb.id);
+        });
+        el.appendChild(del);
+
+        // Editable content
+        const inner = document.createElement("div");
+        inner.className = "text-box-inner";
+        inner.contentEditable = "true";
+        inner.spellcheck = false;
+        inner.textContent = tb.text || "Escribe aquí...";
+        inner.addEventListener("focus", () => {
+          selectTextBox(tb.id);
+          if (inner.textContent === "Escribe aquí...") {
+            inner.textContent = "";
+          }
+        });
+        inner.addEventListener("blur", () => {
+          tb.text = inner.textContent || "Escribe aquí...";
+          if (!inner.textContent.trim()) inner.textContent = "Escribe aquí...";
+          setUnsavedExport();
+        });
+        inner.addEventListener("mousedown", (e) => e.stopPropagation());
+        inner.addEventListener("click", (e) => e.stopPropagation());
+        el.appendChild(inner);
+
+        // Resize handle
+        const rh = document.createElement("div");
+        rh.className = "text-box-resize";
+        rh.textContent = "⟱";
+        rh.title = "Redimensionar";
+        rh.addEventListener("mousedown", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          selectTextBox(tb.id);
+          isResizingTB = true;
+          tbResizeObj = tb;
+          tbResizeEl = el;
+          tbResizeStartX = e.clientX;
+          tbResizeStartY = e.clientY;
+          tbResizeStartW = el.offsetWidth;
+          tbResizeStartH = el.offsetHeight;
+        });
+        el.appendChild(rh);
+
+        // Drag to move (only on the box border/background, not inner)
+        el.addEventListener("mousedown", (e) => {
+          if (e.target === inner || e.target === del || e.target === rh) return;
+          e.stopPropagation();
+          selectTextBox(tb.id);
+          isDraggingTB = true;
+          tbDragEl = el;
+          tbDragObj = tb;
+          const rect = canvasWrap.getBoundingClientRect();
+          tbDragOffX = (e.clientX - rect.left - panX) / scale - tb.x;
+          tbDragOffY = (e.clientY - rect.top - panY) / scale - tb.y;
+        });
+
+        el.addEventListener("click", (e) => {
+          e.stopPropagation();
+          selectTextBox(tb.id);
+        });
+
+        canvas.appendChild(el);
+      }
+
+      function selectTextBox(id) {
+        document
+          .querySelectorAll(".text-box.selected")
+          .forEach((e) => e.classList.remove("selected"));
+        selectedTextBox = id;
+        const el = document.getElementById("tb-" + id);
+        if (el) el.classList.add("selected");
+        // deselect nodes
+        deselect();
+      }
+
+      function deleteTextBox(id) {
+        textBoxes = textBoxes.filter((t) => t.id !== id);
+        const el = document.getElementById("tb-" + id);
+        if (el) el.remove();
+        selectedTextBox = null;
+        setUnsavedExport();
       }
 
       function updateStats() {
@@ -3113,6 +4679,27 @@
           applyTransform();
         }
         if (tooltip.classList.contains("on")) moveTooltip(e);
+        // Text box drag
+        if (isDraggingTB && tbDragEl && tbDragObj) {
+          const rect = canvasWrap.getBoundingClientRect();
+          tbDragObj.x = (e.clientX - rect.left - panX) / scale - tbDragOffX;
+          tbDragObj.y = (e.clientY - rect.top - panY) / scale - tbDragOffY;
+          tbDragEl.style.left = tbDragObj.x + "px";
+          tbDragEl.style.top = tbDragObj.y + "px";
+        }
+        // Text box resize
+        if (isResizingTB && tbResizeObj && tbResizeEl) {
+          const dw = e.clientX - tbResizeStartX;
+          const dh = e.clientY - tbResizeStartY;
+          const nw = Math.max(80, tbResizeStartW + dw);
+          const nh = Math.max(40, tbResizeStartH + dh);
+          tbResizeObj.w = nw;
+          tbResizeObj.h = nh;
+          tbResizeEl.style.width = nw + "px";
+          tbResizeEl.style.minHeight = nh + "px";
+        }
+        // Forward to label drag handler
+        if (window._labelDragMove) window._labelDragMove(e);
       });
 
       window.addEventListener("mouseup", () => {
@@ -3124,7 +4711,15 @@
         isDragging = false;
         dragNode = null;
         isPanning = false;
+        isDraggingTB = false;
+        tbDragEl = null;
+        tbDragObj = null;
+        isResizingTB = false;
+        tbResizeObj = null;
+        tbResizeEl = null;
         canvasWrap.style.cursor = "";
+        // Forward to label drag handler
+        if (window._labelDragUp) window._labelDragUp();
       });
 
       /* ════════════════════════════════
@@ -3199,6 +4794,24 @@
           e.target.closest("#svg-layer")
         ) {
           if (dpPanel.classList.contains("open")) requestClosePanel();
+          // Close conn editor on outside click
+          if (
+            document.getElementById("conn-editor").classList.contains("open")
+          ) {
+            if (connEditorDirty) {
+              document
+                .getElementById("modal-conn-unsaved")
+                .classList.add("show");
+            } else {
+              _forceCloseConnEditor();
+            }
+          }
+          // Deselect text boxes
+          document
+            .querySelectorAll(".text-box.selected")
+            .forEach((e) => e.classList.remove("selected"));
+          selectedTextBox = null;
+
           if (connectMode) {
             connectSource = null;
             updateHint();
@@ -3278,6 +4891,14 @@
               label,
               color,
               dashed,
+              lineStyle: "curve",
+              dashStyle: dashed ? "dashed" : "solid",
+              arrowType: "end",
+              strokeWidth: 2,
+              labelFontSize: 9,
+              labelPos: 50,
+              labelOffX: 0,
+              labelOffY: -12,
             });
             renderConnections();
             updateStats();
@@ -3321,7 +4942,7 @@
           }
         });
 
-        // ── Entry Source: inject real data upload section ──
+        // ── Fuente de la entrada: inject real data upload section ──
         if (n.type === "entry") {
           html += buildRealDataUploadUI(n);
         }
@@ -3369,10 +4990,15 @@
             });
           }
         }
+
+        // Render initial preview
+        try {
+          renderDetailPreview(n);
+        } catch (e) {}
       }
 
       /* ════════════════════════════════
-   REAL DATA UPLOAD (Entry Source)
+   REAL DATA UPLOAD (Fuente de la entrada)
 ════════════════════════════════ */
       function buildRealDataUploadUI(n) {
         const hasData = !!realContactsData;
@@ -3602,11 +5228,28 @@
         dpPanel.classList.remove("open");
         deselect();
         clearDirty();
+        selectedNode = null;
       }
 
       function requestClosePanel(afterFn) {
         if (panelDirty) {
           pendingAction = afterFn || null;
+          // Update modal text based on context
+          const msg = document.querySelector("#modal-unsaved .modal-msg");
+          const applyBtn = document.querySelector("#modal-unsaved .mbtn-apply");
+          if (afterFn) {
+            // Switching to another node
+            if (msg)
+              msg.textContent =
+                "Tienes cambios en el panel que no has aplicado aún. ¿Qué deseas hacer?";
+            if (applyBtn) applyBtn.textContent = "Aplicar y continuar";
+          } else {
+            // Closing the panel (X button)
+            if (msg)
+              msg.textContent =
+                "Tienes cambios sin aplicar. ¿Deseas guardarlos antes de cerrar?";
+            if (applyBtn) applyBtn.textContent = "Aplicar y cerrar";
+          }
           document.getElementById("modal-unsaved").classList.add("show");
         } else {
           closePanel();
@@ -3630,11 +5273,16 @@
       function applyAndProceed() {
         document.getElementById("modal-unsaved").classList.remove("show");
         applyPanel();
-        clearDirty();
-        closePanel();
         if (pendingAction) {
+          // Switching to another node: close current, then open new one
+          clearDirty();
+          closePanel();
           pendingAction();
           pendingAction = null;
+        } else {
+          // X button: apply changes and close the panel
+          clearDirty();
+          closePanel();
         }
       }
 
@@ -3662,7 +5310,11 @@
         renderConnections();
         clearDirty();
         setUnsavedExport();
-        updateStatsPanel(); // sync stats panel with any field changes (e.g. contacts)
+        updateStatsPanel();
+        // Update live preview in panel
+        try {
+          renderDetailPreview(selectedNode);
+        } catch (e) {}
         const el = document.getElementById("n-" + selectedNode.id);
         if (el) {
           el.style.filter = "brightness(1.08)";
@@ -3672,6 +5324,190 @@
         }
         showNotif("✅ Cambios aplicados");
       }
+
+      /* ════════════════════════════════
+   LIVE PREVIEW IN DETAIL PANEL
+════════════════════════════════ */
+      const PREVIEW_TYPES = new Set([
+        "email",
+        "sms",
+        "whatsapp",
+        "push",
+        "banner",
+        "popup",
+      ]);
+      // pmCustomHTML: stores the HTML *template* (with {{placeholders}}) per node
+      const pmCustomHTML = {};
+
+      /* Show/hide the preview button in detail panel */
+      function renderDetailPreview(n) {
+        const wrap = document.getElementById("dp-preview-wrap");
+        if (!wrap) return;
+        wrap.style.display = PREVIEW_TYPES.has(n.type) ? "block" : "none";
+      }
+
+      /* Get live field values from the open panel or node.data */
+      function pmGetLiveVars(n) {
+        function lv(k) {
+          const el = document.getElementById("fp-" + k);
+          return el ? el.value : n.data[k] || "";
+        }
+        return {
+          "{{title}}": lv("title") || n.data.title || "",
+          "{{subtitle}}": lv("subtitle") || n.data.subtitle || "",
+          "{{subject}}": lv("subject") || n.data.subject || "",
+          "{{from}}": lv("from") || n.data.from || "",
+          "{{time}}": lv("time") || n.data.time || "",
+          "{{template}}": lv("template") || n.data.template || "",
+          "{{message}}": lv("message") || n.data.message || "",
+          "{{senderId}}": lv("senderId") || n.data.senderId || "",
+          "{{placement}}": lv("placement") || n.data.placement || "",
+          "{{formField}}": lv("formField") || n.data.formField || "",
+          "{{splitA}}": lv("splitA") || n.data.splitA || "50",
+          "{{splitB}}": lv("splitB") || n.data.splitB || "50",
+          "{{condition}}": lv("condition") || n.data.condition || "",
+          "{{duration}}": lv("duration") || n.data.duration || "",
+          "{{unit}}": lv("unit") || n.data.unit || "",
+          "{{contacts}}": lv("contacts") || n.data.contacts || "",
+          "{{segment}}": lv("segment") || n.data.segment || "",
+        };
+      }
+
+      /* Replace all {{placeholders}} in a template with live values */
+      function pmInjectVars(template, vars) {
+        let html = template;
+        for (const [key, val] of Object.entries(vars)) {
+          html = html.split(key).join(val);
+        }
+        return html;
+      }
+
+      /* Build default preview HTML for a node */
+      function buildNodePreviewHTML(n) {
+        const vars = pmGetLiveVars(n);
+        const ln = { type: n.type, id: n.id, data: {} };
+        for (const [key, val] of Object.entries(vars)) {
+          const k = key.replace(/[{}]/g, "");
+          ln.data[k] = val;
+        }
+        switch (n.type) {
+          case "email":
+            return buildEmailPreview(ln);
+          case "sms":
+            return buildSMSPreview(ln);
+          case "whatsapp":
+            return buildWAPreview(ln);
+          case "push":
+            return buildPushPreview(ln);
+          case "banner":
+            return buildBannerPreview(ln);
+          case "popup":
+            return buildPopupPreview(ln);
+          default:
+            return "";
+        }
+      }
+
+      /* Render preview: inject live vars into the stored template */
+      function pmRenderWithVars(n) {
+        if (pmCustomHTML[n.id] !== undefined) {
+          return pmInjectVars(pmCustomHTML[n.id], pmGetLiveVars(n));
+        }
+        return buildNodePreviewHTML(n);
+      }
+
+      /* ── PREVIEW MODAL ── */
+      let pmNode = null;
+
+      function openPreviewModal() {
+        if (!selectedNode) return;
+        pmNode = selectedNode;
+        const t = NODE_TYPES[pmNode.type];
+        document.getElementById("pm-icon").textContent = t.icon;
+        document.getElementById("pm-title").textContent =
+          (pmNode.data.title || t.label) + " — Vista previa";
+        // Show editor with the raw template (placeholders visible), preview with injected values
+        const template =
+          pmCustomHTML[pmNode.id] !== undefined
+            ? pmCustomHTML[pmNode.id]
+            : buildNodePreviewHTML(pmNode);
+        document.getElementById("pm-editor").value = template;
+        document.getElementById("pm-content").innerHTML =
+          pmRenderWithVars(pmNode);
+        switchPMTab("preview");
+        document.getElementById("preview-modal-overlay").style.display = "flex";
+      }
+
+      function closePreviewModal() {
+        document.getElementById("preview-modal-overlay").style.display = "none";
+        pmNode = null;
+      }
+
+      function switchPMTab(tab) {
+        const pp = document.getElementById("pm-pane-prev");
+        const ph = document.getElementById("pm-pane-html");
+        const tp = document.getElementById("pm-tab-prev");
+        const th = document.getElementById("pm-tab-html");
+        if (tab === "preview") {
+          // Re-render with latest live values when switching to preview
+          if (pmNode)
+            document.getElementById("pm-content").innerHTML =
+              pmRenderWithVars(pmNode);
+          pp.style.display = "flex";
+          ph.style.display = "none";
+          tp.style.borderBottomColor = "var(--sf-blue)";
+          tp.style.color = "var(--sf-blue)";
+          th.style.borderBottomColor = "transparent";
+          th.style.color = "var(--muted)";
+        } else {
+          pp.style.display = "none";
+          ph.style.display = "flex";
+          tp.style.borderBottomColor = "transparent";
+          tp.style.color = "var(--muted)";
+          th.style.borderBottomColor = "var(--sf-blue)";
+          th.style.color = "var(--sf-blue)";
+        }
+      }
+
+      function pmApplyHTML() {
+        if (!pmNode) return;
+        // Save the raw template (with {{placeholders}})
+        const template = document.getElementById("pm-editor").value;
+        pmCustomHTML[pmNode.id] = template;
+        // Show preview with live values injected
+        document.getElementById("pm-content").innerHTML = pmInjectVars(
+          template,
+          pmGetLiveVars(pmNode),
+        );
+        switchPMTab("preview");
+        showNotif("✅ HTML aplicado con variables en tiempo real");
+      }
+
+      function pmResetHTML() {
+        if (!pmNode) return;
+        delete pmCustomHTML[pmNode.id];
+        const html = buildNodePreviewHTML(pmNode);
+        document.getElementById("pm-editor").value = html;
+        document.getElementById("pm-content").innerHTML = html;
+        showNotif("↺ Preview restaurado al original");
+      }
+
+      /* Insert variable at cursor in editor */
+      function pmInsertVar(v) {
+        const ta = document.getElementById("pm-editor");
+        if (!ta) return;
+        const s = ta.selectionStart,
+          e = ta.selectionEnd;
+        ta.value = ta.value.substring(0, s) + v + ta.value.substring(e);
+        ta.selectionStart = ta.selectionEnd = s + v.length;
+        ta.focus();
+      }
+
+      /* Close modal on overlay click */
+      window._pmOverlayClick = function (e) {
+        if (e.target && e.target.id === "preview-modal-overlay")
+          closePreviewModal();
+      };
 
       function deleteNode() {
         if (!selectedNode) return;
@@ -3706,6 +5542,24 @@
         const rect = canvasWrap.getBoundingClientRect();
         const x = (e.clientX - rect.left - panX) / scale;
         const y = (e.clientY - rect.top - panY) / scale;
+
+        // Special: text box
+        if (dragType === "__textbox__") {
+          const tb = {
+            id: ++textBoxIdCounter,
+            x: Math.max(0, x - 80),
+            y: Math.max(0, y - 30),
+            w: 160,
+            h: 60,
+            text: "Escribe aquí...",
+          };
+          textBoxes.push(tb);
+          buildTextBoxEl(tb);
+          setUnsavedExport();
+          dragType = null;
+          return;
+        }
+
         const t = NODE_TYPES[dragType];
         const n = {
           id: ++nodeIdCounter,
@@ -3799,6 +5653,7 @@
         const data = {
           nodes,
           connections,
+          textBoxes,
           title,
           meta: { saved: new Date().toISOString(), journeyMeta },
         };
@@ -3855,6 +5710,7 @@
         closePanel();
         nodes = pendingImportData.nodes;
         connections = pendingImportData.connections || [];
+        textBoxes = pendingImportData.textBoxes || [];
         if (pendingImportData.title)
           document.getElementById("journey-title-display").textContent =
             pendingImportData.title;
@@ -4448,7 +6304,7 @@
         else if (type === "popup") box.innerHTML = buildPopupPreview(n);
         else if (["decision", "split", "random_split"].includes(type))
           box.innerHTML = buildDecisionPreview(n);
-        else if (type === "wait") box.innerHTML = buildWaitPreview(n);
+        else if (type === "wait") box.innerHTML = buildTiempoPreview(n);
         else if (type === "join") box.innerHTML = buildJoinPreview(n);
         else if (type === "entry") box.innerHTML = buildEntryPreview(n);
         else if (["exit_ok", "exit_bad"].includes(type))
@@ -4458,7 +6314,7 @@
 
       /* ── ENTRY ── */
       function buildEntryPreview(n) {
-        const title = n.data.title || "Entry Source";
+        const title = n.data.title || "Fuente de la entrada";
         const subtitle = n.data.subtitle || "";
         const file = n.data.file || "—";
         const contacts = n.data.contacts || "—";
@@ -4527,7 +6383,7 @@
 
       /* ── EMAIL ── */
       function buildEmailPreview(n) {
-        const title = n.data.title || "Send Email";
+        const title = n.data.title || "Correo electronico";
         const subject = n.data.subject || title;
         const from = n.data.from || "noreply@viveterpel.com";
         const body =
@@ -4660,9 +6516,9 @@
   </div>`;
       }
 
-      /* ── PUSH NOTIFICATION ── */
+      /* ── Notificación push ── */
       function buildPushPreview(n) {
-        const title = n.data.title || "Push Notification";
+        const title = n.data.title || "Notificación push";
         const msg = n.data.message || "¡Tienes una notificación nueva!";
         const time = n.data.time || "";
         const subtitle = n.data.subtitle || "";
@@ -4791,8 +6647,8 @@
       }
 
       /* ── WAIT ── */
-      function buildWaitPreview(n) {
-        const title = n.data.title || "Wait";
+      function buildTiempoPreview(n) {
+        const title = n.data.title || "Tiempo";
         const dur = n.data.duration || "?";
         const unit = n.data.unit || "días";
         const subtitle = n.data.subtitle || "";
@@ -4851,7 +6707,8 @@
         const bg = ok ? "#dcfce7" : "#fee2e2";
         const bc = ok ? "#04844b" : "#c23934";
         const ico = ok ? "🏆" : "💤";
-        const title = n.data.title || (ok ? "Exit Positivo" : "Exit Negativo");
+        const title =
+          n.data.title || (ok ? "Salida Positiva" : "Salida Negativa");
         const subtitle =
           n.data.subtitle ||
           (ok
@@ -4892,6 +6749,366 @@
       renderAll();
       resetZoom();
       updateStatsPanel();
+      // Wire preview modal overlay click (DOM is ready here)
+      const _pmOv = document.getElementById("preview-modal-overlay");
+      if (_pmOv)
+        _pmOv.addEventListener("click", (e) => {
+          if (e.target === _pmOv) closePreviewModal();
+        });
     </script>
+
+    <!-- PREVIEW MODAL -->
+    <div
+      id="preview-modal-overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9500;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          border-radius: 12px;
+          width: 94vw;
+          max-width: 760px;
+          max-height: 94vh;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            background: var(--sf-blue);
+            color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+          "
+        >
+          <div
+            style="
+              font-size: 13px;
+              font-weight: 700;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            "
+          >
+            <span id="pm-icon"></span><span id="pm-title">Vista previa</span>
+          </div>
+          <button
+            onclick="closePreviewModal()"
+            style="
+              background: none;
+              border: none;
+              color: #fff;
+              font-size: 18px;
+              cursor: pointer;
+              padding: 2px 8px;
+              border-radius: 4px;
+            "
+            onmouseover="this.style.background = 'rgba(255,255,255,0.2)'"
+            onmouseout="this.style.background = 'none'"
+          >
+            ✕
+          </button>
+        </div>
+        <div
+          style="
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: #f8f8f8;
+            flex-shrink: 0;
+          "
+        >
+          <button
+            id="pm-tab-prev"
+            onclick="switchPMTab('preview')"
+            style="
+              padding: 9px 20px;
+              font-size: 11px;
+              font-weight: 700;
+              border: none;
+              border-bottom: 2.5px solid var(--sf-blue);
+              background: none;
+              color: var(--sf-blue);
+              cursor: pointer;
+            "
+          >
+            👁 Vista previa
+          </button>
+          <button
+            id="pm-tab-html"
+            onclick="switchPMTab('html')"
+            style="
+              padding: 9px 20px;
+              font-size: 11px;
+              font-weight: 700;
+              border: none;
+              border-bottom: 2.5px solid transparent;
+              background: none;
+              color: var(--muted);
+              cursor: pointer;
+            "
+          >
+            ⌨️ Editar HTML
+          </button>
+        </div>
+        <div
+          id="pm-pane-prev"
+          style="
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+          "
+        >
+          <div id="pm-content" style="width: 100%"></div>
+        </div>
+        <div
+          id="pm-pane-html"
+          style="
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            padding: 12px;
+            gap: 8px;
+            min-height: 0;
+            overflow: hidden;
+          "
+        >
+          <!-- Variables hint -->
+          <div
+            style="
+              background: #1e2a3a;
+              border-radius: 6px;
+              padding: 8px 12px;
+              flex-shrink: 0;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                color: #7dd3fc;
+                font-weight: 700;
+                margin-bottom: 6px;
+              "
+            >
+              📌 Variables disponibles — se reemplazan automáticamente con los
+              datos del nodo:
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 5px">
+              <span
+                onclick="pmInsertVar('{{title}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Nombre del nodo"
+                >{{title}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{subtitle}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Descripción"
+                >{{subtitle}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{subject}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Asunto email"
+                >{{subject}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{from}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Remitente"
+                >{{from}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{time}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Hora de envío"
+                >{{time}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{template}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Template"
+                >{{template}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{message}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Mensaje"
+                >{{message}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{senderId}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Sender ID"
+                >{{senderId}}</span
+              >
+              <span
+                onclick="pmInsertVar('{{contacts}}')"
+                style="
+                  background: #0f3460;
+                  color: #93c5fd;
+                  font-size: 9.5px;
+                  font-weight: 700;
+                  padding: 2px 8px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-family: monospace;
+                "
+                title="Contactos"
+                >{{contacts}}</span
+              >
+            </div>
+            <div style="font-size: 9px; color: #64748b; margin-top: 5px">
+              💡 Haz clic en una variable para insertarla en el cursor · Los
+              valores se actualizan en tiempo real desde el panel
+            </div>
+          </div>
+          <textarea
+            id="pm-editor"
+            spellcheck="false"
+            style="
+              flex: 1;
+              min-height: 260px;
+              font-family: &quot;Courier New&quot;, monospace;
+              font-size: 11px;
+              border: 1px solid var(--border);
+              border-radius: 6px;
+              padding: 10px;
+              resize: none;
+              outline: none;
+              line-height: 1.6;
+              background: #1e1e1e;
+              color: #d4d4d4;
+            "
+          ></textarea>
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              justify-content: flex-end;
+              flex-shrink: 0;
+            "
+          >
+            <button
+              onclick="pmResetHTML()"
+              style="
+                padding: 7px 16px;
+                background: #f3f3f3;
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 700;
+                cursor: pointer;
+                color: #555;
+              "
+            >
+              ↺ Restaurar original
+            </button>
+            <button
+              onclick="pmApplyHTML()"
+              style="
+                padding: 7px 18px;
+                background: var(--sf-blue);
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 700;
+                cursor: pointer;
+              "
+            >
+              ✓ Aplicar HTML
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
