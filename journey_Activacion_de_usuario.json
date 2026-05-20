@@ -1,0 +1,687 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "type": "entry",
+      "x": 0,
+      "y": 451.4634146341463,
+      "data": {
+        "title": "Base de datos",
+        "subtitle": "inactivos 6 mes ",
+        "file": "inactivos.csv",
+        "contacts": "~800,000"
+      }
+    },
+    {
+      "id": 3,
+      "type": "split",
+      "x": 347.56097560975604,
+      "y": 450.48780487804873,
+      "data": {
+        "title": "Actividad reciente de vive terpel",
+        "subtitle": "¿El usuario a entrado recientemente a la aplicacion de vive terpel?",
+        "time": "",
+        "condition": "App Descargada",
+        "waitHours": ""
+      }
+    },
+    {
+      "id": 51,
+      "type": "decision",
+      "x": 150.4878048780488,
+      "y": 450.24390243902445,
+      "data": {
+        "title": "Compras desde marzo o 6 mes ",
+        "subtitle": "El usuario a realizado compras desde marzo o 6 meses anteriores ",
+        "time": "",
+        "condition": ""
+      }
+    },
+    {
+      "id": 52,
+      "type": "exit_ok",
+      "x": 159.02439024390247,
+      "y": 753.9024390243903,
+      "data": {
+        "title": "Exito Positivo",
+        "subtitle": "el usuario si realizo compras ",
+        "segment": ""
+      }
+    },
+    {
+      "id": 53,
+      "type": "push",
+      "x": 305.36585365853654,
+      "y": 247.56097560975604,
+      "data": {
+        "title": "Push App + BannerPush",
+        "subtitle": "¡Bienvenido de vuelta! \nBono esperando Banner nativo: Tráfico a",
+        "time": "",
+        "message": "Mi Cuenta/Promoción\"Intensidad: Alta (ya tiene hábito de app"
+      }
+    },
+    {
+      "id": 55,
+      "type": "wait",
+      "x": 539.5121951219512,
+      "y": 254.39643653242388,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "Tiempo estimado 1 dia",
+        "duration": "1",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 56,
+      "type": "decision",
+      "x": 777.3170731707319,
+      "y": 244.34379190587845,
+      "data": {
+        "title": "¿Redimió bono en la plataforma?",
+        "subtitle": "El usuario realizo la accion de rediccion del bono en la plataforma",
+        "time": "",
+        "condition": "Redimió bono"
+      }
+    },
+    {
+      "id": 57,
+      "type": "email",
+      "x": 733.4146341463415,
+      "y": 0,
+      "data": {
+        "title": "Email Urgencia Asunto",
+        "subtitle": "Últimas 48 horas para tu bono\"Deep-link a compra/redención",
+        "time": "",
+        "subject": "Email Urgencia ",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 60,
+      "type": "wait",
+      "x": 964.1923221466755,
+      "y": 9.20014645630993,
+      "data": {
+        "title": "Tiempo ",
+        "subtitle": "Espera por 3 dias ",
+        "duration": "3",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 61,
+      "type": "decision",
+      "x": 1168.953651794137,
+      "y": 0,
+      "data": {
+        "title": "¿Redimió bono en la plataforma?",
+        "subtitle": "El usuario realizo la accion de rediccion del bono en la plataforma",
+        "time": "",
+        "condition": "Redimió bono"
+      }
+    },
+    {
+      "id": 63,
+      "type": "whatsapp",
+      "x": 1426.6532764236254,
+      "y": 0.2106246669091867,
+      "data": {
+        "title": "WhatsApp (último toque)",
+        "subtitle": "Conversacional + link directo a plataforma",
+        "time": "",
+        "message": "Estas a un toque de redimir tu bono ",
+        "template": ""
+      }
+    },
+    {
+      "id": 64,
+      "type": "banner",
+      "x": 1429.6497836867588,
+      "y": 282.1140145720543,
+      "data": {
+        "title": "App Banner",
+        "subtitle": ""
+      }
+    },
+    {
+      "id": 66,
+      "type": "wait",
+      "x": 1426.6532764236254,
+      "y": 134.0546157535427,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "El tiempo estimado es de 2 horas",
+        "duration": "2",
+        "unit": "horas"
+      }
+    },
+    {
+      "id": 67,
+      "type": "wait",
+      "x": 1624.4227557904421,
+      "y": 7.202474947554222,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "Tiempo estimado 1 dia",
+        "duration": "1",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 68,
+      "type": "decision",
+      "x": 2040.9372653660105,
+      "y": 1.9976715087557295,
+      "data": {
+        "title": "¿Redimió bono en la plataforma?",
+        "subtitle": "El usuario realizo la accion de rediccion del bono en la plataforma",
+        "time": "",
+        "condition": "Redimió bono"
+      }
+    },
+    {
+      "id": 71,
+      "type": "exit_ok",
+      "x": 2740.987320985112,
+      "y": 0,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "El usuario pasa por activacion para el siguiente mes",
+        "segment": "El usuario se reactivo y se continua campaña para el siguiente mes"
+      }
+    },
+    {
+      "id": 72,
+      "type": "email",
+      "x": 2443.520574576772,
+      "y": 0,
+      "data": {
+        "title": "Bono confirmado",
+        "subtitle": "Invitación a programa de lealta:\nLa idea es identificar tipos de compradores \nEl usuario recibe un email de felicitaciones sigue atebnto en los proximos meses que tenemos muchas sopresas para ti ",
+        "time": "",
+        "subject": "",
+        "from": "Felicitaciones",
+        "template": ""
+      }
+    },
+    {
+      "id": 73,
+      "type": "exit_bad",
+      "x": 2043.933772629145,
+      "y": 363.7868392604508,
+      "data": {
+        "title": "Exit Negativo",
+        "subtitle": "El usurio queda pendiente para continuar en campaña, este se llevara por 3 meses hasta que se consiga reactivar al usuario",
+        "segment": "Usuarios que no han activado o realizado compra",
+        "action": "Por activar cliente"
+      }
+    },
+    {
+      "id": 76,
+      "type": "email",
+      "x": 304.9607242572866,
+      "y": 797.281556660443,
+      "data": {
+        "title": "Email Awareness + CTA App",
+        "subtitle": "Descarga la app → reclama tu bono\n\"Beneficio: Bonos + experiencia mejorada Link: App Store/Play Store + referencia",
+        "time": "",
+        "subject": "Descarga la app ",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 77,
+      "type": "wait",
+      "x": 304.96072425728653,
+      "y": 1017.0254226235727,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "El tiempo estimado es de un dia ",
+        "duration": "1",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 78,
+      "type": "decision",
+      "x": 541.6847980448398,
+      "y": 1007.0370650797938,
+      "data": {
+        "title": "¿El usurio a entrado a la app recientemente?",
+        "subtitle": "El usuario a descargado la aplicacion de terpel y redimio el bono",
+        "time": "",
+        "condition": "Redimió bono"
+      }
+    },
+    {
+      "id": 79,
+      "type": "email",
+      "x": 506.45841935902365,
+      "y": 1324.3320499124306,
+      "data": {
+        "title": "Bono confirmado",
+        "subtitle": "Invitación a programa de lealta:\nLa idea es identificar tipos de compradores \nEl usuario recibe un email de felicitaciones sigue atebnto en los proximos meses que tenemos muchas sopresas para ti ",
+        "time": "",
+        "subject": "Felicitaciones ",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 80,
+      "type": "exit_ok",
+      "x": 550.358573503554,
+      "y": 1558.495694293659,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "En espera para la campaña del siguiente mes ",
+        "segment": ""
+      }
+    },
+    {
+      "id": 81,
+      "type": "join",
+      "x": 1187.714501280124,
+      "y": 577.0870777478042,
+      "data": {
+        "title": "Join",
+        "subtitle": ""
+      }
+    },
+    {
+      "id": 83,
+      "type": "whatsapp",
+      "x": 727.1879559047482,
+      "y": 1010.5338992611116,
+      "data": {
+        "title": "Tienes un bono",
+        "subtitle": "Descarga ViveTerpel app\"Formato corto + número de soporte",
+        "time": "",
+        "message": "Descarga la app de vive terpel y reclama tu bono",
+        "template": ""
+      }
+    },
+    {
+      "id": 84,
+      "type": "wait",
+      "x": 964.2743703711881,
+      "y": 1018.4936742925406,
+      "data": {
+        "title": "Tiempo ",
+        "subtitle": "Tiempo extimado de un dia ",
+        "duration": "1",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 85,
+      "type": "decision",
+      "x": 1188.3210874824242,
+      "y": 1006.9303343782435,
+      "data": {
+        "title": "¿Redimió bono en la plataforma?",
+        "subtitle": "El usuario realizo la accion de rediccion del bono en la plataforma",
+        "time": "",
+        "condition": "Redimió bono"
+      }
+    },
+    {
+      "id": 86,
+      "type": "email",
+      "x": 1416.3414634146343,
+      "y": 1013.6585365853659,
+      "data": {
+        "title": "Recordatorio de Bono",
+        "subtitle": "Se le recuerda al usuario que tiene un bono pendiente ",
+        "time": "",
+        "subject": "Bono pendiente por reclamar",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 87,
+      "type": "sms",
+      "x": 1419.9516208416244,
+      "y": 1237.7534889196882,
+      "data": {
+        "title": "Recordatorio SMS",
+        "subtitle": "Se le recuerda al usuario que tiene un bono pendiente",
+        "time": "",
+        "message": "Recuerda que tienes un bono pendiente por reclamar solo debes entrar a la app y realizar una compra",
+        "senderId": ""
+      }
+    },
+    {
+      "id": 88,
+      "type": "wait",
+      "x": 1663.9024390243906,
+      "y": 1020.9756097560978,
+      "data": {
+        "title": "Tiempo ",
+        "subtitle": "Tiempo extimado de 3 dias",
+        "duration": "3",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 89,
+      "type": "decision",
+      "x": 2113.246473278745,
+      "y": 1008.8991773508139,
+      "data": {
+        "title": "¿Redimió bono en la plataforma?",
+        "subtitle": "El usuario realizo la accion de rediccion del bono en la plataforma",
+        "time": "",
+        "condition": "Redimió bono"
+      }
+    },
+    {
+      "id": 90,
+      "type": "exit_bad",
+      "x": 2464.907448262874,
+      "y": 1010.0617036251931,
+      "data": {
+        "title": "Exit Negativo",
+        "subtitle": "El usurio queda pendiente para continuar en campaña, este se llevara por 3 meses hasta que se consiga reactivar al usuario",
+        "segment": "Usuarios que no han activado o realizado compra",
+        "action": "Por activar cliente"
+      }
+    }
+  ],
+  "connections": [
+    {
+      "id": "c1779206792801",
+      "from": 51,
+      "to": 52,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779206857779",
+      "from": 51,
+      "to": 3,
+      "label": "NO",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779207068249",
+      "from": 3,
+      "to": 53,
+      "label": "SI",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779207161299",
+      "from": 53,
+      "to": 55,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779207349697",
+      "from": 56,
+      "to": 57,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779207388464",
+      "from": 1,
+      "to": 51,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779207412064",
+      "from": 55,
+      "to": 56,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779207794532",
+      "from": 57,
+      "to": 60,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779207931531",
+      "from": 61,
+      "to": 63,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779207948464",
+      "from": 60,
+      "to": 61,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779208209329",
+      "from": 63,
+      "to": 66,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779208212846",
+      "from": 66,
+      "to": 64,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779208250412",
+      "from": 63,
+      "to": 67,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779208283695",
+      "from": 67,
+      "to": 68,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779208526944",
+      "from": 68,
+      "to": 72,
+      "label": "SI",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779208529710",
+      "from": 72,
+      "to": 71,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779208561244",
+      "from": 68,
+      "to": 73,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779209121923",
+      "from": 3,
+      "to": 76,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779209157323",
+      "from": 76,
+      "to": 77,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779209190256",
+      "from": 77,
+      "to": 78,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779209558923",
+      "from": 78,
+      "to": 79,
+      "label": "SI",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779209584705",
+      "from": 79,
+      "to": 80,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779209686055",
+      "from": 56,
+      "to": 81,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779209872971",
+      "from": 61,
+      "to": 81,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779210002003",
+      "from": 81,
+      "to": 72,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779210131886",
+      "from": 78,
+      "to": 83,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779210269838",
+      "from": 83,
+      "to": 84,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779210459499",
+      "from": 84,
+      "to": 85,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779210581915",
+      "from": 85,
+      "to": 81,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779210788647",
+      "from": 85,
+      "to": 86,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779210795147",
+      "from": 86,
+      "to": 88,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779210936696",
+      "from": 86,
+      "to": 87,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779210983762",
+      "from": 88,
+      "to": 89,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779211048079",
+      "from": 89,
+      "to": 72,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779211100495",
+      "from": 89,
+      "to": 90,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    }
+  ],
+  "title": "\n            Journey B · Inactivos 4-6 meses\n          ",
+  "meta": {
+    "saved": "2026-05-19T17:21:03.461Z",
+    "journeyMeta": {
+      "audiencia": "~~800,000 contactos",
+      "duracion": "11 días",
+      "canales": "Email, SMS, WhatsApp, Push, App Banner",
+      "estrategia": "Email-first intensivo"
+    }
+  }
+}

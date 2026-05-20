@@ -1,0 +1,497 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "type": "entry",
+      "x": 0,
+      "y": 529.5121951219512,
+      "data": {
+        "title": "Usuarios Registrados sin cédula ",
+        "subtitle": "Usuarios para solicitar Numero de cedula",
+        "file": "",
+        "contacts": "~250,000"
+      }
+    },
+    {
+      "id": 53,
+      "type": "random_split",
+      "x": 320.00000000000006,
+      "y": 523.4146341463415,
+      "data": {
+        "title": "AB Testing",
+        "subtitle": "testiar que tipo de beneficios le interesan al usuario",
+        "splitA": "50",
+        "splitB": "50"
+      }
+    },
+    {
+      "id": 54,
+      "type": "email",
+      "x": 279.7560975609756,
+      "y": 218.2926829268293,
+      "data": {
+        "title": "Descubre cómo ganar con Puntos Terpel",
+        "subtitle": "Beneficio AcumulaEn cada compra (gasolina,Altoque, Sbarro)",
+        "time": "",
+        "subject": "Descubre cómo ganar con Puntos Terpel",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 55,
+      "type": "email",
+      "x": 282.1951219512195,
+      "y": 777.0731707317074,
+      "data": {
+        "title": "Descubre cómo ganar con Puntos Terpel",
+        "subtitle": "Beneficio: Canjea Descuentos + ofertas exclusivas",
+        "time": "",
+        "subject": "Descubre cómo ganar con Puntos Terpel",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 56,
+      "type": "wait",
+      "x": 489.5121951219513,
+      "y": 535.609756097561,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "Tiempo estimado de 3 dias",
+        "duration": "3",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 57,
+      "type": "split",
+      "x": 772.439024390244,
+      "y": 524.6341463414634,
+      "data": {
+        "title": "¿Abrió el email ?",
+        "subtitle": "El usuario abrio el email",
+        "time": "",
+        "condition": "¿Abrió el email?",
+        "waitHours": ""
+      }
+    },
+    {
+      "id": 58,
+      "type": "email",
+      "x": 993.1707317073171,
+      "y": 529.5121951219513,
+      "data": {
+        "title": "Email Activación",
+        "subtitle": "¿Cuál es tu bono?\n▪ Bono: $25,000 en crédito válido en cualquier tienda Terpel\n▪ O Descuento: 20% en tu primera compra de la semana⏰ Válido SOLO esta semana (7 días)",
+        "time": "",
+        "subject": "Activa YA y gana [BONO/DESCUENTO]",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 59,
+      "type": "sms",
+      "x": 739.5121951219511,
+      "y": 878.2926829268295,
+      "data": {
+        "title": "Recordatorio por SMS",
+        "subtitle": "El usuario recibe un recordatorio para redimir el bono",
+        "time": "",
+        "message": "",
+        "senderId": ""
+      }
+    },
+    {
+      "id": 60,
+      "type": "email",
+      "x": 735.8536585365855,
+      "y": 740.4878048780489,
+      "data": {
+        "title": "Recordatorio Email",
+        "subtitle": "El usuario recibe un recordatorio para redimir el bono",
+        "time": "",
+        "subject": "",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 61,
+      "type": "wait",
+      "x": 743.1707317073171,
+      "y": 1046.5853658536587,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "tiempo de expera de un dia ",
+        "duration": "1",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 62,
+      "type": "decision",
+      "x": 1044.3902439024391,
+      "y": 1035.6097560975609,
+      "data": {
+        "title": "¿Abrió el email ?",
+        "subtitle": "El usuario abrio el email",
+        "time": "",
+        "condition": "¿Abrió el email?"
+      }
+    },
+    {
+      "id": 63,
+      "type": "whatsapp",
+      "x": 1228.5365853658536,
+      "y": 1039.268292682927,
+      "data": {
+        "title": "Recordatorio mediante WhatsApp",
+        "subtitle": "El usuario recibe un recordatorio de redimir el bono",
+        "time": "",
+        "message": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 64,
+      "type": "wait",
+      "x": 1256.5853658536587,
+      "y": 535.609756097561,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "Espera de 7 dias ",
+        "duration": "7",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 66,
+      "type": "decision",
+      "x": 1495.6097560975616,
+      "y": 526.2541975745495,
+      "data": {
+        "title": "Compro en los ultimos 7 dias ",
+        "subtitle": "El usurio realizo alguna compra con su cedula en los ultimos 7 dias ",
+        "time": "",
+        "condition": "¿Usuario realizo compra ?"
+      }
+    },
+    {
+      "id": 67,
+      "type": "exit_ok",
+      "x": 1504.8010334193616,
+      "y": 837.2275269981366,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "El usuario pasa por activacion para el siguiente mes",
+        "segment": "El usuario se reactivo y se continua campaña para el siguiente mes"
+      }
+    },
+    {
+      "id": 68,
+      "type": "whatsapp",
+      "x": 1676.638503953896,
+      "y": 530.0790832340074,
+      "data": {
+        "title": "Recordatorio + Ubicación Tienda",
+        "subtitle": "Se le recuerda al usuario que tiene un bono pendiente y se le da la ubicacion mas cercana ",
+        "time": "",
+        "message": "Hola, tienes bono $25k en Terpel. Tienda más cercana: [link ubicación]. ¡Úsalo esta semana!",
+        "template": ""
+      }
+    },
+    {
+      "id": 69,
+      "type": "wait",
+      "x": 1887.9335785006124,
+      "y": 537.4498416484277,
+      "data": {
+        "title": "Tiempo",
+        "subtitle": "Tiempo por 7 dias",
+        "duration": "7",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 70,
+      "type": "decision",
+      "x": 2102.5045456759594,
+      "y": 525.9842174482183,
+      "data": {
+        "title": "Compro en los ultimos 7 dias ",
+        "subtitle": "El usurio realizo alguna compra con su cedula en los ultimos 7 dias ",
+        "time": "",
+        "condition": "¿Usuario realizo compra ?"
+      }
+    },
+    {
+      "id": 71,
+      "type": "sms",
+      "x": 2307.247834965414,
+      "y": 532.5360027054808,
+      "data": {
+        "title": "Recordatorio SMS",
+        "subtitle": "Se le recuerda al usuario que tiene un bono por SMS",
+        "time": "",
+        "message": "",
+        "senderId": ""
+      }
+    },
+    {
+      "id": 72,
+      "type": "email",
+      "x": 2308.0668081225713,
+      "y": 641.4594326074701,
+      "data": {
+        "title": "Recordatorio Email",
+        "subtitle": "Se le recuerda al usuario que tiene un bono por Email",
+        "time": "",
+        "subject": "",
+        "from": "",
+        "template": ""
+      }
+    },
+    {
+      "id": 73,
+      "type": "wait",
+      "x": 2529.1895605551813,
+      "y": 540.725734277059,
+      "data": {
+        "title": "Tiempo ",
+        "subtitle": "Tiempo de espera 7 dias",
+        "duration": "7 dias",
+        "unit": "días"
+      }
+    },
+    {
+      "id": 74,
+      "type": "exit_ok",
+      "x": 2571.415644467129,
+      "y": 671.9279783035239,
+      "data": {
+        "title": "Exit Positivo",
+        "subtitle": "El usuario pasa por activacion para el siguiente mes",
+        "segment": "El usuario se reactivo y se continua campaña para el siguiente mes"
+      }
+    },
+    {
+      "id": 75,
+      "type": "exit_bad",
+      "x": 2761.8895910735564,
+      "y": 535.1594610581687,
+      "data": {
+        "title": "Exito Negativo",
+        "subtitle": "Se redirije para una campaña mas agresiva para activar de nuevo al usuario para el siguiente mes ",
+        "segment": "",
+        "action": ""
+      }
+    }
+  ],
+  "connections": [
+    {
+      "id": "c1779212226071",
+      "from": 1,
+      "to": 53,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779212239060",
+      "from": 53,
+      "to": 54,
+      "label": "50%",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779212243505",
+      "from": 53,
+      "to": 55,
+      "label": "50%",
+      "color": "#888",
+      "dashed": true
+    },
+    {
+      "id": "c1779212406087",
+      "from": 53,
+      "to": 56,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779212482020",
+      "from": 56,
+      "to": 57,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779212736218",
+      "from": 57,
+      "to": 58,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779212841184",
+      "from": 57,
+      "to": 60,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779212875284",
+      "from": 60,
+      "to": 59,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779212922417",
+      "from": 59,
+      "to": 61,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779212962033",
+      "from": 62,
+      "to": 58,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779212968100",
+      "from": 61,
+      "to": 62,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213023366",
+      "from": 62,
+      "to": 63,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779213124415",
+      "from": 58,
+      "to": 64,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213244148",
+      "from": 64,
+      "to": 66,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213520048",
+      "from": 66,
+      "to": 67,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779213637614",
+      "from": 66,
+      "to": 68,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779213673530",
+      "from": 68,
+      "to": 69,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213711863",
+      "from": 69,
+      "to": 70,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213724380",
+      "from": 70,
+      "to": 67,
+      "label": "Si",
+      "color": "#04844b",
+      "dashed": true
+    },
+    {
+      "id": "c1779213742930",
+      "from": 70,
+      "to": 71,
+      "label": "No",
+      "color": "#c23934",
+      "dashed": true
+    },
+    {
+      "id": "c1779213754663",
+      "from": 71,
+      "to": 72,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213834896",
+      "from": 71,
+      "to": 73,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213892445",
+      "from": 73,
+      "to": 74,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    },
+    {
+      "id": "c1779213939828",
+      "from": 73,
+      "to": 75,
+      "label": "",
+      "color": "#888",
+      "dashed": false
+    }
+  ],
+  "title": "Journey Invitacion para obtener la cedula",
+  "meta": {
+    "saved": "2026-05-19T18:06:41.445Z",
+    "journeyMeta": {
+      "audiencia": "~~250,000 contactos",
+      "duracion": "25 días",
+      "canales": "Email, SMS, WhatsApp",
+      "estrategia": "Email-first intensivo"
+    }
+  }
+}
