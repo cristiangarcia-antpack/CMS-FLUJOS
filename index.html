@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Journey Builder — Marketing Cloud</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -7516,386 +7517,142 @@
       async function exportPNG() {
         showNotif("📷 Generando imagen… espera un momento");
 
-        // Compute bounds
+        const journeyTitle = document.getElementById(
+          "journey-title-display",
+        ).textContent;
+        const canvasWrap = document.getElementById("canvas-wrap");
+        const canvasEl = document.getElementById("canvas");
+        const svgLayer = document.getElementById("svg-layer");
+
+        // ── 1. Temporarily reset pan/zoom to show ALL nodes at scale=1 ──
+        const prevTransform = canvasEl.style.transform;
+        const prevOrigin = canvasEl.style.transformOrigin;
+
+        // Compute bounding box of all nodes in canvas-space
         let minX = Infinity,
           minY = Infinity,
           maxX = -Infinity,
           maxY = -Infinity;
         nodes.forEach((n) => {
           const { w, h } = getNodeDims(n.type, n.data);
-          const t = NODE_TYPES[n.type];
-          const title = n.data.title || t.label;
-          const sub = n.data.subtitle || "";
-          let extraH = 0;
-          if (t.kind === "diamond") {
-            const titleLines = Math.max(1, Math.ceil(title.length / 18));
-            const subLines = Math.ceil(sub.length / 26);
-            extraH =
-              14 +
-              titleLines * 12 +
-              2 +
-              subLines * 11 +
-              (n.data.time ? 14 : 0) +
-              10;
-          } else if (t.kind === "round") {
-            const titleLines = Math.max(1, Math.ceil(title.length / 12));
-            const subLines = Math.ceil(sub.length / 22);
-            extraH = 14 + titleLines * 11 + 4 + subLines * 11 + 10;
-          } else {
-            // card / wait — text wraps INSIDE, add height for long subtitles
-            const charsPerLine = Math.max(15, Math.floor((w - 16) / 5.2));
-            const subLines = Math.ceil(sub.length / charsPerLine);
-            extraH = Math.max(
-              0,
-              subLines * 12 +
-                8 +
-                (n.data.subject ? 18 : 0) +
-                (n.data.time ? 18 : 0) -
-                32,
-            );
-          }
           minX = Math.min(minX, n.x);
           minY = Math.min(minY, n.y);
-          maxX = Math.max(maxX, n.x + w + 80);
-          maxY = Math.max(maxY, n.y + h + extraH + 80);
+          maxX = Math.max(maxX, n.x + w);
+          maxY = Math.max(maxY, n.y + h);
         });
-        const pad = 70;
-        const W = maxX - minX + pad * 2;
-        const H = maxY - minY + pad * 2;
-        const offX = -minX + pad,
-          offY = -minY + pad;
-
-        /* Build arrow SVG */
-        const colMap = {
-          "#04844b": 1,
-          "#c23934": 2,
-          "#9b59b6": 3,
-          "#0070d2": 4,
-        };
-        const colorIdx = (c) => colMap[c] || 0;
-        const arrowColors = [
-          "#888",
-          "#04844b",
-          "#c23934",
-          "#9b59b6",
-          "#0070d2",
-        ];
-
-        let defs = `<defs>
-    <filter id="dropshadow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#00000018"/>
-    </filter>`;
-        arrowColors.forEach((c, i) => {
-          defs += `<marker id="ea${i}" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="${c}"/>
-    </marker>`;
-        });
-        defs += `</defs>`;
-
-        let arrows = "";
-        connections.forEach((conn) => {
-          const fn = nodes.find((n) => n.id === conn.from),
-            tn = nodes.find((n) => n.id === conn.to);
-          if (!fn || !tn) return;
-          const { from: fp, to: tp } = getBestAnchors(fn, tn);
-          const fx = fp.x + offX,
-            fy = fp.y + offY,
-            tx = tp.x + offX,
-            ty = tp.y + offY;
-          const dx = tx - fx,
-            dy = ty - fy;
-          const cpd = Math.max(40, Math.abs(dx) * 0.45);
-          let cp1x, cp1y, cp2x, cp2y;
-          if (Math.abs(dx) >= Math.abs(dy)) {
-            cp1x = fx + cpd;
-            cp1y = fy;
-            cp2x = tx - cpd;
-            cp2y = ty;
-          } else {
-            cp1x = fx;
-            cp1y = fy + (dy > 0 ? cpd : -cpd);
-            cp2x = tx;
-            cp2y = ty - (dy > 0 ? cpd : -cpd);
-          }
-          const idx = colorIdx(conn.color);
-          const dash = conn.dashed ? 'stroke-dasharray="6,4"' : "";
-          arrows += `<path d="M${fx},${fy} C${cp1x},${cp1y} ${cp2x},${cp2y} ${tx},${ty}"
-      fill="none" stroke="${conn.color}" stroke-width="2" ${dash}
-      marker-end="url(#ea${idx})"/>`;
-          if (conn.label) {
-            const mx = (fx + tx) / 2,
-              my = (fy + ty) / 2 - 10;
-            const isYesE = ["Yes", "yes", "Si", "SI", "Sí", "sí"].includes(
-              conn.label,
-            );
-            const isNoE = ["No", "no", "NO"].includes(conn.label);
-            const lc = isYesE ? "#04844b" : isNoE ? "#c23934" : "#555";
-            const lb = isYesE ? "#dcfce7" : isNoE ? "#fee2e2" : "#f3f4f6";
-            arrows += `<rect x="${mx - 13}" y="${my - 12}" width="26" height="15" rx="3" fill="${lb}" stroke="${lc}" stroke-width="1"/>
-        <text x="${mx}" y="${my}" font-size="10" font-weight="700" fill="${lc}" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif">${conn.label}</text>`;
-          }
-        });
-
-        /* Build node SVG */
-        let nodesSVG = "";
-        nodes.forEach((n) => {
-          const t = NODE_TYPES[n.type];
-          const { w, h } = getNodeDims(n.type, n.data);
-          const nx = n.x + offX,
-            ny = n.y + offY;
-          // Use full text, no truncation
-          const title = n.data.title || t.label;
-          const sub = n.data.subtitle || "";
-          // Helper: wrap text into lines of ~maxChars chars based on word boundaries
-          function _wrap(text, maxChars) {
-            if (!text) return [];
-            const words = text.split(/\s+/);
-            const lines = [];
-            let cur = "";
-            for (const w of words) {
-              if ((cur + " " + w).trim().length <= maxChars) {
-                cur = (cur + " " + w).trim();
-              } else {
-                if (cur) lines.push(cur);
-                cur = w;
-              }
-            }
-            if (cur) lines.push(cur);
-            return lines;
-          }
-          // Escape XML entities
-          function _xml(s) {
-            return String(s)
-              .replace(/&/g, "&amp;")
-              .replace(/</g, "&lt;")
-              .replace(/>/g, "&gt;")
-              .replace(/"/g, "&quot;")
-              .replace(/'/g, "&apos;");
-          }
-
-          if (t.kind === "round") {
-            const r = w / 2,
-              cx = nx + r,
-              cy = ny + r;
-            const subLines = _wrap(sub, 22);
-            const titleLines = _wrap(title, 12);
-            const titleSVG = titleLines
-              .map(
-                (ln, i) =>
-                  `<text x="${cx}" y="${ny + h + 14 + i * 11}" text-anchor="middle" font-size="10" font-weight="700" fill="#222" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-            const subSVG = subLines
-              .map(
-                (ln, i) =>
-                  `<text x="${cx}" y="${ny + h + 14 + titleLines.length * 11 + 4 + i * 11}" text-anchor="middle" font-size="9" fill="#555" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-            nodesSVG += `
-        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${t.bg}" stroke="${t.borderColor}" stroke-width="2.5"/>
-        <text x="${cx}" y="${cy + 5}" text-anchor="middle" font-size="22" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
-        ${titleSVG}
-        ${subSVG}
-      `;
-            n._exportH =
-              h + 14 + titleLines.length * 11 + 4 + subLines.length * 11;
-          } else if (t.kind === "diamond") {
-            const cx = nx + w / 2,
-              cy = ny + h / 2,
-              s = 32;
-            const subLines = _wrap(sub, 26);
-            const titleLines = _wrap(title, 18);
-            const titleSVG = titleLines
-              .map(
-                (ln, i) =>
-                  `<text x="${cx}" y="${ny + h + 14 + i * 12}" text-anchor="middle" font-size="10" font-weight="700" fill="#222" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-            const subStartY = ny + h + 14 + titleLines.length * 12 + 2;
-            const subSVG = subLines
-              .map(
-                (ln, i) =>
-                  `<text x="${cx}" y="${subStartY + i * 11}" text-anchor="middle" font-size="8.5" fill="#777" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-            const timeY = subStartY + subLines.length * 11 + 4;
-            nodesSVG += `
-        <polygon points="${cx},${cy - s} ${cx + s},${cy} ${cx},${cy + s} ${cx - s},${cy}"
-          fill="${t.fill}" stroke="${t.borderColor}" stroke-width="2.5" filter="url(#dropshadow)"/>
-        <text x="${cx}" y="${cy + 6}" text-anchor="middle" font-size="15" font-weight="900" fill="${t.textColor}" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
-        ${titleSVG}
-        ${subSVG}
-        ${n.data.time ? `<text x="${cx}" y="${timeY}" text-anchor="middle" font-size="8.5" fill="#0070d2" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${_xml(n.data.time)}</text>` : ""}
-      `;
-            n._exportH =
-              h +
-              14 +
-              titleLines.length * 12 +
-              2 +
-              subLines.length * 11 +
-              (n.data.time ? 14 : 0);
-          } else if (t.kind === "wait") {
-            const dur = [n.data.duration, n.data.unit]
-              .filter(Boolean)
-              .join(" ");
-            const subLines = _wrap(sub, 22);
-            const titleLines = _wrap(title, 18);
-            const titleSVG = titleLines
-              .map(
-                (ln, i) =>
-                  `<text x="${nx + 42}" y="${ny + 18 + i * 12}" font-size="10" font-weight="700" fill="#6d28d9" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-            const subStartY = ny + 18 + titleLines.length * 12 + 2;
-            const subSVG = subLines
-              .map(
-                (ln, i) =>
-                  `<text x="${nx + 42}" y="${subStartY + i * 11}" font-size="8.5" fill="#888" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-            const renderedH = Math.max(
-              h,
-              subStartY + subLines.length * 11 + 6 - ny,
-            );
-            nodesSVG += `
-        <rect x="${nx}" y="${ny}" width="${w}" height="${renderedH}" rx="5" fill="white" stroke="${t.borderColor}" stroke-width="1.5" filter="url(#dropshadow)"/>
-        <rect x="${nx}" y="${ny}" width="32" height="${renderedH}" rx="5" fill="#ede9fe" stroke="none"/>
-        <rect x="${nx + 30}" y="${ny}" width="2" height="${renderedH}" fill="#ede9fe" stroke="none"/>
-        <text x="${nx + 16}" y="${ny + renderedH / 2 + 6}" text-anchor="middle" font-size="16" font-family="Segoe UI,Arial,sans-serif">⏱️</text>
-        ${titleSVG}
-        ${subSVG}
-        ${dur ? `<text x="${nx + 42}" y="${subStartY + subLines.length * 11 + 4}" font-size="9" fill="#6d28d9" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${_xml(dur)}</text>` : ""}
-      `;
-            n._exportH = renderedH;
-          } else {
-            // card — full text, dynamic height, no truncation
-            // Width for text: total width minus icon (40px) minus right padding (8px) = w-48
-            const titleCharsPerLine = Math.max(10, Math.floor((w - 48) / 6.5));
-            const subCharsPerLine = Math.max(15, Math.floor((w - 16) / 5.5));
-            const titleLines = _wrap(title, titleCharsPerLine);
-            const subLines = _wrap(sub, subCharsPerLine);
-
-            // Header height grows with title: 14px per title line + 12px for typeLabel + 8px padding
-            const titleLineH = 12;
-            const typeLabelH = 11;
-            const hdrPadTop = 8;
-            const hdrPadBottom = 6;
-            const hdrH = Math.max(
-              32,
-              hdrPadTop +
-                titleLines.length * titleLineH +
-                typeLabelH +
-                hdrPadBottom,
-            );
-
-            // Body content
-            const subBlockH =
-              subLines.length > 0 ? subLines.length * 12 + 8 : 0;
-            const subjH = n.data.subject ? 18 : 0;
-            const timeH = n.data.time ? 16 : 0;
-            const renderedH = hdrH + subBlockH + subjH + timeH + 4;
-
-            // Title rendered inside header — start at y = ny + hdrPadTop + 10 (baseline)
-            const titleFS = titleLines.length > 1 ? 9.5 : 10.5;
-            const titleSVG = titleLines
-              .map(
-                (ln, i) =>
-                  `<text x="${nx + 40}" y="${ny + hdrPadTop + 10 + i * titleLineH}" font-size="${titleFS}" font-weight="700" fill="#181818" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-
-            // TypeLabel below title lines
-            const typeLabelY =
-              ny + hdrPadTop + 10 + titleLines.length * titleLineH;
-            const typeLabelSVG = `<text x="${nx + 40}" y="${typeLabelY}" font-size="8.5" fill="${t.borderColor}" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${_xml(t.typeLabel || t.label)}</text>`;
-
-            // Subtitle in body
-            const subSVG = subLines
-              .map(
-                (ln, i) =>
-                  `<text x="${nx + 8}" y="${ny + hdrH + 14 + i * 12}" font-size="9" fill="#444" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
-              )
-              .join("");
-
-            // Subject / time blocks
-            let footY = ny + hdrH + subBlockH;
-            const subjSVG = n.data.subject
-              ? `<rect x="${nx}" y="${footY}" width="${w}" height="18" fill="#f0f7ff" stroke="none"/>
-                 <text x="${nx + 6}" y="${footY + 12}" font-size="8.5" fill="#0050a0" font-weight="600" font-family="Segoe UI,Arial,sans-serif">📧 ${_xml(n.data.subject)}</text>`
-              : "";
-            if (n.data.subject) footY += 18;
-            const timeSVG = n.data.time
-              ? `<rect x="${nx}" y="${footY}" width="${w}" height="16" fill="#f4f6f8" stroke="none"/>
-                 <text x="${nx + 6}" y="${footY + 11}" font-size="8.5" fill="#0070d2" font-weight="700" font-family="Segoe UI,Arial,sans-serif">🕐 ${_xml(n.data.time)}</text>`
-              : "";
-
-            // Icon vertical-center in header
-            const iconCY = ny + hdrH / 2;
-
-            nodesSVG += `
-        <rect x="${nx}" y="${ny}" width="${w}" height="${renderedH}" rx="6" fill="white" stroke="${t.borderColor}" stroke-width="1.5" filter="url(#dropshadow)"/>
-        <rect x="${nx}" y="${ny}" width="${w}" height="${hdrH}" rx="6" fill="${t.headerBg}" stroke="none"/>
-        <rect x="${nx}" y="${ny + hdrH - 4}" width="${w}" height="4" fill="${t.headerBg}" stroke="none"/>
-        <line x1="${nx}" y1="${ny + hdrH}" x2="${nx + w}" y2="${ny + hdrH}" stroke="${t.borderColor}" stroke-width="0.8" opacity="0.4"/>
-        <circle cx="${nx + 22}" cy="${iconCY}" r="13" fill="${t.iconBg}"/>
-        ${
-          n.type === "whatsapp"
-            ? `<image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzUuMjE2IDE3NS41NTIiPjxwYXRoIGQ9Ik04Ny42IDBDMzkuMyAwIDAgMzkuMyAwIDg3LjZjMCAxNS4zIDQgMjkuNyAxMC45IDQyLjJMMCAxNzUuNmw0Ny4yLTEwLjdjMTIgNi40IDI1LjcgMTAuMSA0MC40IDEwLjEgNDguMyAwIDg3LjYtMzkuMyA4Ny42LTg3LjZDMTc1LjIgMzkuMyAxMzUuOSAwIDg3LjYgMHoiIGZpbGw9IiMyNUQzNjYiLz48cGF0aCBkPSJNODcuNiAxNjAuM2MtMTMuNSAwLTI2LjItMy42LTM3LjItOS45bC0yLjctMS42LTI3LjggNi4zIDYuNS0yNy4xLTEuNy0yLjhjLTYuOS0xMS4zLTEwLjYtMjQuNC0xMC42LTM3LjhDMTQuMSA0NyA0NyAxNC4xIDg3LjYgMTQuMWMxOS45IDAgMzguNiA3LjggNTIuNyAyMS44IDE0IDE0IDIxLjggMzIuNyAyMS44IDUyLjUgMCA0MC43LTMyLjkgNzEuOS03NC41IDcxLjl6IiBmaWxsPSIjMjVEMzY2Ii8+PHBhdGggZD0iTTEyOC4yIDEwNS42Yy0yLjItMS4xLTEzLjEtNi41LTE1LjEtNy4yLTItLjctMy41LTEuMS01IDEuMS0xLjUgMi4yLTUuNyA3LjItNyA4LjctMS4zIDEuNS0yLjYgMS43LTQuOC42LTIuMi0xLjEtOS4zLTMuNC0xNy43LTEwLjktNi41LTUuOC0xMC45LTEzLTEyLjItMTUuMi0xLjMtMi4yLS4xLTMuNCAxLTQuNS45LS45IDItMi40IDMuMS0zLjcgMS0xLjIgMS4zLTIuMSAyLTMuNS43LTEuNC4zLTIuNi0uMi0zLjctLjUtMS4xLTUtMTItNi44LTE2LjQtMS44LTQuMy0zLjYtMy43LTUtMy44LTEuMy0uMS0yLjgtLjEtNC4zLS4xLTEuNSAwLTMuOS42LTUuOSAyLjgtMiAyLjItNy43IDcuNS03LjcgMTguNCAwIDEwLjggNy45IDIxLjMgOSAyMi43IDEuMSAxLjUgMTUuNSAyMy43IDM3LjYgMzMuMiA1LjIgMi4zIDkuMyAzLjYgMTIuNSA0LjYgNS4yIDEuNyAxMCAxLjQgMTMuOC45IDQuMi0uNiAxMy4xLTUuNCAxNS0xMC41IDEuOS01LjIgMS45LTkuNiAxLjMtMTAuNS0uNS0xLTItMS41LTQuMi0yLjZ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+" x="${nx + 9}" y="${iconCY - 13}" width="26" height="26"/>`
-            : `<text x="${nx + 22}" y="${iconCY + 5}" text-anchor="middle" font-size="13" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>`
+        if (!isFinite(minX)) {
+          showNotif("⚠ No hay nodos en el flujo");
+          return;
         }
-        ${titleSVG}
-        ${typeLabelSVG}
-        ${subSVG}
-        ${subjSVG}
-        ${timeSVG}
-      `;
-            n._exportH = renderedH;
-          }
+
+        const PAD = 60;
+        const exportW = maxX - minX + PAD * 2;
+        const exportH = maxY - minY + PAD * 2;
+
+        // Offset so top-left node is at (PAD, PAD)
+        const exportPanX = -minX + PAD;
+        const exportPanY = -minY + PAD;
+
+        // Apply scale=1, adjusted pan
+        canvasEl.style.transformOrigin = "0 0";
+        canvasEl.style.transform = `translate(${exportPanX}px, ${exportPanY}px) scale(1)`;
+
+        // Expand canvasWrap temporarily so html2canvas can see everything
+        const prevWrapW = canvasWrap.style.width;
+        const prevWrapH = canvasWrap.style.height;
+        const prevOverflow = canvasWrap.style.overflow;
+        canvasWrap.style.overflow = "visible";
+        canvasWrap.style.width = exportW + "px";
+        canvasWrap.style.height = exportH + "px";
+
+        // Trigger connection redraw at new transform
+        if (typeof renderConnections === "function") renderConnections();
+
+        // ── 2. Wait one frame for DOM to settle ──
+        await new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r)),
+        );
+
+        // ── 3. Hide UI elements that should not appear in export ──
+        const hideSelectors = [".zoom-bar", ".bottombar", ".connect-hint"];
+        const hiddenEls = [];
+        hideSelectors.forEach((sel) => {
+          canvasWrap.querySelectorAll(sel).forEach((el) => {
+            hiddenEls.push({ el, prev: el.style.display });
+            el.style.display = "none";
+          });
         });
 
-        const journeyTitle = document.getElementById(
-          "journey-title-display",
-        ).textContent;
-        const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H + 40}">
-    ${defs}
-    <rect width="${W}" height="${H + 40}" fill="#f0f0ee"/>
-    <defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M20 0L0 0 0 20" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
-    </pattern></defs>
-    <rect width="${W}" height="${H + 40}" fill="url(#grid)"/>
-    <!-- Header bar -->
-    <rect width="${W}" height="40" fill="#0070d2"/>
-    <text x="14" y="25" font-size="13" font-weight="700" fill="white" font-family="Segoe UI,Arial,sans-serif">☁ Marketing Cloud — Journey Builder · ${journeyTitle}</text>
-    <!-- Content offset by header -->
-    <g transform="translate(0,40)">
-      ${arrows}
-      ${nodesSVG}
-    </g>
-  </svg>`;
+        // ── 4. Capture with html2canvas ──
+        try {
+          const cvs = await html2canvas(canvasWrap, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#f0f0ee",
+            width: exportW,
+            height: exportH,
+            x: 0,
+            y: 0,
+            scrollX: 0,
+            scrollY: 0,
+            logging: false,
+          });
 
-        const blob = new Blob([svgStr], {
-          type: "image/svg+xml;charset=utf-8",
-        });
-        const url = URL.createObjectURL(blob);
-        const img = new Image();
-        img.onload = () => {
-          const cvs = document.createElement("canvas");
-          cvs.width = W * 2;
-          cvs.height = (H + 40) * 2;
-          const ctx = cvs.getContext("2d");
-          ctx.scale(2, 2);
-          ctx.drawImage(img, 0, 0, W, H + 40);
-          URL.revokeObjectURL(url);
-          const a = document.createElement("a");
-          a.download = "journey_builder_export.png";
-          a.href = cvs.toDataURL("image/png");
-          a.click();
-          showNotif(
-            "✅ PNG exportado a 2x resolución (listo para presentaciones)",
+          // ── 5. Restore hidden elements ──
+          hiddenEls.forEach(({ el, prev }) => {
+            el.style.display = prev;
+          });
+
+          // ── 4. Restore original pan/zoom & wrap size ──
+          canvasEl.style.transform = prevTransform;
+          canvasEl.style.transformOrigin = prevOrigin;
+          canvasWrap.style.overflow = prevOverflow;
+          canvasWrap.style.width = prevWrapW;
+          canvasWrap.style.height = prevWrapH;
+          if (typeof renderConnections === "function") renderConnections();
+
+          // ── 5. Add header bar on top of captured image ──
+          const HEADER_H = 40;
+          const final = document.createElement("canvas");
+          final.width = cvs.width;
+          final.height = cvs.height + HEADER_H * 2;
+          const ctx = final.getContext("2d");
+
+          // Header
+          ctx.fillStyle = "#0070d2";
+          ctx.fillRect(0, 0, final.width, HEADER_H * 2);
+          ctx.fillStyle = "#ffffff";
+          ctx.font = `bold ${13 * 2}px Segoe UI, Arial, sans-serif`;
+          ctx.fillText(
+            "☁ Marketing Cloud — Journey Builder · " + journeyTitle,
+            14 * 2,
+            26 * 2,
           );
-        };
-        img.onerror = () => showNotif("⚠ Error al generar la imagen");
-        img.src = url;
+
+          // Journey content
+          ctx.drawImage(cvs, 0, HEADER_H * 2);
+
+          // ── 6. Download ──
+          const a = document.createElement("a");
+          a.download = `journey_${journeyTitle.replace(/\s+/g, "_")}.png`;
+          a.href = final.toDataURL("image/png");
+          a.click();
+          showNotif("✅ PNG exportado — fiel al diseño del flujo");
+        } catch (err) {
+          // Restore on error too
+          canvasEl.style.transform = prevTransform;
+          canvasEl.style.transformOrigin = prevOrigin;
+          canvasWrap.style.overflow = prevOverflow;
+          canvasWrap.style.width = prevWrapW;
+          canvasWrap.style.height = prevWrapH;
+          if (typeof renderConnections === "function") renderConnections();
+          hiddenEls.forEach(({ el, prev }) => {
+            el.style.display = prev;
+          });
+          console.error("Export error:", err);
+          showNotif("⚠ Error al exportar: " + err.message);
+        }
       }
 
       /* ════════════════════════════════
