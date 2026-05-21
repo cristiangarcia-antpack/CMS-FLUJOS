@@ -144,6 +144,15 @@
         overflow: hidden;
         z-index: 100;
         flex-shrink: 0;
+        transition:
+          width 0.2s ease,
+          opacity 0.2s ease;
+      }
+      .sidebar.collapsed {
+        width: 0 !important;
+        opacity: 0;
+        pointer-events: none;
+        border-right: none;
       }
       .sb-search {
         padding: 10px 10px 6px;
@@ -2524,6 +2533,15 @@
           style="font-size: 13px; padding: 4px 10px"
         >
           ↪
+        </button>
+        <button
+          class="btn btn-ghost"
+          id="btn-toggle-sidebar"
+          onclick="toggleSidebar()"
+          title="Mostrar / ocultar panel de actividades"
+          style="font-size: 13px; padding: 4px 10px"
+        >
+          ◀ Panel
         </button>
         <button
           class="btn btn-img"
@@ -7386,6 +7404,19 @@
       }
 
       /* ════════════════════════════════
+   SIDEBAR TOGGLE
+════════════════════════════════ */
+      function toggleSidebar() {
+        const sb = document.querySelector(".sidebar");
+        const btn = document.getElementById("btn-toggle-sidebar");
+        const isCollapsed = sb.classList.toggle("collapsed");
+        btn.textContent = isCollapsed ? "▶ Panel" : "◀ Panel";
+        btn.title = isCollapsed
+          ? "Mostrar panel de actividades"
+          : "Ocultar panel de actividades";
+      }
+
+      /* ════════════════════════════════
    SIDEBAR FILTER
 ════════════════════════════════ */
       function filterSidebar(q) {
@@ -7484,9 +7515,21 @@
         textBoxes = pendingImportData.textBoxes || [];
         connWaypoints = pendingImportData.connWaypoints || {};
         nodeLabelOffsets = pendingImportData.nodeLabelOffsets || {};
-        if (pendingImportData.title)
+        // Restore title — update both display and active tab name
+        if (pendingImportData.title) {
+          const importedTitle = pendingImportData.title;
           document.getElementById("journey-title-display").textContent =
-            pendingImportData.title;
+            importedTitle;
+          // Sync the active tab title so it matches
+          if (
+            typeof journeys !== "undefined" &&
+            typeof activeJourneyId !== "undefined"
+          ) {
+            const activeTab = journeys.find((j) => j.id === activeJourneyId);
+            if (activeTab) activeTab.title = importedTitle;
+            if (typeof _renderTabs === "function") _renderTabs();
+          }
+        }
         // Restore meta if present in JSON — solo audiencia es manual,
         // canales/duracion/estrategia se recalculan siempre desde los nodos
         if (pendingImportData.meta?.journeyMeta) {
