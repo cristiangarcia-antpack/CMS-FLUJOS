@@ -4161,14 +4161,15 @@
       /* ════════════════════════════════
    NODE DIMENSIONS
 ════════════════════════════════ */
-      function getNodeDims(type) {
+      function getNodeDims(type, data) {
         const t = NODE_TYPES[type];
         if (t.kind === "round") return { w: 72, h: 72 };
         if (t.kind === "diamond") return { w: 80, h: 80 };
         if (t.kind === "wait") return { w: 160, h: 56 };
-        // card
-        const hasSubject = false; // variable height handled in render, use base
-        return { w: 160, h: 72 };
+        // card — respect custom width if user resized
+        const customW = data && data._w ? data._w : 160;
+        const customH = data && data._h ? data._h : 72;
+        return { w: customW, h: customH };
       }
 
       function getNodeRenderH(n) {
@@ -4642,7 +4643,8 @@
         if (lbl) {
           const dx = off.dx !== undefined ? off.dx : 0;
           const dy = off.dy !== undefined ? off.dy : h + 6;
-          lbl.style.left = n.x + w / 2 + dx - 80 + "px";
+          // Must match _buildNodeExternalLabels: -100 for width:200px centered
+          lbl.style.left = n.x + w / 2 + dx - 100 + "px";
           lbl.style.top = n.y + dy + "px";
         }
       }
@@ -4682,7 +4684,7 @@
       /* Connection anchor points */
       function getAnchors(n) {
         const t = NODE_TYPES[n.type];
-        const { w, h } = getNodeDims(n.type);
+        const { w, h } = getNodeDims(n.type, n.data);
         if (t.kind === "round") {
           const r = w / 2;
           return {
@@ -7041,13 +7043,38 @@
           maxX = -Infinity,
           maxY = -Infinity;
         nodes.forEach((n) => {
-          const { w, h } = getNodeDims(n.type);
-          // Diamond/round nodes have tag below; add extra height
-          const extraH =
-            NODE_TYPES[n.type].kind === "diamond" ||
-            NODE_TYPES[n.type].kind === "round"
-              ? 40
-              : 0;
+          const { w, h } = getNodeDims(n.type, n.data);
+          const t = NODE_TYPES[n.type];
+          const title = n.data.title || t.label;
+          const sub = n.data.subtitle || "";
+          let extraH = 0;
+          if (t.kind === "diamond") {
+            const titleLines = Math.max(1, Math.ceil(title.length / 18));
+            const subLines = Math.ceil(sub.length / 26);
+            extraH =
+              14 +
+              titleLines * 12 +
+              2 +
+              subLines * 11 +
+              (n.data.time ? 14 : 0) +
+              10;
+          } else if (t.kind === "round") {
+            const titleLines = Math.max(1, Math.ceil(title.length / 12));
+            const subLines = Math.ceil(sub.length / 22);
+            extraH = 14 + titleLines * 11 + 4 + subLines * 11 + 10;
+          } else {
+            // card / wait — text wraps INSIDE, add height for long subtitles
+            const charsPerLine = Math.max(15, Math.floor((w - 16) / 5.2));
+            const subLines = Math.ceil(sub.length / charsPerLine);
+            extraH = Math.max(
+              0,
+              subLines * 12 +
+                8 +
+                (n.data.subject ? 18 : 0) +
+                (n.data.time ? 18 : 0) -
+                32,
+            );
+          }
           minX = Math.min(minX, n.x);
           minY = Math.min(minY, n.y);
           maxX = Math.max(maxX, n.x + w + 80);
@@ -7134,71 +7161,212 @@
         let nodesSVG = "";
         nodes.forEach((n) => {
           const t = NODE_TYPES[n.type];
-          const { w, h } = getNodeDims(n.type);
+          const { w, h } = getNodeDims(n.type, n.data);
           const nx = n.x + offX,
             ny = n.y + offY;
-          const title = (n.data.title || t.label).substring(0, 20);
-          const sub = (n.data.subtitle || "").substring(0, 24);
+          // Use full text, no truncation
+          const title = n.data.title || t.label;
+          const sub = n.data.subtitle || "";
+          // Helper: wrap text into lines of ~maxChars chars based on word boundaries
+          function _wrap(text, maxChars) {
+            if (!text) return [];
+            const words = text.split(/\s+/);
+            const lines = [];
+            let cur = "";
+            for (const w of words) {
+              if ((cur + " " + w).trim().length <= maxChars) {
+                cur = (cur + " " + w).trim();
+              } else {
+                if (cur) lines.push(cur);
+                cur = w;
+              }
+            }
+            if (cur) lines.push(cur);
+            return lines;
+          }
+          // Escape XML entities
+          function _xml(s) {
+            return String(s)
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&apos;");
+          }
 
           if (t.kind === "round") {
             const r = w / 2,
               cx = nx + r,
               cy = ny + r;
+            const subLines = _wrap(sub, 22);
+            const titleLines = _wrap(title, 12);
+            const titleSVG = titleLines
+              .map(
+                (ln, i) =>
+                  `<text x="${cx}" y="${ny + h + 14 + i * 11}" text-anchor="middle" font-size="10" font-weight="700" fill="#222" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+            const subSVG = subLines
+              .map(
+                (ln, i) =>
+                  `<text x="${cx}" y="${ny + h + 14 + titleLines.length * 11 + 4 + i * 11}" text-anchor="middle" font-size="9" fill="#555" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
             nodesSVG += `
         <circle cx="${cx}" cy="${cy}" r="${r}" fill="${t.bg}" stroke="${t.borderColor}" stroke-width="2.5"/>
-        <text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="20" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
-        <text x="${cx}" y="${cy + 13}" text-anchor="middle" font-size="9" font-weight="700" fill="white" font-family="Segoe UI,Arial,sans-serif">${title}</text>
-        ${sub ? `<text x="${cx}" y="${ny + h + 16}" text-anchor="middle" font-size="9" fill="#555" font-family="Segoe UI,Arial,sans-serif">${sub}</text>` : ""}
+        <text x="${cx}" y="${cy + 5}" text-anchor="middle" font-size="22" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
+        ${titleSVG}
+        ${subSVG}
       `;
+            n._exportH =
+              h + 14 + titleLines.length * 11 + 4 + subLines.length * 11;
           } else if (t.kind === "diamond") {
             const cx = nx + w / 2,
               cy = ny + h / 2,
               s = 32;
+            const subLines = _wrap(sub, 26);
+            const titleLines = _wrap(title, 18);
+            const titleSVG = titleLines
+              .map(
+                (ln, i) =>
+                  `<text x="${cx}" y="${ny + h + 14 + i * 12}" text-anchor="middle" font-size="10" font-weight="700" fill="#222" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+            const subStartY = ny + h + 14 + titleLines.length * 12 + 2;
+            const subSVG = subLines
+              .map(
+                (ln, i) =>
+                  `<text x="${cx}" y="${subStartY + i * 11}" text-anchor="middle" font-size="8.5" fill="#777" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+            const timeY = subStartY + subLines.length * 11 + 4;
             nodesSVG += `
         <polygon points="${cx},${cy - s} ${cx + s},${cy} ${cx},${cy + s} ${cx - s},${cy}"
           fill="${t.fill}" stroke="${t.borderColor}" stroke-width="2.5" filter="url(#dropshadow)"/>
         <text x="${cx}" y="${cy + 6}" text-anchor="middle" font-size="15" font-weight="900" fill="${t.textColor}" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
-        <text x="${cx}" y="${ny + h + 16}" text-anchor="middle" font-size="10" font-weight="700" fill="#222" font-family="Segoe UI,Arial,sans-serif">${title}</text>
-        ${sub ? `<text x="${cx}" y="${ny + h + 28}" text-anchor="middle" font-size="8.5" fill="#777" font-family="Segoe UI,Arial,sans-serif">${sub}</text>` : ""}
-        ${n.data.time ? `<text x="${cx}" y="${ny + h + 40}" text-anchor="middle" font-size="8.5" fill="#0070d2" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${n.data.time}</text>` : ""}
+        ${titleSVG}
+        ${subSVG}
+        ${n.data.time ? `<text x="${cx}" y="${timeY}" text-anchor="middle" font-size="8.5" fill="#0070d2" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${_xml(n.data.time)}</text>` : ""}
       `;
+            n._exportH =
+              h +
+              14 +
+              titleLines.length * 12 +
+              2 +
+              subLines.length * 11 +
+              (n.data.time ? 14 : 0);
           } else if (t.kind === "wait") {
             const dur = [n.data.duration, n.data.unit]
               .filter(Boolean)
               .join(" ");
+            const subLines = _wrap(sub, 22);
+            const titleLines = _wrap(title, 18);
+            const titleSVG = titleLines
+              .map(
+                (ln, i) =>
+                  `<text x="${nx + 42}" y="${ny + 18 + i * 12}" font-size="10" font-weight="700" fill="#6d28d9" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+            const subStartY = ny + 18 + titleLines.length * 12 + 2;
+            const subSVG = subLines
+              .map(
+                (ln, i) =>
+                  `<text x="${nx + 42}" y="${subStartY + i * 11}" font-size="8.5" fill="#888" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+            const renderedH = Math.max(
+              h,
+              subStartY + subLines.length * 11 + 6 - ny,
+            );
             nodesSVG += `
-        <rect x="${nx}" y="${ny}" width="${w}" height="${h}" rx="5" fill="white" stroke="${t.borderColor}" stroke-width="1.5" filter="url(#dropshadow)"/>
-        <rect x="${nx}" y="${ny}" width="32" height="${h}" rx="5" fill="#ede9fe" stroke="none"/>
-        <rect x="${nx + 30}" y="${ny}" width="2" height="${h}" fill="#ede9fe" stroke="none"/>
-        <text x="${nx + 16}" y="${ny + h / 2 + 6}" text-anchor="middle" font-size="16" font-family="Segoe UI,Arial,sans-serif">⏱️</text>
-        <text x="${nx + 42}" y="${ny + 22}" font-size="10" font-weight="700" fill="#6d28d9" font-family="Segoe UI,Arial,sans-serif">${title}</text>
-        ${dur ? `<text x="${nx + 42}" y="${ny + 36}" font-size="9" fill="#888" font-family="Segoe UI,Arial,sans-serif">${dur}</text>` : ""}
+        <rect x="${nx}" y="${ny}" width="${w}" height="${renderedH}" rx="5" fill="white" stroke="${t.borderColor}" stroke-width="1.5" filter="url(#dropshadow)"/>
+        <rect x="${nx}" y="${ny}" width="32" height="${renderedH}" rx="5" fill="#ede9fe" stroke="none"/>
+        <rect x="${nx + 30}" y="${ny}" width="2" height="${renderedH}" fill="#ede9fe" stroke="none"/>
+        <text x="${nx + 16}" y="${ny + renderedH / 2 + 6}" text-anchor="middle" font-size="16" font-family="Segoe UI,Arial,sans-serif">⏱️</text>
+        ${titleSVG}
+        ${subSVG}
+        ${dur ? `<text x="${nx + 42}" y="${subStartY + subLines.length * 11 + 4}" font-size="9" fill="#6d28d9" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${_xml(dur)}</text>` : ""}
       `;
+            n._exportH = renderedH;
           } else {
-            // card
-            const hdrH = 32;
+            // card — full text, dynamic height, no truncation
+            // Width for text: total width minus icon (40px) minus right padding (8px) = w-48
+            const titleCharsPerLine = Math.max(10, Math.floor((w - 48) / 6.5));
+            const subCharsPerLine = Math.max(15, Math.floor((w - 16) / 5.5));
+            const titleLines = _wrap(title, titleCharsPerLine);
+            const subLines = _wrap(sub, subCharsPerLine);
+
+            // Header height grows with title: 14px per title line + 12px for typeLabel + 8px padding
+            const titleLineH = 12;
+            const typeLabelH = 11;
+            const hdrPadTop = 8;
+            const hdrPadBottom = 6;
+            const hdrH = Math.max(
+              32,
+              hdrPadTop +
+                titleLines.length * titleLineH +
+                typeLabelH +
+                hdrPadBottom,
+            );
+
+            // Body content
+            const subBlockH =
+              subLines.length > 0 ? subLines.length * 12 + 8 : 0;
+            const subjH = n.data.subject ? 18 : 0;
+            const timeH = n.data.time ? 16 : 0;
+            const renderedH = hdrH + subBlockH + subjH + timeH + 4;
+
+            // Title rendered inside header — start at y = ny + hdrPadTop + 10 (baseline)
+            const titleFS = titleLines.length > 1 ? 9.5 : 10.5;
+            const titleSVG = titleLines
+              .map(
+                (ln, i) =>
+                  `<text x="${nx + 40}" y="${ny + hdrPadTop + 10 + i * titleLineH}" font-size="${titleFS}" font-weight="700" fill="#181818" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+
+            // TypeLabel below title lines
+            const typeLabelY =
+              ny + hdrPadTop + 10 + titleLines.length * titleLineH;
+            const typeLabelSVG = `<text x="${nx + 40}" y="${typeLabelY}" font-size="8.5" fill="${t.borderColor}" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${_xml(t.typeLabel || t.label)}</text>`;
+
+            // Subtitle in body
+            const subSVG = subLines
+              .map(
+                (ln, i) =>
+                  `<text x="${nx + 8}" y="${ny + hdrH + 14 + i * 12}" font-size="9" fill="#444" font-family="Segoe UI,Arial,sans-serif">${_xml(ln)}</text>`,
+              )
+              .join("");
+
+            // Subject / time blocks
+            let footY = ny + hdrH + subBlockH;
+            const subjSVG = n.data.subject
+              ? `<rect x="${nx}" y="${footY}" width="${w}" height="18" fill="#f0f7ff" stroke="none"/>
+                 <text x="${nx + 6}" y="${footY + 12}" font-size="8.5" fill="#0050a0" font-weight="600" font-family="Segoe UI,Arial,sans-serif">📧 ${_xml(n.data.subject)}</text>`
+              : "";
+            if (n.data.subject) footY += 18;
+            const timeSVG = n.data.time
+              ? `<rect x="${nx}" y="${footY}" width="${w}" height="16" fill="#f4f6f8" stroke="none"/>
+                 <text x="${nx + 6}" y="${footY + 11}" font-size="8.5" fill="#0070d2" font-weight="700" font-family="Segoe UI,Arial,sans-serif">🕐 ${_xml(n.data.time)}</text>`
+              : "";
+
+            // Icon vertical-center in header
+            const iconCY = ny + hdrH / 2;
+
             nodesSVG += `
-        <rect x="${nx}" y="${ny}" width="${w}" height="${h}" rx="5" fill="white" stroke="${t.borderColor}" stroke-width="1.5" filter="url(#dropshadow)"/>
-        <rect x="${nx}" y="${ny}" width="${w}" height="${hdrH}" rx="5" fill="${t.headerBg}" stroke="${t.borderColor}" stroke-width="1.5"/>
+        <rect x="${nx}" y="${ny}" width="${w}" height="${renderedH}" rx="6" fill="white" stroke="${t.borderColor}" stroke-width="1.5" filter="url(#dropshadow)"/>
+        <rect x="${nx}" y="${ny}" width="${w}" height="${hdrH}" rx="6" fill="${t.headerBg}" stroke="none"/>
         <rect x="${nx}" y="${ny + hdrH - 4}" width="${w}" height="4" fill="${t.headerBg}" stroke="none"/>
-        <circle cx="${nx + 22}" cy="${ny + hdrH / 2}" r="13" fill="${t.iconBg}"/>
-        <text x="${nx + 22}" y="${ny + hdrH / 2 + 5}" text-anchor="middle" font-size="13" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
-        <text x="${nx + 40}" y="${ny + 16}" font-size="10" font-weight="700" fill="#181818" font-family="Segoe UI,Arial,sans-serif">${title}</text>
-        <text x="${nx + 40}" y="${ny + 27}" font-size="8" fill="${t.borderColor}" font-weight="600" font-family="Segoe UI,Arial,sans-serif">${t.typeLabel || t.label}</text>
-        ${sub ? `<text x="${nx + 8}" y="${ny + hdrH + 14}" font-size="8.5" fill="#444" font-family="Segoe UI,Arial,sans-serif">${sub}</text>` : ""}
-        ${
-          n.data.subject
-            ? `<rect x="${nx}" y="${ny + h - 18}" width="${w}" height="18" fill="#f0f7ff" stroke="none" rx="0"/>
-          <text x="${nx + 6}" y="${ny + h - 6}" font-size="8" fill="#0050a0" font-family="Segoe UI,Arial,sans-serif">📧 ${n.data.subject.substring(0, 22)}</text>`
-            : ""
-        }
-        ${
-          n.data.time
-            ? `<rect x="${nx}" y="${ny + h - 16}" width="${w}" height="16" fill="#f4f6f8" stroke="none"/>
-          <text x="${nx + 6}" y="${ny + h - 5}" font-size="8.5" fill="#0070d2" font-weight="700" font-family="Segoe UI,Arial,sans-serif">🕐 ${n.data.time}</text>`
-            : ""
-        }
+        <line x1="${nx}" y1="${ny + hdrH}" x2="${nx + w}" y2="${ny + hdrH}" stroke="${t.borderColor}" stroke-width="0.8" opacity="0.4"/>
+        <circle cx="${nx + 22}" cy="${iconCY}" r="13" fill="${t.iconBg}"/>
+        <text x="${nx + 22}" y="${iconCY + 5}" text-anchor="middle" font-size="13" font-family="Segoe UI,Arial,sans-serif">${t.icon}</text>
+        ${titleSVG}
+        ${typeLabelSVG}
+        ${subSVG}
+        ${subjSVG}
+        ${timeSVG}
       `;
+            n._exportH = renderedH;
           }
         });
 
