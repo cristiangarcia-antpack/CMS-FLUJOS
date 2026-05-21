@@ -144,9 +144,7 @@
         overflow: hidden;
         z-index: 100;
         flex-shrink: 0;
-        transition:
-          width 0.2s ease,
-          opacity 0.2s ease;
+        transition: width 0.2s ease, opacity 0.2s ease;
       }
       .sidebar.collapsed {
         width: 0 !important;
@@ -597,9 +595,7 @@
         align-items: center;
         justify-content: space-between;
       }
-      .field-label-text {
-        flex: 1;
-      }
+      .field-label-text { flex: 1; }
       .field-vis-btn {
         background: none;
         border: none;
@@ -611,17 +607,11 @@
         transition: opacity 0.15s;
         flex-shrink: 0;
       }
-      .field-vis-btn:hover {
-        opacity: 1;
-      }
-      .field-vis-btn.hidden-vis {
-        opacity: 0.3;
-      }
+      .field-vis-btn:hover { opacity: 1; }
+      .field-vis-btn.hidden-vis { opacity: 0.3; }
       .field-group-hidden .field-input,
       .field-group-hidden .rtb-editor,
-      .field-group-hidden .rtb-toolbar {
-        opacity: 0.45;
-      }
+      .field-group-hidden .rtb-toolbar { opacity: 0.45; }
       .field-input {
         width: 100%;
         border: 1px solid var(--border);
@@ -664,6 +654,7 @@
         letter-spacing: 0.2px;
         width: fit-content;
       }
+
 
       .rtb-wrap {
         margin-bottom: 13px;
@@ -2154,31 +2145,15 @@
         border-radius: 8px;
         padding: 9px 12px;
         width: 230px;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.28);
         pointer-events: none;
       }
-      .fnl-tooltip.above {
-        bottom: calc(100% + 6px);
-      }
-      .fnl-tooltip.below {
-        top: calc(100% + 6px);
-      }
-      .fnl-tooltip strong {
-        color: #fff;
-        display: block;
-        margin-bottom: 3px;
-      }
-      .fnl-tooltip .tip-src {
-        color: #94a3b8;
-        font-size: 9px;
-        margin-top: 5px;
-        border-top: 1px solid #334155;
-        padding-top: 4px;
-      }
+      .fnl-tooltip.above { bottom: calc(100% + 6px); }
+      .fnl-tooltip.below { top: calc(100% + 6px); }
+      .fnl-tooltip strong { color: #fff; display: block; margin-bottom: 3px; }
+      .fnl-tooltip .tip-src { color: #94a3b8; font-size: 9px; margin-top: 5px; border-top: 1px solid #334155; padding-top: 4px; }
       .fnl-info-btn:hover + .fnl-tooltip,
-      .fnl-info-btn:focus + .fnl-tooltip {
-        display: block;
-      }
+      .fnl-info-btn:focus + .fnl-tooltip { display: block; }
 
       .kpi-card-wrap {
         position: relative;
@@ -2203,10 +2178,7 @@
         font-family: serif;
         transition: background 0.15s;
       }
-      .kpi-info-btn:hover {
-        background: #0070d2;
-        color: #fff;
-      }
+      .kpi-info-btn:hover { background: #0070d2; color: #fff; }
       .kpi-tooltip {
         display: none;
         position: absolute;
@@ -2221,26 +2193,14 @@
         border-radius: 8px;
         padding: 9px 12px;
         width: 200px;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.28);
         pointer-events: none;
         text-align: left;
       }
-      .kpi-tooltip strong {
-        color: #fff;
-        display: block;
-        margin-bottom: 3px;
-      }
-      .kpi-tooltip .tip-src {
-        color: #94a3b8;
-        font-size: 9px;
-        margin-top: 5px;
-        border-top: 1px solid #334155;
-        padding-top: 4px;
-      }
+      .kpi-tooltip strong { color: #fff; display: block; margin-bottom: 3px; }
+      .kpi-tooltip .tip-src { color: #94a3b8; font-size: 9px; margin-top: 5px; border-top: 1px solid #334155; padding-top: 4px; }
       .kpi-info-btn:hover + .kpi-tooltip,
-      .kpi-info-btn:focus + .kpi-tooltip {
-        display: block;
-      }
+      .kpi-info-btn:focus + .kpi-tooltip { display: block; }
 
       /* ══ FREE TEXT BOX ══════════════════════════════ */
       .text-box {
@@ -2539,7 +2499,7 @@
           id="btn-toggle-sidebar"
           onclick="toggleSidebar()"
           title="Mostrar / ocultar panel de actividades"
-          style="font-size: 13px; padding: 4px 10px"
+          style="font-size:13px; padding:4px 10px;"
         >
           ◀ Panel
         </button>
@@ -2586,12 +2546,7 @@
             animation: pulse-dot 1.4s ease-in-out infinite;
           "
         ></div>
-        <button
-          class="btn"
-          onclick="openMaterialsModal()"
-          style="background: #1e293b; color: #fff; border: 1px solid #334155"
-          title="Ver cuadro de materiales del journey"
-        >
+        <button class="btn" onclick="openMaterialsModal()" style="background:#1e293b;color:#fff;border:1px solid #334155;" title="Ver cuadro de materiales del journey">
           📦 Materiales
         </button>
         <button class="btn btn-green" onclick="openActivation()">
@@ -2601,61 +2556,23 @@
     </div>
 
     <!-- TABS BAR -->
-    <div
-      id="tabs-bar"
-      style="
-        display: flex;
-        align-items: center;
-        gap: 0;
-        background: #e8edf2;
-        border-bottom: 1px solid #c8d0d8;
-        height: 34px;
-        padding: 0 8px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-shrink: 0;
-        position: relative;
-        z-index: 200;
-      "
-    >
-      <div
-        id="tabs-list"
-        style="
-          display: flex;
-          align-items: center;
-          gap: 3px;
-          flex: 1;
-          overflow-x: auto;
-          scrollbar-width: none;
-        "
-      ></div>
-      <button
-        onclick="createNewJourney()"
-        title="Crear nuevo journey"
-        style="
-          flex-shrink: 0;
-          margin-left: 6px;
-          background: #0070d2;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          font-size: 18px;
-          font-weight: 700;
-          width: 26px;
-          height: 26px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          line-height: 1;
-          padding: 0;
-        "
-      >
-        +
-      </button>
+    <div id="tabs-bar" style="
+      display:flex; align-items:center; gap:0;
+      background:#e8edf2; border-bottom:1px solid #c8d0d8;
+      height:34px; padding:0 8px; overflow-x:auto; overflow-y:hidden;
+      flex-shrink:0; position:relative; z-index:200;
+    ">
+      <div id="tabs-list" style="display:flex;align-items:center;gap:3px;flex:1;overflow-x:auto;scrollbar-width:none;"></div>
+      <button onclick="createNewJourney()" title="Crear nuevo journey" style="
+        flex-shrink:0; margin-left:6px;
+        background:#0070d2; color:#fff; border:none; border-radius:4px;
+        font-size:18px; font-weight:700; width:26px; height:26px;
+        cursor:pointer; display:flex; align-items:center; justify-content:center;
+        line-height:1; padding:0;
+      ">+</button>
     </div>
 
-    <div class="layout">
+        <div class="layout">
       <!-- SIDEBAR -->
       <div class="sidebar">
         <div class="sb-search">
@@ -2691,35 +2608,7 @@
             </div>
           </div>
           <div class="sb-item" draggable="true" data-type="whatsapp">
-            <div
-              class="sb-icon"
-              style="
-                background: #dcfce7;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 175.216 175.552"
-                width="18"
-                height="18"
-              >
-                <path
-                  d="M87.6 0C39.3 0 0 39.3 0 87.6c0 15.3 4 29.7 10.9 42.2L0 175.6l47.2-10.7c12 6.4 25.7 10.1 40.4 10.1 48.3 0 87.6-39.3 87.6-87.6C175.2 39.3 135.9 0 87.6 0z"
-                  fill="#25D366"
-                />
-                <path
-                  d="M87.6 160.3c-13.5 0-26.2-3.6-37.2-9.9l-2.7-1.6-27.8 6.3 6.5-27.1-1.7-2.8c-6.9-11.3-10.6-24.4-10.6-37.8C14.1 47 47 14.1 87.6 14.1c19.9 0 38.6 7.8 52.7 21.8 14 14 21.8 32.7 21.8 52.5 0 40.7-32.9 71.9-74.5 71.9z"
-                  fill="#25D366"
-                />
-                <path
-                  d="M128.2 105.6c-2.2-1.1-13.1-6.5-15.1-7.2-2-.7-3.5-1.1-5 1.1-1.5 2.2-5.7 7.2-7 8.7-1.3 1.5-2.6 1.7-4.8.6-2.2-1.1-9.3-3.4-17.7-10.9-6.5-5.8-10.9-13-12.2-15.2-1.3-2.2-.1-3.4 1-4.5.9-.9 2-2.4 3.1-3.7 1-1.2 1.3-2.1 2-3.5.7-1.4.3-2.6-.2-3.7-.5-1.1-5-12-6.8-16.4-1.8-4.3-3.6-3.7-5-3.8-1.3-.1-2.8-.1-4.3-.1-1.5 0-3.9.6-5.9 2.8-2 2.2-7.7 7.5-7.7 18.4 0 10.8 7.9 21.3 9 22.7 1.1 1.5 15.5 23.7 37.6 33.2 5.2 2.3 9.3 3.6 12.5 4.6 5.2 1.7 10 1.4 13.8.9 4.2-.6 13.1-5.4 15-10.5 1.9-5.2 1.9-9.6 1.3-10.5-.5-1-2-1.5-4.2-2.6z"
-                  fill="#fff"
-                />
-              </svg>
-            </div>
+            <div class="sb-icon" style="background: #dcfce7; display:flex; align-items:center; justify-content:center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" width="18" height="18"><path d="M87.6 0C39.3 0 0 39.3 0 87.6c0 15.3 4 29.7 10.9 42.2L0 175.6l47.2-10.7c12 6.4 25.7 10.1 40.4 10.1 48.3 0 87.6-39.3 87.6-87.6C175.2 39.3 135.9 0 87.6 0z" fill="#25D366"/><path d="M87.6 160.3c-13.5 0-26.2-3.6-37.2-9.9l-2.7-1.6-27.8 6.3 6.5-27.1-1.7-2.8c-6.9-11.3-10.6-24.4-10.6-37.8C14.1 47 47 14.1 87.6 14.1c19.9 0 38.6 7.8 52.7 21.8 14 14 21.8 32.7 21.8 52.5 0 40.7-32.9 71.9-74.5 71.9z" fill="#25D366"/><path d="M128.2 105.6c-2.2-1.1-13.1-6.5-15.1-7.2-2-.7-3.5-1.1-5 1.1-1.5 2.2-5.7 7.2-7 8.7-1.3 1.5-2.6 1.7-4.8.6-2.2-1.1-9.3-3.4-17.7-10.9-6.5-5.8-10.9-13-12.2-15.2-1.3-2.2-.1-3.4 1-4.5.9-.9 2-2.4 3.1-3.7 1-1.2 1.3-2.1 2-3.5.7-1.4.3-2.6-.2-3.7-.5-1.1-5-12-6.8-16.4-1.8-4.3-3.6-3.7-5-3.8-1.3-.1-2.8-.1-4.3-.1-1.5 0-3.9.6-5.9 2.8-2 2.2-7.7 7.5-7.7 18.4 0 10.8 7.9 21.3 9 22.7 1.1 1.5 15.5 23.7 37.6 33.2 5.2 2.3 9.3 3.6 12.5 4.6 5.2 1.7 10 1.4 13.8.9 4.2-.6 13.1-5.4 15-10.5 1.9-5.2 1.9-9.6 1.3-10.5-.5-1-2-1.5-4.2-2.6z" fill="#fff"/></svg></div>
             <div>
               <div class="sb-label">Mensaje por WhatsApp</div>
               <div class="sb-desc">WhatsApp Business</div>
@@ -3632,24 +3521,9 @@
 
             <!-- Funnel chart -->
             <div class="activ-funnel">
-              <div
-                class="funnel-title"
-                style="display: flex; align-items: center; gap: 6px"
-              >
+              <div class="funnel-title" style="display:flex;align-items:center;gap:6px;">
                 📊 Embudo de conversión estimado
-                <span
-                  style="
-                    background: #dcfce7;
-                    color: #059669;
-                    font-size: 8px;
-                    font-weight: 700;
-                    padding: 1px 7px;
-                    border-radius: 10px;
-                    border: 1px solid #bbf7d0;
-                    letter-spacing: 0.3px;
-                  "
-                  >⚡ TIEMPO REAL</span
-                >
+                <span style="background:#dcfce7;color:#059669;font-size:8px;font-weight:700;padding:1px 7px;border-radius:10px;border:1px solid #bbf7d0;letter-spacing:.3px;">⚡ TIEMPO REAL</span>
               </div>
               <div id="activ-funnel-rows"></div>
             </div>
@@ -3727,15 +3601,7 @@
           iconBg: "#e0f4ff",
           headerBg: "#e8f4ff",
           typeLabel: "Correo electronico",
-          fields: [
-            "title",
-            "intentType",
-            "subtitle",
-            "time",
-            "subject",
-            "from",
-            "template",
-          ],
+          fields: ["title", "intentType", "subtitle", "time", "subject", "from", "template"],
           tooltip: "Envía un email al contacto en el momento configurado.",
         },
         sms: {
@@ -3746,14 +3612,7 @@
           iconBg: "#fff3cd",
           headerBg: "#fff8e6",
           typeLabel: "Mensaje de Texto SMS",
-          fields: [
-            "title",
-            "intentType",
-            "subtitle",
-            "time",
-            "message",
-            "senderId",
-          ],
+          fields: ["title", "intentType", "subtitle", "time", "message", "senderId"],
           tooltip: "Envía un SMS al número registrado del contacto.",
         },
         whatsapp: {
@@ -3765,14 +3624,7 @@
           iconBg: "#dcfce7",
           headerBg: "#f0fdf4",
           typeLabel: "WhatsApp",
-          fields: [
-            "title",
-            "intentType",
-            "subtitle",
-            "time",
-            "message",
-            "template",
-          ],
+          fields: ["title", "intentType", "subtitle", "time", "message", "template"],
           tooltip: "Envía un mensaje por WhatsApp Business API.",
         },
         push: {
@@ -3794,14 +3646,7 @@
           iconBg: "#ede9fe",
           headerBg: "#f5f3ff",
           typeLabel: "App Banner",
-          fields: [
-            "title",
-            "intentType",
-            "subtitle",
-            "time",
-            "message",
-            "placement",
-          ],
+          fields: ["title", "intentType", "subtitle", "time", "message", "placement"],
           tooltip:
             "Muestra un banner dentro de la app en el momento configurado.",
         },
@@ -3813,14 +3658,7 @@
           iconBg: "#fce7f3",
           headerBg: "#fdf2f8",
           typeLabel: "Formulario emergente",
-          fields: [
-            "title",
-            "intentType",
-            "subtitle",
-            "time",
-            "message",
-            "formField",
-          ],
+          fields: ["title", "intentType", "subtitle", "time", "message", "formField"],
           tooltip:
             "Modal que aparece al abrir la app para capturar datos del usuario.",
         },
@@ -4261,8 +4099,9 @@
         const detectedChannels = Object.entries(channelMap)
           .filter(([type]) => nodes.some((n) => n.type === type))
           .map(([, label]) => label);
-        journeyMeta.canales =
-          detectedChannels.length > 0 ? detectedChannels.join(", ") : "—";
+        journeyMeta.canales = detectedChannels.length > 0
+          ? detectedChannels.join(", ")
+          : "—";
         document.getElementById("stat-canales").textContent =
           journeyMeta.canales;
 
@@ -4270,19 +4109,19 @@
         let estrategia = "—";
         if (detectedChannels.length > 0) {
           const hasEmail = detectedChannels.includes("Email");
-          const hasSMS = detectedChannels.includes("SMS");
-          const hasWA = detectedChannels.includes("WhatsApp");
-          const hasPush = detectedChannels.includes("Push");
+          const hasSMS   = detectedChannels.includes("SMS");
+          const hasWA    = detectedChannels.includes("WhatsApp");
+          const hasPush  = detectedChannels.includes("Push");
           if (hasEmail && hasSMS && hasWA) estrategia = "Multicanal intensivo";
-          else if (hasEmail && hasSMS) estrategia = "Email + SMS";
-          else if (hasEmail && hasWA) estrategia = "Email + WhatsApp";
-          else if (hasEmail && hasPush) estrategia = "Email + Push";
-          else if (hasEmail) estrategia = "Email-first";
-          else if (hasSMS && hasWA) estrategia = "SMS + WhatsApp";
-          else if (hasSMS) estrategia = "SMS directo";
-          else if (hasWA) estrategia = "WhatsApp directo";
-          else if (hasPush) estrategia = "Push notifications";
-          else estrategia = detectedChannels[0];
+          else if (hasEmail && hasSMS)     estrategia = "Email + SMS";
+          else if (hasEmail && hasWA)      estrategia = "Email + WhatsApp";
+          else if (hasEmail && hasPush)    estrategia = "Email + Push";
+          else if (hasEmail)               estrategia = "Email-first";
+          else if (hasSMS && hasWA)        estrategia = "SMS + WhatsApp";
+          else if (hasSMS)                 estrategia = "SMS directo";
+          else if (hasWA)                  estrategia = "WhatsApp directo";
+          else if (hasPush)                estrategia = "Push notifications";
+          else                             estrategia = detectedChannels[0];
         }
         journeyMeta.estrategia = estrategia;
         document.getElementById("stat-estrategia").textContent =
@@ -4559,15 +4398,11 @@
         // For card/wait: title/sub shown inside the card, respect hide flags
         // For round/diamond: title/sub shown as external labels (handled in _buildNodeExternalLabels)
         const title = n.data.title || t.label;
-        const displayTitle =
-          (t.kind === "card" || t.kind === "wait") && n.data._hide_title
-            ? ""
-            : title;
+        const displayTitle = (t.kind === 'card' || t.kind === 'wait') && n.data._hide_title
+          ? '' : title;
         const sub = n.data.subtitle || "";
-        const displaySub =
-          (t.kind === "card" || t.kind === "wait") && n.data._hide_subtitle
-            ? ""
-            : sub;
+        const displaySub = (t.kind === 'card' || t.kind === 'wait') && n.data._hide_subtitle
+          ? '' : sub;
 
         /* ── Round ── */
         if (t.kind === "round") {
@@ -4614,26 +4449,22 @@
 
         /* ── Card ── */
         // Resolve intent display
-        const intentVal = n.data.intentType || "";
-        let intentBadge = "";
+        const intentVal = n.data.intentType || '';
+        let intentBadge = '';
         if (intentVal) {
           const intentColors = {
-            Compra: { bg: "#d1fae5", color: "#065f46", icon: "🛒" },
-            Evento: { bg: "#ede9fe", color: "#5b21b6", icon: "📅" },
-            Bono: { bg: "#fff3cd", color: "#7a5200", icon: "🎁" },
+            'Compra': { bg:'#d1fae5', color:'#065f46', icon:'🛒' },
+            'Evento': { bg:'#ede9fe', color:'#5b21b6', icon:'📅' },
+            'Bono':   { bg:'#fff3cd', color:'#7a5200', icon:'🎁' },
           };
-          const ic = intentColors[intentVal] || {
-            bg: "#f3f4f6",
-            color: "#374151",
-            icon: "",
-          };
-          intentBadge = `<div class="node-intent-badge" style="background:${ic.bg};color:${ic.color}">${ic.icon ? ic.icon + " " : ""}${intentVal}</div>`;
+          const ic = intentColors[intentVal] || { bg:'#f3f4f6', color:'#374151', icon:'' };
+          intentBadge = `<div class="node-intent-badge" style="background:${ic.bg};color:${ic.color}">${ic.icon ? ic.icon + ' ' : ''}${intentVal}</div>`;
         }
         return `<div class="node-card" style="border-color:${t.borderColor}">
     <div class="node-card-header" style="background:${t.headerBg}">
       <div class="node-icon-circle" style="background:${t.iconBg};display:flex;align-items:center;justify-content:center">${t.iconHTML || t.icon}</div>
       <div>
-        <div class="node-card-name">${displayTitle || "&nbsp;"}</div>
+        <div class="node-card-name">${displayTitle || '&nbsp;'}</div>
         <div class="node-card-type" style="color:${t.borderColor}">${t.typeLabel || t.label}</div>
       </div>
     </div>
@@ -4703,8 +4534,8 @@
         // Card nodes (email, sms, whatsapp, etc.) have text inside the card already
         if (t.kind !== "diamond" && t.kind !== "round") return;
 
-        const title = !n.data._hide_title ? n.data.title || t.label : "";
-        const sub = !n.data._hide_subtitle ? n.data.subtitle || "" : "";
+        const title = (!n.data._hide_title) ? (n.data.title || t.label) : "";
+        const sub = (!n.data._hide_subtitle) ? (n.data.subtitle || "") : "";
         if (!title && !sub) return;
 
         const off = nodeLabelOffsets[n.id] || {};
@@ -4730,13 +4561,11 @@
           pointer-events: all;
         `;
         // Use rich HTML if available (preserves colors, sizes, bold from WYSIWYG editor)
-        const richTitle = !n.data._hide_title
-          ? n.data._rich_title ||
-            `<span style="font-size:11px;font-weight:700;color:#1a1a1a">${title}</span>`
+        const richTitle = (!n.data._hide_title)
+          ? (n.data._rich_title || `<span style="font-size:11px;font-weight:700;color:#1a1a1a">${title}</span>`)
           : "";
-        const richSub = !n.data._hide_subtitle
-          ? n.data._rich_subtitle ||
-            (sub ? `<span style="font-size:10px;color:#666">${sub}</span>` : "")
+        const richSub = (!n.data._hide_subtitle)
+          ? (n.data._rich_subtitle || (sub ? `<span style="font-size:10px;color:#666">${sub}</span>` : ""))
           : "";
         lbl.innerHTML = `
           <div style="line-height:1.4;word-break:break-word;text-align:center">${richTitle}</div>
@@ -6353,23 +6182,22 @@
 ════════════════════════════════ */
       function intentSelectChange(select, fieldKey) {
         const intent = select.value;
-        const wrap = document.getElementById("intent-custom-wrap-" + fieldKey);
-        const hidden = document.getElementById("fp-" + fieldKey);
-        const customInp = document.getElementById("fp-" + fieldKey + "-custom");
-        if (intent === "Otro") {
-          if (wrap) wrap.classList.add("show");
-          if (hidden)
-            hidden.value = customInp && customInp.value ? customInp.value : "";
+        const wrap = document.getElementById('intent-custom-wrap-' + fieldKey);
+        const hidden = document.getElementById('fp-' + fieldKey);
+        const customInp = document.getElementById('fp-' + fieldKey + '-custom');
+        if (intent === 'Otro') {
+          if (wrap) wrap.classList.add('show');
+          if (hidden) hidden.value = customInp && customInp.value ? customInp.value : '';
           if (customInp) customInp.focus();
         } else {
-          if (wrap) wrap.classList.remove("show");
+          if (wrap) wrap.classList.remove('show');
           if (hidden) hidden.value = intent;
         }
         markDirty();
       }
 
       function intentCustomInput(input, fieldKey) {
-        const hidden = document.getElementById("fp-" + fieldKey);
+        const hidden = document.getElementById('fp-' + fieldKey);
         if (hidden) hidden.value = input.value;
         markDirty();
       }
@@ -6382,9 +6210,8 @@
         _forceCloseConnEditor();
 
         const t = NODE_TYPES[n.type];
-        document.getElementById("dp-title").innerHTML = t.iconHTML
-          ? `<span style="vertical-align:middle;margin-right:4px">${t.iconHTML}</span>${n.data.title || t.label}`
-          : `${t.icon} ${n.data.title || t.label}`;
+        document.getElementById("dp-title").innerHTML =
+          t.iconHTML ? `<span style="vertical-align:middle;margin-right:4px">${t.iconHTML}</span>${n.data.title || t.label}` : `${t.icon} ${n.data.title || t.label}`;
         const fields = t.fields || ["title", "subtitle"];
         let html = "";
         fields.forEach((k) => {
@@ -6403,14 +6230,13 @@
                   .replace(/</g, "&lt;")
                   .replace(/>/g, "&gt;")
                   .replace(/\n/g, "<br>");
-              const isVisToggle2 = k === "title" || k === "subtitle";
-              const isHidden2 =
-                isVisToggle2 && !!selectedNode.data["_hide_" + k];
+              const isVisToggle2 = (k === 'title' || k === 'subtitle');
+              const isHidden2 = isVisToggle2 && !!selectedNode.data['_hide_' + k];
               const hasContent2 = !!val.trim();
               const eyeBtn2 = isVisToggle2
-                ? `<button type="button" class="field-vis-btn${isHidden2 ? " hidden-vis" : ""}" id="fp-vis-${k}" title="${isHidden2 ? "Mostrar en canvas" : "Ocultar en canvas"}" onclick="toggleFieldVis('${k}', this)" style="${hasContent2 ? "" : "display:none"}">${isHidden2 ? "🙈" : "👁️"}</button>`
-                : "";
-              html += `<div class="rtb-wrap${isHidden2 ? " field-group-hidden" : ""}" id="fg-${k}">
+                ? `<button type="button" class="field-vis-btn${isHidden2 ? ' hidden-vis' : ''}" id="fp-vis-${k}" title="${isHidden2 ? 'Mostrar en canvas' : 'Ocultar en canvas'}" onclick="toggleFieldVis('${k}', this)" style="${hasContent2 ? '' : 'display:none'}">${isHidden2 ? '🙈' : '👁️'}</button>`
+                : '';
+              html += `<div class="rtb-wrap${isHidden2 ? ' field-group-hidden' : ''}" id="fg-${k}">
   <div class="field-label"><span class="field-label-text">${m.label}</span>${eyeBtn2}</div>
   <div class="rtb-toolbar" id="rtb-${k}">
     <button type="button" class="rtb-btn" data-cmd="bold" data-field="${k}" title="Negrita"><b>B</b></button>
@@ -6485,31 +6311,24 @@
             }
           } else if (m.type === "intent") {
             // Intent type: select dropdown + optional custom text for "Otro"
-            const isOtro = val && !m.options.slice(0, -1).includes(val);
+            const isOtro = val && !m.options.slice(0,-1).includes(val);
             const displayOtro = isOtro ? val : "";
-            const selectVal = isOtro ? "Otro" : val || "";
-            const opts = m.options
-              .map((o) => {
-                const label =
-                  o === "Compra"
-                    ? "🛒 Compra"
-                    : o === "Evento"
-                      ? "📅 Evento"
-                      : o === "Bono"
-                        ? "🎁 Bono"
-                        : "Otro";
-                return `<option value="${o}"${selectVal === o ? " selected" : ""}>${label}</option>`;
-              })
-              .join("");
+            const selectVal = isOtro ? "Otro" : (val || "");
+            const opts = m.options.map(o => {
+              const label = o === 'Compra' ? '🛒 Compra' :
+                            o === 'Evento' ? '📅 Evento' :
+                            o === 'Bono'   ? '🎁 Bono'   : 'Otro';
+              return `<option value="${o}"${selectVal === o ? ' selected' : ''}>${label}</option>`;
+            }).join('');
             html += `<div class="field-group">
               <div class="field-label">${m.label}</div>
               <select class="field-input" id="fp-${k}-select" onchange="intentSelectChange(this,'${k}')">
                 <option value="">— Seleccionar —</option>
                 ${opts}
               </select>
-              <input type="hidden" id="fp-${k}" value="${val.replace(/"/g, "&quot;")}">
-              <div class="intent-custom-wrap${selectVal === "Otro" ? " show" : ""}" id="intent-custom-wrap-${k}">
-                <input class="field-input" id="fp-${k}-custom" type="text" value="${displayOtro.replace(/"/g, "&quot;")}" placeholder="Escribe el tipo de intención…" oninput="intentCustomInput(this,'${k}')">
+              <input type="hidden" id="fp-${k}" value="${val.replace(/"/g,'&quot;')}">
+              <div class="intent-custom-wrap${(selectVal === 'Otro') ? ' show' : ''}" id="intent-custom-wrap-${k}">
+                <input class="field-input" id="fp-${k}-custom" type="text" value="${displayOtro.replace(/"/g,'&quot;')}" placeholder="Escribe el tipo de intención…" oninput="intentCustomInput(this,'${k}')">
               </div>
             </div>`;
           } else if (m.type === "select") {
@@ -6521,13 +6340,13 @@
             html += `<div class="field-group"><div class="field-label">${m.label}</div>
         <select class="field-input" id="fp-${k}">${opts}</select></div>`;
           } else {
-            const isVisToggle = k === "title" || k === "subtitle";
-            const isHidden = isVisToggle && !!selectedNode.data["_hide_" + k];
+            const isVisToggle = (k === 'title' || k === 'subtitle');
+            const isHidden = isVisToggle && !!selectedNode.data['_hide_' + k];
             const hasContent = !!val.trim();
             const eyeBtn = isVisToggle
-              ? `<button type="button" class="field-vis-btn${isHidden ? " hidden-vis" : ""}" id="fp-vis-${k}" title="${isHidden ? "Mostrar en canvas" : "Ocultar en canvas"}" onclick="toggleFieldVis('${k}', this)" style="${hasContent ? "" : "display:none"}">${isHidden ? "🙈" : "👁️"}</button>`
-              : "";
-            html += `<div class="field-group${isHidden ? " field-group-hidden" : ""}" id="fg-${k}"><div class="field-label"><span class="field-label-text">${m.label}</span>${eyeBtn}</div>
+              ? `<button type="button" class="field-vis-btn${isHidden ? ' hidden-vis' : ''}" id="fp-vis-${k}" title="${isHidden ? 'Mostrar en canvas' : 'Ocultar en canvas'}" onclick="toggleFieldVis('${k}', this)" style="${hasContent ? '' : 'display:none'}">${isHidden ? '🙈' : '👁️'}</button>`
+              : '';
+            html += `<div class="field-group${isHidden ? ' field-group-hidden' : ''}" id="fg-${k}"><div class="field-label"><span class="field-label-text">${m.label}</span>${eyeBtn}</div>
         <input class="field-input" id="fp-${k}" type="text" value="${val.replace(/"/g, "&quot;")}" placeholder="${m.placeholder || ""}" oninput="onFieldInput('${k}')"></div>`;
           }
         });
@@ -6985,16 +6804,16 @@
       /* ── Field visibility toggle (eye button) ── */
       function toggleFieldVis(k, btn) {
         if (!selectedNode) return;
-        const hideKey = "_hide_" + k;
+        const hideKey = '_hide_' + k;
         const isNowHidden = !selectedNode.data[hideKey];
         selectedNode.data[hideKey] = isNowHidden;
         // Update button appearance
-        btn.textContent = isNowHidden ? "🙈" : "👁️";
-        btn.title = isNowHidden ? "Mostrar en canvas" : "Ocultar en canvas";
-        btn.classList.toggle("hidden-vis", isNowHidden);
+        btn.textContent = isNowHidden ? '🙈' : '👁️';
+        btn.title = isNowHidden ? 'Mostrar en canvas' : 'Ocultar en canvas';
+        btn.classList.toggle('hidden-vis', isNowHidden);
         // Dim the field group
-        const fg = document.getElementById("fg-" + k);
-        if (fg) fg.classList.toggle("field-group-hidden", isNowHidden);
+        const fg = document.getElementById('fg-' + k);
+        if (fg) fg.classList.toggle('field-group-hidden', isNowHidden);
         // Live-update canvas
         _buildNodeExternalLabels(selectedNode);
         refreshNodeEl(selectedNode);
@@ -7006,10 +6825,10 @@
       /* Show eye button on field only when it has content */
       function onFieldInput(k) {
         markDirty();
-        const input = document.getElementById("fp-" + k);
-        const btn = document.getElementById("fp-vis-" + k);
+        const input = document.getElementById('fp-' + k);
+        const btn = document.getElementById('fp-vis-' + k);
         if (!input || !btn) return;
-        btn.style.display = input.value.trim() ? "" : "none";
+        btn.style.display = input.value.trim() ? '' : 'none';
       }
 
       function applyPanel() {
@@ -7028,9 +6847,8 @@
             selectedNode.data[k] = el.value;
           }
         });
-        document.getElementById("dp-title").innerHTML = t.iconHTML
-          ? `<span style="vertical-align:middle;margin-right:4px">${t.iconHTML}</span>${selectedNode.data.title || t.label}`
-          : `${t.icon} ${selectedNode.data.title || t.label}`;
+        document.getElementById("dp-title").innerHTML =
+          t.iconHTML ? `<span style="vertical-align:middle;margin-right:4px">${t.iconHTML}</span>${selectedNode.data.title || t.label}` : `${t.icon} ${selectedNode.data.title || t.label}`;
         refreshNodeEl(selectedNode);
         _buildNodeExternalLabels(selectedNode);
         renderConnections();
@@ -7411,9 +7229,7 @@
         const btn = document.getElementById("btn-toggle-sidebar");
         const isCollapsed = sb.classList.toggle("collapsed");
         btn.textContent = isCollapsed ? "▶ Panel" : "◀ Panel";
-        btn.title = isCollapsed
-          ? "Mostrar panel de actividades"
-          : "Ocultar panel de actividades";
+        btn.title = isCollapsed ? "Mostrar panel de actividades" : "Ocultar panel de actividades";
       }
 
       /* ════════════════════════════════
@@ -7518,14 +7334,10 @@
         // Restore title — update both display and active tab name
         if (pendingImportData.title) {
           const importedTitle = pendingImportData.title;
-          document.getElementById("journey-title-display").textContent =
-            importedTitle;
+          document.getElementById("journey-title-display").textContent = importedTitle;
           // Sync the active tab title so it matches
-          if (
-            typeof journeys !== "undefined" &&
-            typeof activeJourneyId !== "undefined"
-          ) {
-            const activeTab = journeys.find((j) => j.id === activeJourneyId);
+          if (typeof journeys !== "undefined" && typeof activeJourneyId !== "undefined") {
+            const activeTab = journeys.find(j => j.id === activeJourneyId);
             if (activeTab) activeTab.title = importedTitle;
             if (typeof _renderTabs === "function") _renderTabs();
           }
@@ -7533,8 +7345,7 @@
         // Restore meta if present in JSON — solo audiencia es manual,
         // canales/duracion/estrategia se recalculan siempre desde los nodos
         if (pendingImportData.meta?.journeyMeta) {
-          journeyMeta.audiencia =
-            pendingImportData.meta.journeyMeta.audiencia || "—";
+          journeyMeta.audiencia = pendingImportData.meta.journeyMeta.audiencia || "—";
         }
         nodeIdCounter = nodes.length
           ? Math.max(...nodes.map((n) => n.id)) + 1
@@ -7560,37 +7371,29 @@
       async function exportPNG() {
         showNotif("📷 Generando imagen… espera un momento");
 
-        const journeyTitle = document.getElementById(
-          "journey-title-display",
-        ).textContent;
-        const canvasWrap = document.getElementById("canvas-wrap");
-        const canvasEl = document.getElementById("canvas");
-        const svgLayer = document.getElementById("svg-layer");
+        const journeyTitle = document.getElementById("journey-title-display").textContent;
+        const canvasWrap   = document.getElementById("canvas-wrap");
+        const canvasEl     = document.getElementById("canvas");
+        const svgLayer     = document.getElementById("svg-layer");
 
         // ── 1. Temporarily reset pan/zoom to show ALL nodes at scale=1 ──
         const prevTransform = canvasEl.style.transform;
-        const prevOrigin = canvasEl.style.transformOrigin;
+        const prevOrigin    = canvasEl.style.transformOrigin;
 
         // Compute bounding box of all nodes in canvas-space
-        let minX = Infinity,
-          minY = Infinity,
-          maxX = -Infinity,
-          maxY = -Infinity;
-        nodes.forEach((n) => {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        nodes.forEach(n => {
           const { w, h } = getNodeDims(n.type, n.data);
           minX = Math.min(minX, n.x);
           minY = Math.min(minY, n.y);
           maxX = Math.max(maxX, n.x + w);
           maxY = Math.max(maxY, n.y + h);
         });
-        if (!isFinite(minX)) {
-          showNotif("⚠ No hay nodos en el flujo");
-          return;
-        }
+        if (!isFinite(minX)) { showNotif("⚠ No hay nodos en el flujo"); return; }
 
-        const PAD = 60;
-        const exportW = maxX - minX + PAD * 2;
-        const exportH = maxY - minY + PAD * 2;
+        const PAD   = 60;
+        const exportW = (maxX - minX) + PAD * 2;
+        const exportH = (maxY - minY) + PAD * 2;
 
         // Offset so top-left node is at (PAD, PAD)
         const exportPanX = -minX + PAD;
@@ -7601,26 +7404,24 @@
         canvasEl.style.transform = `translate(${exportPanX}px, ${exportPanY}px) scale(1)`;
 
         // Expand canvasWrap temporarily so html2canvas can see everything
-        const prevWrapW = canvasWrap.style.width;
-        const prevWrapH = canvasWrap.style.height;
+        const prevWrapW   = canvasWrap.style.width;
+        const prevWrapH   = canvasWrap.style.height;
         const prevOverflow = canvasWrap.style.overflow;
         canvasWrap.style.overflow = "visible";
-        canvasWrap.style.width = exportW + "px";
+        canvasWrap.style.width  = exportW + "px";
         canvasWrap.style.height = exportH + "px";
 
         // Trigger connection redraw at new transform
         if (typeof renderConnections === "function") renderConnections();
 
         // ── 2. Wait one frame for DOM to settle ──
-        await new Promise((r) =>
-          requestAnimationFrame(() => requestAnimationFrame(r)),
-        );
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
         // ── 3. Hide UI elements that should not appear in export ──
         const hideSelectors = [".zoom-bar", ".bottombar", ".connect-hint"];
         const hiddenEls = [];
-        hideSelectors.forEach((sel) => {
-          canvasWrap.querySelectorAll(sel).forEach((el) => {
+        hideSelectors.forEach(sel => {
+          canvasWrap.querySelectorAll(sel).forEach(el => {
             hiddenEls.push({ el, prev: el.style.display });
             el.style.display = "none";
           });
@@ -7633,7 +7434,7 @@
             useCORS: true,
             allowTaint: true,
             backgroundColor: "#f0f0ee",
-            width: exportW,
+            width:  exportW,
             height: exportH,
             x: 0,
             y: 0,
@@ -7643,22 +7444,20 @@
           });
 
           // ── 5. Restore hidden elements ──
-          hiddenEls.forEach(({ el, prev }) => {
-            el.style.display = prev;
-          });
+          hiddenEls.forEach(({ el, prev }) => { el.style.display = prev; });
 
           // ── 4. Restore original pan/zoom & wrap size ──
-          canvasEl.style.transform = prevTransform;
+          canvasEl.style.transform       = prevTransform;
           canvasEl.style.transformOrigin = prevOrigin;
           canvasWrap.style.overflow = prevOverflow;
-          canvasWrap.style.width = prevWrapW;
-          canvasWrap.style.height = prevWrapH;
+          canvasWrap.style.width    = prevWrapW;
+          canvasWrap.style.height   = prevWrapH;
           if (typeof renderConnections === "function") renderConnections();
 
           // ── 5. Add header bar on top of captured image ──
           const HEADER_H = 40;
           const final = document.createElement("canvas");
-          final.width = cvs.width;
+          final.width  = cvs.width;
           final.height = cvs.height + HEADER_H * 2;
           const ctx = final.getContext("2d");
 
@@ -7667,32 +7466,27 @@
           ctx.fillRect(0, 0, final.width, HEADER_H * 2);
           ctx.fillStyle = "#ffffff";
           ctx.font = `bold ${13 * 2}px Segoe UI, Arial, sans-serif`;
-          ctx.fillText(
-            "☁ Marketing Cloud — Journey Builder · " + journeyTitle,
-            14 * 2,
-            26 * 2,
-          );
+          ctx.fillText("☁ Marketing Cloud — Journey Builder · " + journeyTitle, 14 * 2, 26 * 2);
 
           // Journey content
           ctx.drawImage(cvs, 0, HEADER_H * 2);
 
           // ── 6. Download ──
           const a = document.createElement("a");
-          a.download = `journey_${journeyTitle.replace(/\s+/g, "_")}.png`;
+          a.download = `journey_${journeyTitle.replace(/\s+/g,"_")}.png`;
           a.href = final.toDataURL("image/png");
           a.click();
           showNotif("✅ PNG exportado — fiel al diseño del flujo");
+
         } catch (err) {
           // Restore on error too
-          canvasEl.style.transform = prevTransform;
+          canvasEl.style.transform       = prevTransform;
           canvasEl.style.transformOrigin = prevOrigin;
           canvasWrap.style.overflow = prevOverflow;
-          canvasWrap.style.width = prevWrapW;
-          canvasWrap.style.height = prevWrapH;
+          canvasWrap.style.width    = prevWrapW;
+          canvasWrap.style.height   = prevWrapH;
           if (typeof renderConnections === "function") renderConnections();
-          hiddenEls.forEach(({ el, prev }) => {
-            el.style.display = prev;
-          });
+          hiddenEls.forEach(({ el, prev }) => { el.style.display = prev; });
           console.error("Export error:", err);
           showNotif("⚠ Error al exportar: " + err.message);
         }
@@ -7997,182 +7791,136 @@
               nodes.find((n) => n.type === "entry")?.data?.contacts || "250000"
             ).replace(/[^\d]/g, ""),
           ) || 250000;
-        const fmt = (n) =>
-          n >= 1000
-            ? ((n / 1000) % 1 === 0
-                ? (n / 1000).toFixed(0)
-                : (n / 1000).toFixed(1)) + "K"
-            : n;
+        const fmt = (n) => n >= 1000 ? (n / 1000 % 1 === 0 ? (n/1000).toFixed(0) : (n/1000).toFixed(1)) + 'K' : n;
 
         // Detect real channel nodes
-        const hasEmail = nodes.some((n) => n.type === "email");
-        const hasSMS = nodes.some((n) => n.type === "sms");
-        const hasWA = nodes.some((n) => n.type === "whatsapp");
-        const hasPush = nodes.some((n) => n.type === "push");
-        const hasSplit = nodes.some((n) =>
-          ["split", "decision", "random_split"].includes(n.type),
-        );
-        const hasEntry = nodes.some((n) => n.type === "entry");
-        const hasExitOk = nodes.some((n) => n.type === "exit_ok");
-        const hasExitBad = nodes.some((n) => n.type === "exit_bad");
+        const hasEmail   = nodes.some(n => n.type === 'email');
+        const hasSMS     = nodes.some(n => n.type === 'sms');
+        const hasWA      = nodes.some(n => n.type === 'whatsapp');
+        const hasPush    = nodes.some(n => n.type === 'push');
+        const hasSplit   = nodes.some(n => ['split','decision','random_split'].includes(n.type));
+        const hasEntry   = nodes.some(n => n.type === 'entry');
+        const hasExitOk  = nodes.some(n => n.type === 'exit_ok');
+        const hasExitBad = nodes.some(n => n.type === 'exit_bad');
 
-        const emailNodes = nodes.filter((n) => n.type === "email");
-        const smsNodes = nodes.filter((n) => n.type === "sms");
-        const waNodes = nodes.filter((n) => n.type === "whatsapp");
-        const pushNodes = nodes.filter((n) => n.type === "push");
-        const splitNodes = nodes.filter((n) =>
-          ["split", "decision", "random_split"].includes(n.type),
-        );
-        const waitNodes = activOrder.filter((n) => n.type === "wait");
+        const emailNodes  = nodes.filter(n => n.type === 'email');
+        const smsNodes    = nodes.filter(n => n.type === 'sms');
+        const waNodes     = nodes.filter(n => n.type === 'whatsapp');
+        const pushNodes   = nodes.filter(n => n.type === 'push');
+        const splitNodes  = nodes.filter(n => ['split','decision','random_split'].includes(n.type));
+        const waitNodes   = activOrder.filter(n => n.type === 'wait');
 
         // Dynamic open-rate benchmark by primary channel
-        const openRate = hasEmail
-          ? 35
-          : hasSMS
-            ? 72
-            : hasWA
-              ? 85
-              : hasPush
-                ? 20
-                : 35;
-        const clickRate = hasEmail
-          ? 18
-          : hasSMS
-            ? 28
-            : hasWA
-              ? 45
-              : hasPush
-                ? 12
-                : 20;
-        const convRate = hasSplit
-          ? Math.round(clickRate * 0.65)
-          : Math.round(clickRate * 0.55);
+        const openRate   = hasEmail ? 35 : hasSMS ? 72 : hasWA ? 85 : hasPush ? 20 : 35;
+        const clickRate  = hasEmail ? 18 : hasSMS ? 28 : hasWA ? 45 : hasPush ? 12 : 20;
+        const convRate   = hasSplit ? Math.round(clickRate * 0.65) : Math.round(clickRate * 0.55);
 
         // Build steps dynamically from what's in the journey
         const allSteps = [
           {
-            key: "entry",
+            key: 'entry',
             show: hasEntry,
-            label: "Audiencia entrada",
+            label: 'Audiencia entrada',
             pct: 100,
-            color: "#0070d2",
+            color: '#0070d2',
             tooltip: {
-              title: "👥 Audiencia de entrada",
+              title: '👥 Audiencia de entrada',
               body: `Total de contactos en el segmento de entrada del journey. Esta cifra viene directamente del nodo <strong style="color:#93c5fd">Entrada de datos</strong> configurado en el canvas.`,
-              src: `Fuente: Nodo "Entrada de datos" · Contactos configurados: ${totalContacts.toLocaleString("es-CO")}`,
-            },
+              src: `Fuente: Nodo "Entrada de datos" · Contactos configurados: ${totalContacts.toLocaleString('es-CO')}`
+            }
           },
           {
-            key: "email",
+            key: 'email',
             show: hasEmail,
-            label:
-              emailNodes.length > 1
-                ? `Reciben Email (×${emailNodes.length})`
-                : `Reciben Email`,
+            label: emailNodes.length > 1 ? `Reciben Email (×${emailNodes.length})` : `Reciben Email`,
             pct: 100,
-            color: "#0070d2",
+            color: '#0070d2',
             tooltip: {
-              title: "✉️ Entrega de Email",
-              body: `Se asume tasa de entrega del 100% sobre el segmento válido. Journey cuenta con <strong style="color:#93c5fd">${emailNodes.length} nodo(s) de Email</strong>: ${emailNodes.map((n) => n.data.title || "Email").join(", ")}.`,
-              src: `Nodos detectados: ${emailNodes.map((n) => n.data.title || "Email").join(" · ")}`,
-            },
+              title: '✉️ Entrega de Email',
+              body: `Se asume tasa de entrega del 100% sobre el segmento válido. Journey cuenta con <strong style="color:#93c5fd">${emailNodes.length} nodo(s) de Email</strong>: ${emailNodes.map(n => n.data.title || 'Email').join(', ')}.`,
+              src: `Nodos detectados: ${emailNodes.map(n => n.data.title || 'Email').join(' · ')}`
+            }
           },
           {
-            key: "sms",
+            key: 'sms',
             show: hasSMS && !hasEmail,
-            label:
-              smsNodes.length > 1
-                ? `Reciben SMS (×${smsNodes.length})`
-                : `Reciben SMS`,
+            label: smsNodes.length > 1 ? `Reciben SMS (×${smsNodes.length})` : `Reciben SMS`,
             pct: 100,
-            color: "#e07800",
+            color: '#e07800',
             tooltip: {
-              title: "📱 Entrega de SMS",
-              body: `Se asume entrega del 100% al segmento. Journey cuenta con <strong style="color:#93c5fd">${smsNodes.length} nodo(s) de SMS</strong>: ${smsNodes.map((n) => n.data.title || "SMS").join(", ")}.`,
-              src: `Nodos detectados: ${smsNodes.map((n) => n.data.title || "SMS").join(" · ")}`,
-            },
+              title: '📱 Entrega de SMS',
+              body: `Se asume entrega del 100% al segmento. Journey cuenta con <strong style="color:#93c5fd">${smsNodes.length} nodo(s) de SMS</strong>: ${smsNodes.map(n => n.data.title || 'SMS').join(', ')}.`,
+              src: `Nodos detectados: ${smsNodes.map(n => n.data.title || 'SMS').join(' · ')}`
+            }
           },
           {
-            key: "wa",
+            key: 'wa',
             show: hasWA && !hasEmail && !hasSMS,
-            label:
-              waNodes.length > 1
-                ? `Reciben WhatsApp (×${waNodes.length})`
-                : `Reciben WhatsApp`,
+            label: waNodes.length > 1 ? `Reciben WhatsApp (×${waNodes.length})` : `Reciben WhatsApp`,
             pct: 100,
-            color: "#25D366",
+            color: '#25D366',
             tooltip: {
-              title: "💬 Entrega de WhatsApp",
-              body: `Se asume entrega del 100% al segmento válido. Journey tiene <strong style="color:#93c5fd">${waNodes.length} nodo(s) de WhatsApp</strong>: ${waNodes.map((n) => n.data.title || "WhatsApp").join(", ")}.`,
-              src: `Nodos detectados: ${waNodes.map((n) => n.data.title || "WA").join(" · ")}`,
-            },
+              title: '💬 Entrega de WhatsApp',
+              body: `Se asume entrega del 100% al segmento válido. Journey tiene <strong style="color:#93c5fd">${waNodes.length} nodo(s) de WhatsApp</strong>: ${waNodes.map(n => n.data.title || 'WhatsApp').join(', ')}.`,
+              src: `Nodos detectados: ${waNodes.map(n => n.data.title || 'WA').join(' · ')}`
+            }
           },
           {
-            key: "open",
+            key: 'open',
             show: hasEmail || hasSMS || hasWA || hasPush,
-            label: hasEmail
-              ? `Abren email (${openRate}%)`
-              : hasSMS
-                ? `Leen SMS (${openRate}%)`
-                : hasWA
-                  ? `Leen WhatsApp (${openRate}%)`
-                  : `Ven notif. (${openRate}%)`,
+            label: hasEmail ? `Abren email (${openRate}%)` : hasSMS ? `Leen SMS (${openRate}%)` : hasWA ? `Leen WhatsApp (${openRate}%)` : `Ven notif. (${openRate}%)`,
             pct: openRate,
-            color: "#7c3aed",
+            color: '#7c3aed',
             tooltip: {
-              title: "👁 Tasa de apertura / lectura",
-              body: `Benchmark de industria para el canal <strong style="color:#93c5fd">${hasEmail ? "Email (B2C reactivación)" : hasSMS ? "SMS" : hasWA ? "WhatsApp Business" : "Push"}</strong>. Esta tasa es un estimado estándar de mercado latinoamericano.`,
-              src: `Benchmark: Email 30-40% · SMS 70-80% · WhatsApp 80-90% · Push 15-25%`,
-            },
+              title: '👁 Tasa de apertura / lectura',
+              body: `Benchmark de industria para el canal <strong style="color:#93c5fd">${hasEmail ? 'Email (B2C reactivación)' : hasSMS ? 'SMS' : hasWA ? 'WhatsApp Business' : 'Push'}</strong>. Esta tasa es un estimado estándar de mercado latinoamericano.`,
+              src: `Benchmark: Email 30-40% · SMS 70-80% · WhatsApp 80-90% · Push 15-25%`
+            }
           },
           {
-            key: "split",
+            key: 'split',
             show: hasSplit,
-            label: `Engagement Split (${splitNodes.length > 1 ? splitNodes.length + " splits" : "1 split"})`,
+            label: `Engagement Split (${splitNodes.length > 1 ? splitNodes.length + ' splits' : '1 split'})`,
             pct: openRate,
-            color: "#e07800",
+            color: '#e07800',
             tooltip: {
-              title: "⚡ Engagement Split detectado",
-              body: `El journey tiene <strong style="color:#93c5fd">${splitNodes.length} nodo(s) de decisión</strong>. Solo los contactos que abrieron el mensaje llegan a esta bifurcación: ${splitNodes.map((n) => n.data.title || "Split").join(", ")}.`,
-              src: `Nodos de decisión: ${splitNodes.map((n) => n.data.title || "Split").join(" · ")}`,
-            },
+              title: '⚡ Engagement Split detectado',
+              body: `El journey tiene <strong style="color:#93c5fd">${splitNodes.length} nodo(s) de decisión</strong>. Solo los contactos que abrieron el mensaje llegan a esta bifurcación: ${splitNodes.map(n => n.data.title || 'Split').join(', ')}.`,
+              src: `Nodos de decisión: ${splitNodes.map(n => n.data.title || 'Split').join(' · ')}`
+            }
           },
           {
-            key: "cta",
+            key: 'cta',
             show: hasSMS || hasWA || (hasEmail && hasSplit),
             label: `Responden CTA (${clickRate}%)`,
             pct: clickRate,
-            color: "#059669",
+            color: '#059669',
             tooltip: {
-              title: "🖱 Respuesta al CTA",
-              body: `Porcentaje del total que hace clic en el llamado a la acción (CTA) o responde directamente. Incluye contactos derivados desde split de engagement a canales secundarios (${[hasSMS && "SMS", hasWA && "WA"].filter(Boolean).join(", ")}).`,
-              src: `Benchmark CTA: Email 15-22% · SMS 25-35% · WhatsApp 40-55%`,
-            },
+              title: '🖱 Respuesta al CTA',
+              body: `Porcentaje del total que hace clic en el llamado a la acción (CTA) o responde directamente. Incluye contactos derivados desde split de engagement a canales secundarios (${[hasSMS&&'SMS',hasWA&&'WA'].filter(Boolean).join(', ')}).`,
+              src: `Benchmark CTA: Email 15-22% · SMS 25-35% · WhatsApp 40-55%`
+            }
           },
           {
-            key: "conv",
+            key: 'conv',
             show: hasExitOk || hasExitBad,
             label: `Conversión final (${convRate}%)`,
             pct: convRate,
-            color: "#04844b",
+            color: '#04844b',
             tooltip: {
-              title: "🏆 Conversión final estimada",
-              body: `Contactos que llegaron a la <strong style="color:#93c5fd">Salida Positiva</strong> del journey (reactivados). Se calcula aplicando eficiencia de conversión (${hasSplit ? "65%" : "55%"} del CTA) sobre el total del segmento.`,
-              src: hasExitOk
-                ? `Nodo destino: Salida Positiva detectada en el journey`
-                : `Proyección sobre segmento de entrada`,
-            },
+              title: '🏆 Conversión final estimada',
+              body: `Contactos que llegaron a la <strong style="color:#93c5fd">Salida Positiva</strong> del journey (reactivados). Se calcula aplicando eficiencia de conversión (${hasSplit ? '65%' : '55%'} del CTA) sobre el total del segmento.`,
+              src: hasExitOk ? `Nodo destino: Salida Positiva detectada en el journey` : `Proyección sobre segmento de entrada`
+            }
           },
-        ].filter((s) => s.show);
+        ].filter(s => s.show);
 
-        document.getElementById("activ-funnel-rows").innerHTML =
-          allSteps.length === 0
-            ? `<div style="color:#94a3b8;font-size:11px;padding:8px 0;">No hay nodos de canal detectados.</div>`
-            : allSteps
-                .map((s, idx) => {
-                  const count = Math.round((totalContacts * s.pct) / 100);
-                  const isLast = idx === allSteps.length - 1;
-                  return `
+        document.getElementById("activ-funnel-rows").innerHTML = allSteps.length === 0
+          ? `<div style="color:#94a3b8;font-size:11px;padding:8px 0;">No hay nodos de canal detectados.</div>`
+          : allSteps.map((s, idx) => {
+            const count = Math.round((totalContacts * s.pct) / 100);
+            const isLast = idx === allSteps.length - 1;
+            return `
     <div class="fnl-row-wrap" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;position:relative;">
       <div class="funnel-label" style="position:relative;">${s.label}</div>
       <div class="funnel-track" style="flex:1;height:18px;background:#f0f0f0;border-radius:4px;overflow:hidden;">
@@ -8180,40 +7928,33 @@
       </div>
       <div class="funnel-pct" style="font-size:10px;font-weight:700;color:#444;width:36px;flex-shrink:0;">${s.pct}%</div>
       <button class="fnl-info-btn" tabindex="0">i</button>
-      <div class="fnl-tooltip ${idx < allSteps.length - 2 ? "below" : "above"}" style="display:none;">
+      <div class="fnl-tooltip ${idx < allSteps.length - 2 ? 'below' : 'above'}" style="display:none;">
         <strong>${s.tooltip.title}</strong>
         <span style="font-size:10px;line-height:1.5;">${s.tooltip.body}</span>
         <div class="tip-src">📌 ${s.tooltip.src}</div>
       </div>
     </div>`;
-                })
-                .join("");
+          }).join('');
 
         // Animate bars after paint
         requestAnimationFrame(() => {
-          document
-            .querySelectorAll(".funnel-fill[data-target]")
-            .forEach((el) => {
-              el.style.width = el.dataset.target + "%";
-            });
+          document.querySelectorAll('.funnel-fill[data-target]').forEach(el => {
+            el.style.width = el.dataset.target + '%';
+          });
         });
 
         // Toggle tooltip on click for touch support
-        document.querySelectorAll(".fnl-info-btn").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
+        document.querySelectorAll('.fnl-info-btn').forEach(btn => {
+          btn.addEventListener('click', e => {
             e.stopPropagation();
             const tip = btn.nextElementSibling;
-            const wasOpen = tip.style.display === "block";
-            document
-              .querySelectorAll(".fnl-tooltip")
-              .forEach((t) => (t.style.display = "none"));
-            tip.style.display = wasOpen ? "none" : "block";
+            const wasOpen = tip.style.display === 'block';
+            document.querySelectorAll('.fnl-tooltip').forEach(t => t.style.display = 'none');
+            tip.style.display = wasOpen ? 'none' : 'block';
           });
         });
-        document.addEventListener("click", () => {
-          document
-            .querySelectorAll(".fnl-tooltip")
-            .forEach((t) => (t.style.display = "none"));
+        document.addEventListener('click', () => {
+          document.querySelectorAll('.fnl-tooltip').forEach(t => t.style.display = 'none');
         });
       }
 
@@ -8664,7 +8405,7 @@
         const subtitle = n.data.subtitle || t.tooltip;
         return `
   <div style="padding:20px;text-align:center">
-    <div style="font-size:36px;margin-bottom:8px">${t.iconHTML ? `<span style="display:inline-block;width:36px;height:36px;vertical-align:middle">${t.iconHTML.replace('width="18" height="18"', 'width="36" height="36"')}</span>` : t.icon}</div>
+    <div style="font-size:36px;margin-bottom:8px">${t.iconHTML ? `<span style="display:inline-block;width:36px;height:36px;vertical-align:middle">${t.iconHTML.replace('width="18" height="18"','width="36" height="36"')}</span>` : t.icon}</div>
     <div style="font-size:13px;font-weight:800;color:#333;margin-bottom:6px">${title}</div>
     <div style="font-size:11px;color:#666;margin-bottom:10px">${subtitle}</div>
     ${n.data.time ? `<div style="font-size:10px;color:var(--sf-blue);font-weight:700">🕐 ${n.data.time}</div>` : ""}
@@ -9041,445 +8782,274 @@
     </div>
 
     <script>
-      /* ══════════════════════════════════════════════════════
+    /* ══════════════════════════════════════════════════════
        MULTI-JOURNEY TABS SYSTEM
     ══════════════════════════════════════════════════════ */
 
-      // State snapshot keys per journey
-      const ALL_STATE_KEYS = [
-        "nodes",
-        "connections",
-        "textBoxes",
-        "connWaypoints",
-        "nodeLabelOffsets",
-        "journeyMeta",
-        "nodeIdCounter",
-        "textBoxIdCounter",
-        "scale",
-        "panX",
-        "panY",
-      ];
+    // State snapshot keys per journey
+    const ALL_STATE_KEYS = [
+      'nodes','connections','textBoxes','connWaypoints',
+      'nodeLabelOffsets','journeyMeta','nodeIdCounter',
+      'textBoxIdCounter','scale','panX','panY'
+    ];
 
-      let journeys = []; // [{id, title, state}]
-      let activeJourneyId = null;
-      let journeyCounter = 1;
+    let journeys = [];       // [{id, title, state}]
+    let activeJourneyId = null;
+    let journeyCounter = 1;
 
-      function _captureState() {
-        return {
-          nodes: JSON.parse(JSON.stringify(nodes)),
-          connections: JSON.parse(JSON.stringify(connections)),
-          textBoxes: JSON.parse(JSON.stringify(textBoxes)),
-          connWaypoints: JSON.parse(JSON.stringify(connWaypoints)),
-          nodeLabelOffsets: JSON.parse(JSON.stringify(nodeLabelOffsets)),
-          journeyMeta: JSON.parse(JSON.stringify(journeyMeta)),
-          nodeIdCounter: nodeIdCounter,
-          textBoxIdCounter: textBoxIdCounter,
-          scale: scale,
-          panX: panX,
-          panY: panY,
-          title: document.getElementById("journey-title-display").textContent,
-        };
-      }
+    function _captureState() {
+      return {
+        nodes: JSON.parse(JSON.stringify(nodes)),
+        connections: JSON.parse(JSON.stringify(connections)),
+        textBoxes: JSON.parse(JSON.stringify(textBoxes)),
+        connWaypoints: JSON.parse(JSON.stringify(connWaypoints)),
+        nodeLabelOffsets: JSON.parse(JSON.stringify(nodeLabelOffsets)),
+        journeyMeta: JSON.parse(JSON.stringify(journeyMeta)),
+        nodeIdCounter: nodeIdCounter,
+        textBoxIdCounter: textBoxIdCounter,
+        scale: scale,
+        panX: panX,
+        panY: panY,
+        title: document.getElementById('journey-title-display').textContent
+      };
+    }
 
-      function _restoreState(state) {
-        nodes = JSON.parse(JSON.stringify(state.nodes));
-        connections = JSON.parse(JSON.stringify(state.connections));
-        textBoxes = JSON.parse(JSON.stringify(state.textBoxes || []));
-        connWaypoints = JSON.parse(JSON.stringify(state.connWaypoints || {}));
-        nodeLabelOffsets = JSON.parse(
-          JSON.stringify(state.nodeLabelOffsets || {}),
-        );
-        // Only restore audiencia from meta; rest recalculated
-        journeyMeta.audiencia =
-          (state.journeyMeta && state.journeyMeta.audiencia) || "—";
-        nodeIdCounter = state.nodeIdCounter || 50;
-        textBoxIdCounter = state.textBoxIdCounter || 2000;
-        scale = state.scale || 1;
-        panX = state.panX != null ? state.panX : 40;
-        panY = state.panY != null ? state.panY : 40;
-        document.getElementById("journey-title-display").textContent =
-          state.title || "Nuevo Journey";
-        canvas.style.transform = `translate(${panX}px,${panY}px) scale(${scale})`;
-      }
+    function _restoreState(state) {
+      nodes = JSON.parse(JSON.stringify(state.nodes));
+      connections = JSON.parse(JSON.stringify(state.connections));
+      textBoxes = JSON.parse(JSON.stringify(state.textBoxes || []));
+      connWaypoints = JSON.parse(JSON.stringify(state.connWaypoints || {}));
+      nodeLabelOffsets = JSON.parse(JSON.stringify(state.nodeLabelOffsets || {}));
+      // Only restore audiencia from meta; rest recalculated
+      journeyMeta.audiencia = (state.journeyMeta && state.journeyMeta.audiencia) || '—';
+      nodeIdCounter = state.nodeIdCounter || 50;
+      textBoxIdCounter = state.textBoxIdCounter || 2000;
+      scale = state.scale || 1;
+      panX = state.panX != null ? state.panX : 40;
+      panY = state.panY != null ? state.panY : 40;
+      document.getElementById('journey-title-display').textContent = state.title || 'Nuevo Journey';
+      canvas.style.transform = `translate(${panX}px,${panY}px) scale(${scale})`;
+    }
 
-      function _emptyState(title) {
-        return {
-          nodes: [],
-          connections: [],
-          textBoxes: [],
-          connWaypoints: {},
-          nodeLabelOffsets: {},
-          journeyMeta: {
-            audiencia: "—",
-            duracion: "—",
-            canales: "—",
-            estrategia: "—",
-          },
-          nodeIdCounter: 50,
-          textBoxIdCounter: 2000,
-          scale: 1,
-          panX: 40,
-          panY: 40,
-          title: title || "Nuevo Journey",
-        };
-      }
+    function _emptyState(title) {
+      return {
+        nodes: [],
+        connections: [],
+        textBoxes: [],
+        connWaypoints: {},
+        nodeLabelOffsets: {},
+        journeyMeta: { audiencia:'—', duracion:'—', canales:'—', estrategia:'—' },
+        nodeIdCounter: 50,
+        textBoxIdCounter: 2000,
+        scale: 1,
+        panX: 40,
+        panY: 40,
+        title: title || 'Nuevo Journey'
+      };
+    }
 
-      function _renderTabs() {
-        const list = document.getElementById("tabs-list");
-        list.innerHTML = "";
-        journeys.forEach((j) => {
-          const isActive = j.id === activeJourneyId;
-          const tab = document.createElement("div");
-          tab.style.cssText = `
+    function _renderTabs() {
+      const list = document.getElementById('tabs-list');
+      list.innerHTML = '';
+      journeys.forEach(j => {
+        const isActive = j.id === activeJourneyId;
+        const tab = document.createElement('div');
+        tab.style.cssText = `
           display:flex; align-items:center; gap:5px;
           padding:0 10px 0 12px; height:26px; border-radius:4px 4px 0 0;
-          font-size:11px; font-weight:${isActive ? "700" : "500"};
+          font-size:11px; font-weight:${isActive ? '700' : '500'};
           cursor:pointer; white-space:nowrap; flex-shrink:0;
-          background:${isActive ? "#fff" : "transparent"};
-          color:${isActive ? "#0070d2" : "#444"};
-          border:${isActive ? "1px solid #c8d0d8" : "1px solid transparent"};
-          border-bottom:${isActive ? "1px solid #fff" : "1px solid transparent"};
-          margin-bottom:${isActive ? "-1px" : "0"};
+          background:${isActive ? '#fff' : 'transparent'};
+          color:${isActive ? '#0070d2' : '#444'};
+          border:${isActive ? '1px solid #c8d0d8' : '1px solid transparent'};
+          border-bottom:${isActive ? '1px solid #fff' : '1px solid transparent'};
+          margin-bottom:${isActive ? '-1px' : '0'};
           position:relative;
           transition: background 0.1s;
         `;
-          tab.innerHTML = `
+        tab.innerHTML = `
           <span class="tab-name" ondblclick="renameTab(${j.id})" title="Doble clic para renombrar">${j.title}</span>
-          ${
-            journeys.length > 1
-              ? `<span onclick="closeJourney(${j.id},event)" style="
+          ${journeys.length > 1 ? `<span onclick="closeJourney(${j.id},event)" style="
             margin-left:2px; opacity:0.45; font-size:13px; line-height:1;
             padding:1px 3px; border-radius:3px;
             transition:opacity .15s;
           " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.45'"
-          title="Cerrar">×</span>`
-              : ""
-          }
+          title="Cerrar">×</span>` : ''}
         `;
-          tab.addEventListener("click", () => switchJourney(j.id));
-          list.appendChild(tab);
-        });
-      }
+        tab.addEventListener('click', () => switchJourney(j.id));
+        list.appendChild(tab);
+      });
+    }
 
-      function switchJourney(id) {
-        if (id === activeJourneyId) return;
-        // Save current state
-        const cur = journeys.find((j) => j.id === activeJourneyId);
-        if (cur) cur.state = _captureState();
-        // Switch
-        activeJourneyId = id;
-        const next = journeys.find((j) => j.id === id);
-        if (!next) return;
+    function switchJourney(id) {
+      if (id === activeJourneyId) return;
+      // Save current state
+      const cur = journeys.find(j => j.id === activeJourneyId);
+      if (cur) cur.state = _captureState();
+      // Switch
+      activeJourneyId = id;
+      const next = journeys.find(j => j.id === id);
+      if (!next) return;
+      closePanel();
+      _restoreState(next.state);
+      renderAll();
+      updateStatsPanel();
+      _initHistory();
+      _renderTabs();
+    }
+
+    function createNewJourney() {
+      // Save current
+      const cur = journeys.find(j => j.id === activeJourneyId);
+      if (cur) cur.state = _captureState();
+
+      journeyCounter++;
+      const newId = Date.now();
+      const title = 'Journey ' + journeyCounter;
+      journeys.push({ id: newId, title, state: _emptyState(title) });
+      activeJourneyId = newId;
+
+      closePanel();
+      _restoreState(_emptyState(title));
+      renderAll();
+      updateStatsPanel();
+      _initHistory();
+      _renderTabs();
+    }
+
+    function closeJourney(id, e) {
+      e && e.stopPropagation();
+      if (journeys.length <= 1) return;
+      const idx = journeys.findIndex(j => j.id === id);
+      journeys.splice(idx, 1);
+      if (activeJourneyId === id) {
+        const next = journeys[Math.min(idx, journeys.length - 1)];
+        activeJourneyId = next.id;
         closePanel();
         _restoreState(next.state);
         renderAll();
         updateStatsPanel();
         _initHistory();
+      }
+      _renderTabs();
+    }
+
+    function renameTab(id) {
+      const j = journeys.find(j => j.id === id);
+      if (!j) return;
+      const nv = prompt('Nombre del journey:', j.title);
+      if (nv && nv.trim()) {
+        j.title = nv.trim();
+        if (id === activeJourneyId) {
+          document.getElementById('journey-title-display').textContent = j.title;
+          updateStatsPanel();
+        }
         _renderTabs();
       }
+    }
 
-      function createNewJourney() {
-        // Save current
-        const cur = journeys.find((j) => j.id === activeJourneyId);
-        if (cur) cur.state = _captureState();
-
-        journeyCounter++;
-        const newId = Date.now();
-        const title = "Journey " + journeyCounter;
-        journeys.push({ id: newId, title, state: _emptyState(title) });
-        activeJourneyId = newId;
-
-        closePanel();
-        _restoreState(_emptyState(title));
-        renderAll();
+    // Override renameJourney to also update tab
+    const _origRenameJourney = renameJourney;
+    renameJourney = function() {
+      const cur = document.getElementById('journey-title-display').textContent;
+      const nv = prompt('Nombre del journey:', cur);
+      if (nv && nv.trim()) {
+        document.getElementById('journey-title-display').textContent = nv.trim();
+        const j = journeys.find(j => j.id === activeJourneyId);
+        if (j) j.title = nv.trim();
         updateStatsPanel();
-        _initHistory();
         _renderTabs();
       }
+    };
 
-      function closeJourney(id, e) {
-        e && e.stopPropagation();
-        if (journeys.length <= 1) return;
-        const idx = journeys.findIndex((j) => j.id === id);
-        journeys.splice(idx, 1);
-        if (activeJourneyId === id) {
-          const next = journeys[Math.min(idx, journeys.length - 1)];
-          activeJourneyId = next.id;
-          closePanel();
-          _restoreState(next.state);
-          renderAll();
-          updateStatsPanel();
-          _initHistory();
-        }
-        _renderTabs();
-      }
-
-      function renameTab(id) {
-        const j = journeys.find((j) => j.id === id);
-        if (!j) return;
-        const nv = prompt("Nombre del journey:", j.title);
-        if (nv && nv.trim()) {
-          j.title = nv.trim();
-          if (id === activeJourneyId) {
-            document.getElementById("journey-title-display").textContent =
-              j.title;
-            updateStatsPanel();
-          }
-          _renderTabs();
-        }
-      }
-
-      // Override renameJourney to also update tab
-      const _origRenameJourney = renameJourney;
-      renameJourney = function () {
-        const cur = document.getElementById(
-          "journey-title-display",
-        ).textContent;
-        const nv = prompt("Nombre del journey:", cur);
-        if (nv && nv.trim()) {
-          document.getElementById("journey-title-display").textContent =
-            nv.trim();
-          const j = journeys.find((j) => j.id === activeJourneyId);
-          if (j) j.title = nv.trim();
-          updateStatsPanel();
-          _renderTabs();
-        }
-      };
-
-      // ── INIT: wrap the default journey into tab system ──
-      (function initTabs() {
-        const firstId = Date.now();
-        journeyCounter = 1;
-        journeys = [
-          {
-            id: firstId,
-            title: document.getElementById("journey-title-display").textContent,
-            state: null, // current canvas IS the state, no need to capture yet
-          },
-        ];
-        activeJourneyId = firstId;
-        _renderTabs();
-      })();
+    // ── INIT: wrap the default journey into tab system ──
+    (function initTabs() {
+      const firstId = Date.now();
+      journeyCounter = 1;
+      journeys = [{
+        id: firstId,
+        title: document.getElementById('journey-title-display').textContent,
+        state: null  // current canvas IS the state, no need to capture yet
+      }];
+      activeJourneyId = firstId;
+      _renderTabs();
+    })();
     </script>
 
     <!-- ══════════════════════════════════════════════
          MODAL: CUADRO DE MATERIALES
     ══════════════════════════════════════════════ -->
-    <div
-      id="materials-modal"
-      style="
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 9000;
-        background: rgba(0, 0, 0, 0.55);
-        backdrop-filter: blur(3px);
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <div
-        style="
-          background: #fff;
-          border-radius: 10px;
-          width: 820px;
-          max-width: 96vw;
-          max-height: 90vh;
-          display: flex;
-          flex-direction: column;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-          overflow: hidden;
-        "
-      >
+    <div id="materials-modal" style="
+      display:none; position:fixed; inset:0; z-index:9000;
+      background:rgba(0,0,0,0.55); backdrop-filter:blur(3px);
+      align-items:center; justify-content:center;
+    ">
+      <div style="
+        background:#fff; border-radius:10px; width:820px; max-width:96vw;
+        max-height:90vh; display:flex; flex-direction:column;
+        box-shadow:0 20px 60px rgba(0,0,0,0.35); overflow:hidden;
+      ">
         <!-- Header -->
-        <div
-          style="
-            background: #0f172a;
-            color: #fff;
-            padding: 18px 24px 14px;
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            flex-shrink: 0;
-          "
-        >
+        <div style="
+          background:#0f172a; color:#fff; padding:18px 24px 14px;
+          display:flex; align-items:flex-start; justify-content:space-between;
+          flex-shrink:0;
+        ">
           <div>
-            <div
-              style="
-                font-size: 18px;
-                font-weight: 900;
-                letter-spacing: 1px;
-                text-transform: uppercase;
-              "
-            >
+            <div style="font-size:18px;font-weight:900;letter-spacing:1px;text-transform:uppercase;">
               📦 CUADRO DE MATERIALES
             </div>
-            <div
-              id="mat-journey-name"
-              style="
-                font-size: 11px;
-                color: #94a3b8;
-                margin-top: 3px;
-                font-weight: 500;
-              "
-            ></div>
+            <div id="mat-journey-name" style="font-size:11px;color:#94a3b8;margin-top:3px;font-weight:500;"></div>
           </div>
-          <button
-            onclick="closeMaterialsModal()"
-            style="
-              background: rgba(255, 255, 255, 0.1);
-              border: none;
-              color: #fff;
-              width: 30px;
-              height: 30px;
-              border-radius: 50%;
-              font-size: 16px;
-              cursor: pointer;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-shrink: 0;
-              margin-left: 12px;
-            "
-          >
-            ×
-          </button>
+          <button onclick="closeMaterialsModal()" style="
+            background:rgba(255,255,255,0.1); border:none; color:#fff;
+            width:30px; height:30px; border-radius:50%; font-size:16px;
+            cursor:pointer; display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; margin-left:12px;
+          ">×</button>
         </div>
 
         <!-- Summary pills -->
-        <div
-          id="mat-summary-bar"
-          style="
-            background: #1e293b;
-            padding: 10px 24px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            flex-shrink: 0;
-          "
-        ></div>
+        <div id="mat-summary-bar" style="
+          background:#1e293b; padding:10px 24px; display:flex; gap:10px;
+          flex-wrap:wrap; flex-shrink:0;
+        "></div>
 
         <!-- Content scrollable -->
-        <div style="overflow-y: auto; padding: 20px 24px; flex: 1">
+        <div style="overflow-y:auto; padding:20px 24px; flex:1;">
+
           <!-- Totales por canal -->
-          <div style="margin-bottom: 20px">
-            <div
-              style="
-                font-size: 10px;
-                font-weight: 700;
-                color: #64748b;
-                text-transform: uppercase;
-                letter-spacing: 0.8px;
-                margin-bottom: 10px;
-              "
-            >
+          <div style="margin-bottom:20px;">
+            <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">
               Resumen por canal
             </div>
-            <div
-              id="mat-channel-cards"
-              style="display: flex; flex-wrap: wrap; gap: 10px"
-            ></div>
+            <div id="mat-channel-cards" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
           </div>
 
           <!-- Tabla detallada -->
           <div>
-            <div
-              style="
-                font-size: 10px;
-                font-weight: 700;
-                color: #64748b;
-                text-transform: uppercase;
-                letter-spacing: 0.8px;
-                margin-bottom: 10px;
-              "
-            >
+            <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">
               Detalle de piezas por nodo
             </div>
-            <div
-              style="
-                border-radius: 8px;
-                overflow: hidden;
-                border: 1px solid #e2e8f0;
-              "
-            >
-              <table
-                id="mat-detail-table"
-                style="width: 100%; border-collapse: collapse; font-size: 12px"
-              ></table>
+            <div style="border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">
+              <table id="mat-detail-table" style="width:100%;border-collapse:collapse;font-size:12px;"></table>
             </div>
           </div>
 
           <!-- Spec table -->
-          <div style="margin-top: 20px">
-            <div
-              style="
-                font-size: 10px;
-                font-weight: 700;
-                color: #64748b;
-                text-transform: uppercase;
-                letter-spacing: 0.8px;
-                margin-bottom: 10px;
-              "
-            >
+          <div style="margin-top:20px;">
+            <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;">
               Especificaciones técnicas de formatos
             </div>
-            <div
-              style="
-                border-radius: 8px;
-                overflow: hidden;
-                border: 1px solid #e2e8f0;
-              "
-            >
-              <table
-                style="width: 100%; border-collapse: collapse; font-size: 11px"
-              >
+            <div style="border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">
+              <table style="width:100%;border-collapse:collapse;font-size:11px;">
                 <thead>
-                  <tr style="background: #0f172a; color: #fff">
-                    <th
-                      style="
-                        padding: 9px 14px;
-                        text-align: left;
-                        font-weight: 700;
-                      "
-                    >
-                      Pieza
-                    </th>
-                    <th
-                      style="
-                        padding: 9px 14px;
-                        text-align: center;
-                        font-weight: 700;
-                      "
-                    >
-                      Formato
-                    </th>
-                    <th
-                      style="
-                        padding: 9px 14px;
-                        text-align: center;
-                        font-weight: 700;
-                      "
-                    >
-                      Dimensiones
-                    </th>
-                    <th
-                      style="
-                        padding: 9px 14px;
-                        text-align: center;
-                        font-weight: 700;
-                      "
-                    >
-                      Peso máx.
-                    </th>
-                    <th
-                      style="
-                        padding: 9px 14px;
-                        text-align: center;
-                        font-weight: 700;
-                      "
-                    >
-                      Entrega
-                    </th>
+                  <tr style="background:#0f172a;color:#fff;">
+                    <th style="padding:9px 14px;text-align:left;font-weight:700;">Pieza</th>
+                    <th style="padding:9px 14px;text-align:center;font-weight:700;">Formato</th>
+                    <th style="padding:9px 14px;text-align:center;font-weight:700;">Dimensiones</th>
+                    <th style="padding:9px 14px;text-align:center;font-weight:700;">Peso máx.</th>
+                    <th style="padding:9px 14px;text-align:center;font-weight:700;">Entrega</th>
                   </tr>
                 </thead>
                 <tbody id="mat-spec-tbody"></tbody>
@@ -9489,234 +9059,129 @@
         </div>
 
         <!-- Footer -->
-        <div
-          style="
-            padding: 12px 24px;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            flex-shrink: 0;
-            background: #f8fafc;
-          "
-        >
-          <button
-            onclick="exportMaterialsCSV()"
-            style="
-              padding: 7px 16px;
-              background: #1e293b;
-              color: #fff;
-              border: none;
-              border-radius: 5px;
-              font-size: 11px;
-              font-weight: 700;
-              cursor: pointer;
-            "
-          >
-            ⬇ Exportar CSV
-          </button>
-          <button
-            onclick="closeMaterialsModal()"
-            style="
-              padding: 7px 16px;
-              background: #f1f5f9;
-              color: #334155;
-              border: 1px solid #cbd5e1;
-              border-radius: 5px;
-              font-size: 11px;
-              font-weight: 700;
-              cursor: pointer;
-            "
-          >
-            Cerrar
-          </button>
+        <div style="
+          padding:12px 24px; border-top:1px solid #e2e8f0; display:flex;
+          justify-content:flex-end; gap:8px; flex-shrink:0; background:#f8fafc;
+        ">
+          <button onclick="exportMaterialsCSV()" style="
+            padding:7px 16px; background:#1e293b; color:#fff; border:none;
+            border-radius:5px; font-size:11px; font-weight:700; cursor:pointer;
+          ">⬇ Exportar CSV</button>
+          <button onclick="closeMaterialsModal()" style="
+            padding:7px 16px; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;
+            border-radius:5px; font-size:11px; font-weight:700; cursor:pointer;
+          ">Cerrar</button>
         </div>
       </div>
     </div>
 
     <script>
-      /* ══════════════════════════════════════════════
+    /* ══════════════════════════════════════════════
        CUADRO DE MATERIALES
     ══════════════════════════════════════════════ */
 
-      // Helper: render channel icon as HTML (handles SVG icons vs emoji)
-      function _iconDisplay(ch, size) {
-        size = size || 18;
-        if (ch.icon && ch.icon.trim().startsWith("<svg")) {
-          return ch.icon
-            .replace(/width="\d+"/, `width="${size}"`)
-            .replace(/height="\d+"/, `height="${size}"`);
-        }
-        return ch.icon;
+    // Helper: render channel icon as HTML (handles SVG icons vs emoji)
+    function _iconDisplay(ch, size) {
+      size = size || 18;
+      if (ch.icon && ch.icon.trim().startsWith('<svg')) {
+        return ch.icon.replace(/width="\d+"/, `width="${size}"`).replace(/height="\d+"/, `height="${size}"`);
       }
+      return ch.icon;
+    }
 
-      // Channel definitions: nodeType → display info
-      const MAT_CHANNELS = {
-        email: {
-          label: "Email",
-          icon: "✉️",
-          color: "#0070d2",
-          bg: "#e8f4ff",
-          specs: {
-            formato: "HTML+JPG",
-            dims: "600 px ancho",
-            peso: "300 KB",
-            entrega: "HTML+JPG",
-          },
-        },
-        sms: {
-          label: "SMS",
-          icon: "📱",
-          color: "#e07800",
-          bg: "#fff8e6",
-          specs: { formato: "TXT", dims: "—", peso: "—", entrega: "TXT" },
-        },
-        whatsapp: {
-          label: "WhatsApp",
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" width="18" height="18" style="vertical-align:middle"><path d="M87.6 0C39.3 0 0 39.3 0 87.6c0 15.3 4 29.7 10.9 42.2L0 175.6l47.2-10.7c12 6.4 25.7 10.1 40.4 10.1 48.3 0 87.6-39.3 87.6-87.6C175.2 39.3 135.9 0 87.6 0z" fill="#25D366"/><path d="M87.6 160.3c-13.5 0-26.2-3.6-37.2-9.9l-2.7-1.6-27.8 6.3 6.5-27.1-1.7-2.8c-6.9-11.3-10.6-24.4-10.6-37.8C14.1 47 47 14.1 87.6 14.1c19.9 0 38.6 7.8 52.7 21.8 14 14 21.8 32.7 21.8 52.5 0 40.7-32.9 71.9-74.5 71.9z" fill="#25D366"/><path d="M128.2 105.6c-2.2-1.1-13.1-6.5-15.1-7.2-2-.7-3.5-1.1-5 1.1-1.5 2.2-5.7 7.2-7 8.7-1.3 1.5-2.6 1.7-4.8.6-2.2-1.1-9.3-3.4-17.7-10.9-6.5-5.8-10.9-13-12.2-15.2-1.3-2.2-.1-3.4 1-4.5.9-.9 2-2.4 3.1-3.7 1-1.2 1.3-2.1 2-3.5.7-1.4.3-2.6-.2-3.7-.5-1.1-5-12-6.8-16.4-1.8-4.3-3.6-3.7-5-3.8-1.3-.1-2.8-.1-4.3-.1-1.5 0-3.9.6-5.9 2.8-2 2.2-7.7 7.5-7.7 18.4 0 10.8 7.9 21.3 9 22.7 1.1 1.5 15.5 23.7 37.6 33.2 5.2 2.3 9.3 3.6 12.5 4.6 5.2 1.7 10 1.4 13.8.9 4.2-.6 13.1-5.4 15-10.5 1.9-5.2 1.9-9.6 1.3-10.5-.5-1-2-1.5-4.2-2.6z" fill="#fff"/></svg>',
-          color: "#059669",
-          bg: "#f0fdf4",
-          specs: {
-            formato: "JPG",
-            dims: "800×418 px",
-            peso: "150 KB",
-            entrega: "JPG+copy",
-          },
-        },
-        push: {
-          label: "Push",
-          icon: "🔔",
-          color: "#db2777",
-          bg: "#fdf2f8",
-          specs: {
-            formato: "JPG",
-            dims: "1080×1080 px",
-            peso: "200 KB",
-            entrega: "JPG",
-          },
-        },
-        banner: {
-          label: "App Banner",
-          icon: "🎯",
-          color: "#7c3aed",
-          bg: "#f5f3ff",
-          specs: {
-            formato: "JPG/PNG",
-            dims: "Según spec app",
-            peso: "200 KB",
-            entrega: "JPG",
-          },
-        },
-        popup: {
-          label: "PopUp In-App",
-          icon: "📝",
-          color: "#db2777",
-          bg: "#fdf2f8",
-          specs: {
-            formato: "JPG/PNG",
-            dims: "375×500 px",
-            peso: "200 KB",
-            entrega: "JPG+PNG",
-          },
-        },
-      };
+    // Channel definitions: nodeType → display info
+    const MAT_CHANNELS = {
+      email:    { label:'Email',             icon:'✉️',  color:'#0070d2', bg:'#e8f4ff', specs:{ formato:'HTML+JPG', dims:'600 px ancho', peso:'300 KB', entrega:'HTML+JPG' } },
+      sms:      { label:'SMS',               icon:'📱',  color:'#e07800', bg:'#fff8e6', specs:{ formato:'TXT',      dims:'—',           peso:'—',      entrega:'TXT'      } },
+      whatsapp: { label:'WhatsApp',          icon:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" width="18" height="18" style="vertical-align:middle"><path d="M87.6 0C39.3 0 0 39.3 0 87.6c0 15.3 4 29.7 10.9 42.2L0 175.6l47.2-10.7c12 6.4 25.7 10.1 40.4 10.1 48.3 0 87.6-39.3 87.6-87.6C175.2 39.3 135.9 0 87.6 0z" fill="#25D366"/><path d="M87.6 160.3c-13.5 0-26.2-3.6-37.2-9.9l-2.7-1.6-27.8 6.3 6.5-27.1-1.7-2.8c-6.9-11.3-10.6-24.4-10.6-37.8C14.1 47 47 14.1 87.6 14.1c19.9 0 38.6 7.8 52.7 21.8 14 14 21.8 32.7 21.8 52.5 0 40.7-32.9 71.9-74.5 71.9z" fill="#25D366"/><path d="M128.2 105.6c-2.2-1.1-13.1-6.5-15.1-7.2-2-.7-3.5-1.1-5 1.1-1.5 2.2-5.7 7.2-7 8.7-1.3 1.5-2.6 1.7-4.8.6-2.2-1.1-9.3-3.4-17.7-10.9-6.5-5.8-10.9-13-12.2-15.2-1.3-2.2-.1-3.4 1-4.5.9-.9 2-2.4 3.1-3.7 1-1.2 1.3-2.1 2-3.5.7-1.4.3-2.6-.2-3.7-.5-1.1-5-12-6.8-16.4-1.8-4.3-3.6-3.7-5-3.8-1.3-.1-2.8-.1-4.3-.1-1.5 0-3.9.6-5.9 2.8-2 2.2-7.7 7.5-7.7 18.4 0 10.8 7.9 21.3 9 22.7 1.1 1.5 15.5 23.7 37.6 33.2 5.2 2.3 9.3 3.6 12.5 4.6 5.2 1.7 10 1.4 13.8.9 4.2-.6 13.1-5.4 15-10.5 1.9-5.2 1.9-9.6 1.3-10.5-.5-1-2-1.5-4.2-2.6z" fill="#fff"/></svg>',  color:'#059669', bg:'#f0fdf4', specs:{ formato:'JPG',      dims:'800×418 px',  peso:'150 KB', entrega:'JPG+copy' } },
+      push:     { label:'Push',              icon:'🔔',  color:'#db2777', bg:'#fdf2f8', specs:{ formato:'JPG',      dims:'1080×1080 px',peso:'200 KB', entrega:'JPG'      } },
+      banner:   { label:'App Banner',        icon:'🎯',  color:'#7c3aed', bg:'#f5f3ff', specs:{ formato:'JPG/PNG',  dims:'Según spec app',peso:'200 KB',entrega:'JPG'     } },
+      popup:    { label:'PopUp In-App',      icon:'📝',  color:'#db2777', bg:'#fdf2f8', specs:{ formato:'JPG/PNG',  dims:'375×500 px',  peso:'200 KB', entrega:'JPG+PNG'  } },
+    };
 
-      function _buildMaterials() {
-        // Count nodes per channel
-        const counts = {};
-        const nodeList = {}; // channel → [{title, intentType, time}]
+    function _buildMaterials() {
+      // Count nodes per channel
+      const counts = {};
+      const nodeList = {}; // channel → [{title, intentType, time}]
 
-        nodes.forEach((n) => {
-          if (!MAT_CHANNELS[n.type]) return;
-          counts[n.type] = (counts[n.type] || 0) + 1;
-          if (!nodeList[n.type]) nodeList[n.type] = [];
-          nodeList[n.type].push({
-            title: n.data.title || NODE_TYPES[n.type].label,
-            intentType: n.data.intentType || "—",
-            time: n.data.time || "—",
-            subject: n.data.subject || "",
-            message: n.data.message || n.data.subtitle || "",
-          });
+      nodes.forEach(n => {
+        if (!MAT_CHANNELS[n.type]) return;
+        counts[n.type] = (counts[n.type] || 0) + 1;
+        if (!nodeList[n.type]) nodeList[n.type] = [];
+        nodeList[n.type].push({
+          title: n.data.title || NODE_TYPES[n.type].label,
+          intentType: n.data.intentType || '—',
+          time: n.data.time || '—',
+          subject: n.data.subject || '',
+          message: n.data.message || n.data.subtitle || '',
         });
+      });
 
-        return { counts, nodeList };
-      }
+      return { counts, nodeList };
+    }
 
-      function openMaterialsModal() {
-        const modal = document.getElementById("materials-modal");
-        modal.style.display = "flex";
-        _renderMaterials();
-      }
+    function openMaterialsModal() {
+      const modal = document.getElementById('materials-modal');
+      modal.style.display = 'flex';
+      _renderMaterials();
+    }
 
-      function closeMaterialsModal() {
-        document.getElementById("materials-modal").style.display = "none";
-      }
+    function closeMaterialsModal() {
+      document.getElementById('materials-modal').style.display = 'none';
+    }
 
-      function _renderMaterials() {
-        const { counts, nodeList } = _buildMaterials();
-        const journeyTitle = document.getElementById(
-          "journey-title-display",
-        ).textContent;
+    function _renderMaterials() {
+      const { counts, nodeList } = _buildMaterials();
+      const journeyTitle = document.getElementById('journey-title-display').textContent;
 
-        // Journey name
-        document.getElementById("mat-journey-name").textContent = journeyTitle;
+      // Journey name
+      document.getElementById('mat-journey-name').textContent = journeyTitle;
 
-        // Summary pills
-        const summaryBar = document.getElementById("mat-summary-bar");
-        const totalNodes = Object.values(counts).reduce((a, b) => a + b, 0);
-        const totalChannels = Object.keys(counts).length;
-        const pills = [
-          { label: "Total piezas", val: totalNodes, color: "#f59e0b" },
-          ...Object.entries(counts).map(([type, n]) => ({
-            label: MAT_CHANNELS[type].label,
-            val: n,
-            color: MAT_CHANNELS[type].color,
-          })),
-        ];
-        summaryBar.innerHTML = pills
-          .map(
-            (p) => `
+      // Summary pills
+      const summaryBar = document.getElementById('mat-summary-bar');
+      const totalNodes = Object.values(counts).reduce((a,b)=>a+b, 0);
+      const totalChannels = Object.keys(counts).length;
+      const pills = [
+        { label:'Total piezas', val: totalNodes, color:'#f59e0b' },
+        ...Object.entries(counts).map(([type, n]) => ({
+          label: MAT_CHANNELS[type].label, val: n, color: MAT_CHANNELS[type].color
+        }))
+      ];
+      summaryBar.innerHTML = pills.map(p => `
         <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
           border-radius:20px;padding:4px 13px;font-size:11px;color:#fff;font-weight:700;white-space:nowrap;">
           ${p.label}: <span style="color:${p.color}">${p.val}</span>
-        </div>`,
-          )
-          .join("");
+        </div>`).join('');
 
-        // Channel cards
-        const cardsCont = document.getElementById("mat-channel-cards");
-        if (Object.keys(counts).length === 0) {
-          cardsCont.innerHTML =
-            '<div style="color:#94a3b8;font-size:12px;padding:8px 0;">No hay nodos de comunicación en el journey todavía.</div>';
-        } else {
-          cardsCont.innerHTML = Object.entries(MAT_CHANNELS)
-            .filter(([type]) => counts[type])
-            .map(
-              ([type, ch]) => `
+      // Channel cards
+      const cardsCont = document.getElementById('mat-channel-cards');
+      if (Object.keys(counts).length === 0) {
+        cardsCont.innerHTML = '<div style="color:#94a3b8;font-size:12px;padding:8px 0;">No hay nodos de comunicación en el journey todavía.</div>';
+      } else {
+        cardsCont.innerHTML = Object.entries(MAT_CHANNELS)
+          .filter(([type]) => counts[type])
+          .map(([type, ch]) => `
             <div style="background:${ch.bg};border:1.5px solid ${ch.color}30;border-radius:8px;
               padding:12px 16px;min-width:130px;flex:1;max-width:180px;">
               <div style="line-height:1;margin-bottom:5px;display:flex;align-items:center;">${_iconDisplay(ch, 28)}</div>
               <div style="font-size:11px;font-weight:700;color:${ch.color};">${ch.label}</div>
               <div style="font-size:28px;font-weight:900;color:${ch.color};line-height:1.1;margin-top:2px;">${counts[type]}</div>
-              <div style="font-size:9px;color:#64748b;margin-top:2px;">${counts[type] === 1 ? "pieza" : "piezas"}</div>
-            </div>`,
-            )
-            .join("");
-        }
+              <div style="font-size:9px;color:#64748b;margin-top:2px;">${counts[type]===1?'pieza':'piezas'}</div>
+            </div>`).join('');
+      }
 
-        // Detail table
-        const tbody = Object.entries(MAT_CHANNELS)
-          .filter(([type]) => nodeList[type])
-          .flatMap(([type, ch]) =>
-            nodeList[type].map((nd, i) => ({ type, ch, nd, i })),
-          );
+      // Detail table
+      const tbody = Object.entries(MAT_CHANNELS)
+        .filter(([type]) => nodeList[type])
+        .flatMap(([type, ch]) =>
+          nodeList[type].map((nd, i) => ({ type, ch, nd, i }))
+        );
 
-        const tableEl = document.getElementById("mat-detail-table");
-        if (tbody.length === 0) {
-          tableEl.innerHTML =
-            '<tbody><tr><td colspan="5" style="padding:16px;text-align:center;color:#94a3b8;font-size:12px;">Sin nodos de comunicación.</td></tr></tbody>';
-        } else {
-          tableEl.innerHTML = `
+      const tableEl = document.getElementById('mat-detail-table');
+      if (tbody.length === 0) {
+        tableEl.innerHTML = '<tbody><tr><td colspan="5" style="padding:16px;text-align:center;color:#94a3b8;font-size:12px;">Sin nodos de comunicación.</td></tr></tbody>';
+      } else {
+        tableEl.innerHTML = `
           <thead>
             <tr style="background:#0f172a;color:#fff;">
               <th style="padding:9px 14px;text-align:left;font-weight:700;">#</th>
@@ -9727,11 +9192,9 @@
             </tr>
           </thead>
           <tbody>
-            ${tbody
-              .map(
-                ({ type, ch, nd, i }, idx) => `
-              <tr style="background:${idx % 2 === 0 ? "#f8fafc" : "#fff"};border-bottom:1px solid #e2e8f0;">
-                <td style="padding:8px 14px;color:#94a3b8;font-size:11px;">${idx + 1}</td>
+            ${tbody.map(({type, ch, nd, i}, idx) => `
+              <tr style="background:${idx%2===0?'#f8fafc':'#fff'};border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px 14px;color:#94a3b8;font-size:11px;">${idx+1}</td>
                 <td style="padding:8px 14px;">
                   <span style="display:inline-flex;align-items:center;gap:5px;
                     background:${ch.bg};color:${ch.color};font-weight:700;font-size:10px;
@@ -9742,25 +9205,18 @@
                 <td style="padding:8px 14px;font-weight:600;color:#1e293b;font-size:12px;">${nd.title}</td>
                 <td style="padding:8px 14px;color:#475569;font-size:11px;">${nd.intentType}</td>
                 <td style="padding:8px 14px;color:#475569;font-size:11px;font-family:monospace;">${nd.time}</td>
-              </tr>`,
-              )
-              .join("")}
+              </tr>`).join('')}
           </tbody>`;
-        }
+      }
 
-        // Spec table — only channels present
-        const specTbody = document.getElementById("mat-spec-tbody");
-        const specRows = Object.entries(MAT_CHANNELS).filter(
-          ([type]) => counts[type],
-        );
-        if (specRows.length === 0) {
-          specTbody.innerHTML =
-            '<tr><td colspan="5" style="padding:14px;text-align:center;color:#94a3b8;">Sin canales activos.</td></tr>';
-        } else {
-          specTbody.innerHTML = specRows
-            .map(
-              ([type, ch], idx) => `
-          <tr style="background:${idx % 2 === 0 ? "#f8fafc" : "#fff"};border-bottom:1px solid #e2e8f0;">
+      // Spec table — only channels present
+      const specTbody = document.getElementById('mat-spec-tbody');
+      const specRows = Object.entries(MAT_CHANNELS).filter(([type]) => counts[type]);
+      if (specRows.length === 0) {
+        specTbody.innerHTML = '<tr><td colspan="5" style="padding:14px;text-align:center;color:#94a3b8;">Sin canales activos.</td></tr>';
+      } else {
+        specTbody.innerHTML = specRows.map(([type, ch], idx) => `
+          <tr style="background:${idx%2===0?'#f8fafc':'#fff'};border-bottom:1px solid #e2e8f0;">
             <td style="padding:9px 14px;font-weight:700;color:#1e293b;">
               <span style="margin-right:6px;display:inline-flex;vertical-align:middle;">${_iconDisplay(ch, 16)}</span>${ch.label}
             </td>
@@ -9768,69 +9224,38 @@
             <td style="padding:9px 14px;text-align:center;color:#475569;">${ch.specs.dims}</td>
             <td style="padding:9px 14px;text-align:center;color:#475569;">${ch.specs.peso}</td>
             <td style="padding:9px 14px;text-align:center;color:#475569;">${ch.specs.entrega}</td>
-          </tr>`,
-            )
-            .join("");
-        }
+          </tr>`).join('');
       }
+    }
 
-      function exportMaterialsCSV() {
-        const { counts, nodeList } = _buildMaterials();
-        const journeyTitle = document.getElementById(
-          "journey-title-display",
-        ).textContent;
-        const rows = [
-          [
-            "Journey",
-            "Canal",
-            "#",
-            "Nombre de pieza",
-            "Tipo de intención",
-            "Hora envío",
-          ],
-        ];
-        Object.entries(MAT_CHANNELS)
-          .filter(([t]) => nodeList[t])
-          .forEach(([type, ch]) => {
-            nodeList[type].forEach((nd, i) => {
-              rows.push([
-                journeyTitle,
-                ch.label,
-                i + 1,
-                nd.title,
-                nd.intentType,
-                nd.time,
-              ]);
-            });
-          });
-        // Totals row
-        rows.push([]);
-        rows.push(["TOTALES"]);
-        Object.entries(MAT_CHANNELS)
-          .filter(([t]) => counts[t])
-          .forEach(([type, ch]) => {
-            rows.push(["", ch.label, counts[type]]);
-          });
-        const csv = rows
-          .map((r) =>
-            r.map((c) => `"${String(c || "").replace(/"/g, '""')}"`).join(","),
-          )
-          .join("\n");
-        const blob = new Blob(["\ufeff" + csv], {
-          type: "text/csv;charset=utf-8;",
+    function exportMaterialsCSV() {
+      const { counts, nodeList } = _buildMaterials();
+      const journeyTitle = document.getElementById('journey-title-display').textContent;
+      const rows = [['Journey','Canal','#','Nombre de pieza','Tipo de intención','Hora envío']];
+      Object.entries(MAT_CHANNELS).filter(([t]) => nodeList[t]).forEach(([type, ch]) => {
+        nodeList[type].forEach((nd, i) => {
+          rows.push([journeyTitle, ch.label, i+1, nd.title, nd.intentType, nd.time]);
         });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `materiales_${journeyTitle.replace(/\s+/g, "_")}.csv`;
-        a.click();
-      }
+      });
+      // Totals row
+      rows.push([]);
+      rows.push(['TOTALES']);
+      Object.entries(MAT_CHANNELS).filter(([t]) => counts[t]).forEach(([type, ch]) => {
+        rows.push(['', ch.label, counts[type]]);
+      });
+      const csv = rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8;'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `materiales_${journeyTitle.replace(/\s+/g,'_')}.csv`;
+      a.click();
+    }
 
-      // Close on backdrop click
-      document
-        .getElementById("materials-modal")
-        .addEventListener("click", function (e) {
-          if (e.target === this) closeMaterialsModal();
-        });
+    // Close on backdrop click
+    document.getElementById('materials-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeMaterialsModal();
+    });
     </script>
+
   </body>
 </html>
